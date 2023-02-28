@@ -11,13 +11,78 @@ class Majorizer extends StatelessWidget {
     return MaterialApp(
       title: 'Majorizer',
       routes: {
-        '/SignUp': (context) => const SignUpScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
+        '/signUp': (context) => const SignUpScreen(),
+        '/home': (context) => const HomeScreen(),
         '/landing': (context) => const LandingScreen(),
-        //'/accountPage': (context) => const AccountScreen(),
+        '/catalog': (context) => const CatalogScreen(),
+        '/studentBuild': (context) => const StudentBuildScreen(),
+        '/history': (context) => const HistoryScreen(),
+        '/advisorBuild': (context) => const AdvisorBuildScreen(),
+        '/studentManager': (context) => const StudentManagerScreen(),
+        '/courseManager': (context) => const CourseManagerScreen(),
       },
       initialRoute: '/landing',
     );
+  }
+}
+
+class CourseManagerScreen extends StatelessWidget {
+  const CourseManagerScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class StudentManagerScreen extends StatelessWidget {
+  const StudentManagerScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class AdvisorBuildScreen extends StatelessWidget {
+  const AdvisorBuildScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class HistoryScreen extends StatelessWidget {
+  const HistoryScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class StudentBuildScreen extends StatelessWidget {
+  const StudentBuildScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class CatalogScreen extends StatelessWidget {
+  const CatalogScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
 
@@ -25,7 +90,7 @@ class LandingScreen extends StatelessWidget {
   const LandingScreen();
 
   void navToSignUp(BuildContext context) {
-    Navigator.of(context).pushNamed('/SignUp');
+    Navigator.of(context).pushNamed('/signUp');
   }
 
   @override
@@ -64,7 +129,7 @@ class LandingScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                      '/SignUp'); //eventually should be changed to a separate Login page
+                      '/signUp'); //eventually should be changed to a separate Login page
                   //user is just making a new account every time they visit, essentially
                 },
                 child: const Text(
@@ -88,43 +153,108 @@ class LandingScreen extends StatelessWidget {
         ],
       ),
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const <Widget>[
-              Text(
-                'Welcome to',
-                style: TextStyle(
-                  fontSize: 24,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: const Text(
+                  'Welcome to',
+                  style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.white,
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Text(
-                'Majorizer',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 96,
-                  fontFamily: 'Montserrat',
-                  shadows: <Shadow>[
-                    Shadow(
-                      offset: Offset(4.0, 4.0),
-                      blurRadius: 5.0,
-                      color: Color.fromARGB(120, 0, 0, 0),
-                    ),
-                  ],
+              Container(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: const Text(
+                  'Majorizer',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 126,
+                    fontFamily: 'Montserrat',
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Text('Where you plan courses until graduation'),
+              Container(
+                padding: const EdgeInsets.only(bottom: 200),
+                child: const Text(
+                  'Where you plan courses until graduation',
+                  style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.white,
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              navToSignUp(context);
-            },
-            child: const Text(
-              "Sign Up",
-              style: TextStyle(),
+          Container(
+            width: 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: const Offset(0, .3),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.fromLTRB(0, 0, 80, 250),
+            child: SizedBox(
+              height: 70,
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () {
+                  navToSignUp(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35),
+                  ),
+                  shadowColor: const Color.fromARGB(
+                      120, 0, 0, 0), //still need to add shadow to this widget
+                ),
+                child: const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    color: Color(0xFFda6237),
+                    fontSize: 44,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -175,8 +305,8 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen();
+class HomeScreen extends StatelessWidget {
+  const HomeScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +319,7 @@ class WelcomeScreen extends StatelessWidget {
             return IconButton(
               iconSize: 35,
               onPressed: () {
-                Navigator.of(context).pushNamed('/welcome');
+                Navigator.of(context).pushNamed('/home');
               },
               icon: const Icon(
                 Icons.home,
@@ -301,8 +431,8 @@ class _SignUpFormState extends State<SignUpForm> {
     });
   }
 
-  void _showWelcomeScreen() {
-    Navigator.of(context).pushNamed('/welcome');
+  void _showHomeScreen() {
+    Navigator.of(context).pushNamed('/home');
   }
 
   @override
@@ -350,7 +480,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     : const Color(0xFFda6237);
               }),
             ),
-            onPressed: _formProgress == 1 ? _showWelcomeScreen : null,
+            onPressed: _formProgress == 1 ? _showHomeScreen : null,
             child: const Text('Sign up'),
           ),
         ],
