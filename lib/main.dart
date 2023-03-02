@@ -470,7 +470,7 @@ class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFe79772),
+      backgroundColor: const Color(0xFFF3956F),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Builder(
@@ -669,7 +669,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color(0xFFe79772),
+      backgroundColor: Color(0xFFF3956F),
       body: Center(
         child: SizedBox(
           width: 400,
@@ -688,7 +688,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFe79772),
+      backgroundColor: const Color(0xFFF3956F),
+      //drawer: SideMenu()
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Builder(
@@ -794,28 +795,40 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Align(
-          alignment: const Alignment(-.8, -.4),
-          child: Text(
-            'Welcome, $firstName!',
-            style: const TextStyle(
-              //still need to add Montserrat into the pubspec.yaml file or whatever else it needs to show up
-              //it will not break without it, it just will be in a defualt font
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 96,
-              fontFamily: 'Montserrat',
-              shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(4.0, 4.0),
-                  blurRadius: 5.0,
-                  color: Color.fromARGB(120, 0, 0, 0),
+      body: Row(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Text(
+                  'Welcome, $firstName!',
+                  style: const TextStyle(
+                    //still need to add Montserrat into the pubspec.yaml file or whatever else it needs to show up
+                    //it will not break without it, it just will be in a defualt font
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 96,
+                    fontFamily: 'Montserrat',
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                  width: 675,
+                  height: 450,
+                  child:
+                      Image.asset('assets/images/man_holding_laptop_art.png')),
+            ],
           ),
-        ),
+        ],
       ),
     );
   }
