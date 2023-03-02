@@ -198,7 +198,7 @@ class LandingScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 200),
+                padding: const EdgeInsets.only(bottom: 350),
                 child: const Text(
                   'Where you plan courses until graduation',
                   style: TextStyle(
@@ -218,17 +218,19 @@ class LandingScreen extends StatelessWidget {
             ],
           ),
           Container(
-            width: 300,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
+              borderRadius: BorderRadius.circular(35),
+              //NOTE:
+              //Drop shadow for sign up button still needs to be implemented properly
+              //the boxShadow below is what I currently have, but I can't get it to not drop to the bottom of the window
+              /*boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.2),
                   spreadRadius: 4,
                   blurRadius: 10,
-                  offset: const Offset(0, .3),
+                  //offset: const Offset(0, )\,
                 ),
-              ],
+              ],*/
             ),
             padding: const EdgeInsets.fromLTRB(0, 0, 80, 250),
             child: SizedBox(
@@ -243,6 +245,7 @@ class LandingScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35),
                   ),
+                  elevation: 20,
                   shadowColor: const Color.fromARGB(
                       120, 0, 0, 0), //still need to add shadow to this widget
                 ),
