@@ -59,60 +59,165 @@ class AdvisorManagerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-      Container(
-          height: 75,
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(top: 25, left: 40),
-          margin: EdgeInsets.zero,
-          child: Text('Advisor Information',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
-      Flexible(
-          child: Container(
-        height: 50,
-        alignment: Alignment.bottomCenter,
-        child: Row(children: <Widget>[
-          Spacer(flex: 1),
-          Expanded(
-              flex: 2,
-              child:
-                  Text('Name', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 2,
-              child: Text('Department',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 2,
-              child:
-                  Text('Role', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 2,
-              child:
-                  Text('Email', style: TextStyle(fontWeight: FontWeight.bold))),
-        ]),
-      )),
-      Container(width: 1250, child: Divider(color: Colors.grey)),
-      Flexible(
-        child: ListView.builder(
-            itemCount: advisors.length,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 50,
-                child: Row(children: <Widget>[
-                  Spacer(flex: 1),
-                  Expanded(flex: 2, child: Text(advisors[index])),
-                  Expanded(
-                      flex: 2,
-                      child:
-                          Text(depts[index], overflow: TextOverflow.ellipsis)),
-                  Expanded(flex: 2, child: Text(roles[index])),
-                  Expanded(flex: 2, child: Text(emails[index]))
-                ]),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                iconSize: 35,
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/home');
+                },
+                icon: const Icon(
+                  Icons.home,
+                  color: Color(0xFFda6237),
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(3.0, 3.0),
+                      blurRadius: 5.0,
+                      color: Color.fromARGB(80, 0, 0, 0),
+                    ),
+                  ],
+                ),
               );
-            }),
-      ),
-    ]));
+            },
+          ),
+          leadingWidth: 150,
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                height: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/advisorManager');
+                  },
+                  child: const Text(
+                    'Advisor Manager',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFda6237),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                height: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/history');
+                  },
+                  child: const Text(
+                    'History',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFda6237),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                height: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/landing');
+                  },
+                  child: const Text(
+                    'Log Out',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFda6237),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: Column(children: [
+          Container(
+              height: 75,
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 25, left: 40),
+              margin: EdgeInsets.zero,
+              child: Text('Advisor Information',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
+          Flexible(
+              child: Container(
+            height: 50,
+            alignment: Alignment.bottomCenter,
+            child: Row(children: <Widget>[
+              Spacer(flex: 1),
+              Expanded(
+                  flex: 2,
+                  child: Text('Name',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  flex: 2,
+                  child: Text('Department',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  flex: 2,
+                  child: Text('Role',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  flex: 2,
+                  child: Text('Email',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+            ]),
+          )),
+          Container(width: 1250, child: Divider(color: Colors.grey)),
+          Flexible(
+            child: ListView.builder(
+                itemCount: advisors.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 50,
+                    child: Row(children: <Widget>[
+                      Spacer(flex: 1),
+                      Expanded(flex: 2, child: Text(advisors[index])),
+                      Expanded(
+                          flex: 2,
+                          child: Text(depts[index],
+                              overflow: TextOverflow.ellipsis)),
+                      Expanded(flex: 2, child: Text(roles[index])),
+                      Expanded(flex: 2, child: Text(emails[index]))
+                    ]),
+                  );
+                }),
+          ),
+        ]));
   }
 }
 
@@ -149,81 +254,186 @@ class HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(children: [
-      Container(
-          height: 75,
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(top: 25, left: 40),
-          margin: EdgeInsets.zero,
-          child: Text('Course List',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
-      Container(
-        width: 2500,
-        height: 45,
-        alignment: Alignment.topRight,
-        padding: EdgeInsets.only(left: 1050, right: 75),
-        margin: EdgeInsets.zero,
-        child: TextField(
-            onChanged: searchCourses,
-            decoration: InputDecoration(
-                hintText: 'Search...',
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 3, color: Colors.grey)))),
-      ),
-      Flexible(
-          child: Container(
-        height: 50,
-        alignment: Alignment.bottomCenter,
-        child: Row(children: <Widget>[
-          Spacer(flex: 1),
-          Expanded(
-              flex: 2,
-              child: Text('Course ID',
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 5,
-              child: Text('Course Title',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 2,
-              child:
-                  Text('Term', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              child:
-                  Text('Grade', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              child: Text('Credits',
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 2,
-              child:
-                  Text('Status', style: TextStyle(fontWeight: FontWeight.bold)))
-        ]),
-      )),
-      Container(width: 1250, child: Divider(color: Colors.grey)),
-      Flexible(
-        child: ListView.builder(
-            itemCount: courses.length,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 50,
-                child: Row(children: <Widget>[
-                  Spacer(flex: 1),
-                  Expanded(flex: 2, child: Text(courses[index])),
-                  Expanded(
-                      flex: 5,
-                      child:
-                          Text(titles[index], overflow: TextOverflow.ellipsis)),
-                  Expanded(flex: 2, child: Text(term[index])),
-                  Expanded(child: Text(grades[index])),
-                  Expanded(child: Text(credits[index])),
-                  Expanded(flex: 2, child: Text(status[index]))
-                ]),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                iconSize: 35,
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/home');
+                },
+                icon: const Icon(
+                  Icons.home,
+                  color: Color(0xFFda6237),
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(3.0, 3.0),
+                      blurRadius: 5.0,
+                      color: Color.fromARGB(80, 0, 0, 0),
+                    ),
+                  ],
+                ),
               );
-            }),
-      ),
-    ]));
+            },
+          ),
+          leadingWidth: 150,
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                height: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/advisorManager');
+                  },
+                  child: const Text(
+                    'Advisor Manager',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFda6237),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                height: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/history');
+                  },
+                  child: const Text(
+                    'History',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFda6237),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                height: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/landing');
+                  },
+                  child: const Text(
+                    'Log Out',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFda6237),
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(3.0, 3.0),
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: Column(children: [
+          Container(
+              height: 75,
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 25, left: 40),
+              margin: EdgeInsets.zero,
+              child: Text('Course List',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
+          Container(
+            width: 2500,
+            height: 45,
+            alignment: Alignment.topRight,
+            padding: EdgeInsets.only(left: 1050, right: 75),
+            margin: EdgeInsets.zero,
+            child: TextField(
+                onChanged: searchCourses,
+                decoration: InputDecoration(
+                    hintText: 'Search...',
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 3, color: Colors.grey)))),
+          ),
+          Flexible(
+              child: Container(
+            height: 50,
+            alignment: Alignment.bottomCenter,
+            child: Row(children: <Widget>[
+              Spacer(flex: 1),
+              Expanded(
+                  flex: 2,
+                  child: Text('Course ID',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  flex: 5,
+                  child: Text('Course Title',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  flex: 2,
+                  child: Text('Term',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  child: Text('Grade',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  child: Text('Credits',
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Expanded(
+                  flex: 2,
+                  child: Text('Status',
+                      style: TextStyle(fontWeight: FontWeight.bold)))
+            ]),
+          )),
+          Container(width: 1400, child: Divider(color: Colors.grey)),
+          Flexible(
+            child: ListView.builder(
+                itemCount: courses.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 50,
+                    child: Row(children: <Widget>[
+                      Spacer(flex: 1),
+                      Expanded(flex: 2, child: Text(courses[index])),
+                      Expanded(
+                          flex: 5,
+                          child: Text(titles[index],
+                              overflow: TextOverflow.ellipsis)),
+                      Expanded(flex: 2, child: Text(term[index])),
+                      Expanded(child: Text(grades[index])),
+                      Expanded(child: Text(credits[index])),
+                      Expanded(flex: 2, child: Text(status[index]))
+                    ]),
+                  );
+                }),
+          ),
+        ]));
   }
 
   // these are the event handler for searching and filtering courses...will figure this out later
@@ -504,6 +714,58 @@ class HomeScreen extends StatelessWidget {
         ),
         leadingWidth: 150,
         actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 50),
+            child: SizedBox(
+              height: 0,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/advisorManager');
+                },
+                child: const Text(
+                  'Advisor Manager',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFda6237),
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(3.0, 3.0),
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 50),
+            child: SizedBox(
+              height: 0,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/history');
+                },
+                child: const Text(
+                  'History',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFda6237),
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(3.0, 3.0),
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 50),
             child: SizedBox(
