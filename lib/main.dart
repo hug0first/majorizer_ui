@@ -66,6 +66,15 @@ Widget sideMenu(BuildContext context) {
             Navigator.of(context).pushNamed('/history');
           },
         ),
+        ListTile(
+          title: const Text(
+            'Schedule Builder',
+            style: TextStyle(color: Color(0xFFda6237)),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/studentBuild');
+          },
+        ),
       ],
     ),
   );
@@ -618,8 +627,22 @@ class StudentBuildScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: const Color(0xFFF3956F),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: mainAppBar(context, scaffoldKey),
+      ),
+      endDrawer: sideMenu(context),
+      body: const Center(
+        child: SizedBox(
+          child: Text("schedule builder needs to be implemented"),
+        ),
+      ),
+    );
   }
 }
 
@@ -880,14 +903,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      key: homeKey,
+      key: scaffoldKey,
       backgroundColor: const Color(0xFFF3956F),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
-        child: mainAppBar(context, homeKey),
+        child: mainAppBar(context, scaffoldKey),
       ),
       endDrawer: sideMenu(context),
       body: Row(
@@ -922,6 +945,34 @@ class HomeScreen extends StatelessWidget {
                 child: Image.asset('assets/images/man_holding_laptop_art.png'),
               ),
             ],
+          ),
+          Align(
+            alignment: const Alignment(1, 1),
+            child: SizedBox(
+              height: 400,
+              width: 600,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: const Text(
+                  '''
+              Current Major(s):
+              Computer Science
+
+              Current Minor(s):
+              Psychology
+
+              ''',
+                  style: TextStyle(
+                    fontSize: 48,
+                    color: Color(0xFFda6237),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),
