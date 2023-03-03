@@ -112,58 +112,6 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
           height: 0,
           child: TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/advisorManager');
-            },
-            child: const Text(
-              'Advisor Manager',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFFda6237),
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(3.0, 3.0),
-                    blurRadius: 5.0,
-                    color: Color.fromARGB(120, 0, 0, 0),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(right: 50),
-        child: SizedBox(
-          height: 0,
-          child: TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/history');
-            },
-            child: const Text(
-              'History',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFFda6237),
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(3.0, 3.0),
-                    blurRadius: 5.0,
-                    color: Color.fromARGB(120, 0, 0, 0),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(right: 50),
-        child: SizedBox(
-          height: 0,
-          child: TextButton(
-            onPressed: () {
               Navigator.of(context).pushNamed('/landing');
             },
             child: const Text(
@@ -238,122 +186,29 @@ class AdvisorManagerScreen extends StatelessWidget {
   final roles = ['Research', 'Academic'];
   final emails = ['sbanerje@clarkson.edu', 'cthorpe@clarkson.edu'];
 
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                iconSize: 35,
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/home');
-                },
-                icon: const Icon(
-                  Icons.home,
-                  color: Color(0xFFda6237),
-                  shadows: <Shadow>[
-                    Shadow(
-                      offset: Offset(3.0, 3.0),
-                      blurRadius: 5.0,
-                      color: Color.fromARGB(80, 0, 0, 0),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          leadingWidth: 150,
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(
-                height: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/advisorManager');
-                  },
-                  child: const Text(
-                    'Advisor Manager',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFda6237),
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(
-                height: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/history');
-                  },
-                  child: const Text(
-                    'History',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFda6237),
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(
-                height: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/landing');
-                  },
-                  child: const Text(
-                    'Log Out',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFda6237),
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        key: scaffoldKey,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(56),
+          child: mainAppBar(context, scaffoldKey),
         ),
+        endDrawer: sideMenu(context),
         body: Column(children: [
           Container(
               height: 75,
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(top: 25, left: 40),
               margin: EdgeInsets.zero,
-              child: const Text('Advisor Information',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
+              child: const Text('Advisor Manager',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Color(0xFFda6237),
+                      fontFamily: 'Montserrat'))),
           Flexible(
               child: Container(
             height: 50,
@@ -433,122 +288,29 @@ class HistoryScreenState extends State<HistoryScreen> {
   final credits = ['4', '3', '3'];
   final status = ['Transferred', 'Taken', 'Taken'];
 
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                iconSize: 35,
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/home');
-                },
-                icon: const Icon(
-                  Icons.home,
-                  color: Color(0xFFda6237),
-                  shadows: <Shadow>[
-                    Shadow(
-                      offset: Offset(3.0, 3.0),
-                      blurRadius: 5.0,
-                      color: Color.fromARGB(80, 0, 0, 0),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          leadingWidth: 150,
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(
-                height: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/advisorManager');
-                  },
-                  child: const Text(
-                    'Advisor Manager',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFda6237),
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(
-                height: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/history');
-                  },
-                  child: const Text(
-                    'History',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFda6237),
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(
-                height: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/landing');
-                  },
-                  child: const Text(
-                    'Log Out',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFda6237),
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        key: scaffoldKey,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(56),
+          child: mainAppBar(context, scaffoldKey),
         ),
+        endDrawer: sideMenu(context),
         body: Column(children: [
           Container(
               height: 75,
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(top: 25, left: 40),
               margin: EdgeInsets.zero,
-              child: const Text('Course List',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
+              child: const Text('Course History',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Color(0xFFda6237),
+                      fontFamily: 'Montserrat'))),
           Container(
             width: 2500,
             height: 45,
