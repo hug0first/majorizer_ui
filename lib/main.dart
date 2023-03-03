@@ -27,6 +27,179 @@ class Majorizer extends StatelessWidget {
   }
 }
 
+Widget sideMenu(BuildContext context) {
+  return Drawer(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        const DrawerHeader(
+          decoration: BoxDecoration(
+            color: Color(0xFFda6237),
+          ),
+          child: Text(
+            'Majorizer Navigation', //Temporary title
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
+        ),
+        ListTile(
+          //leading: Icon(Icons.message),
+          title: const Text(
+            'Advisor Manager',
+            style: TextStyle(color: Color(0xFFda6237)),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/advisorManager');
+          },
+        ),
+        ListTile(
+          //leading: Icon(Icons.account_circle),
+          title: const Text(
+            'History',
+            style: TextStyle(
+              color: Color(0xFFda6237),
+            ),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/history');
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
+  return AppBar(
+    backgroundColor: Colors.white,
+    leading: Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          iconSize: 35,
+          onPressed: () {
+            Navigator.of(context).pushNamed('/home');
+          },
+          icon: const Icon(
+            Icons.home,
+            color: Color(0xFFda6237),
+            shadows: <Shadow>[
+              Shadow(
+                offset: Offset(3.0, 3.0),
+                blurRadius: 5.0,
+                color: Color.fromARGB(80, 0, 0, 0),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+    leadingWidth: 150,
+    actions: <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(right: 50),
+        child: SizedBox(
+          height: 0,
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/advisorManager');
+            },
+            child: const Text(
+              'Advisor Manager',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFda6237),
+                shadows: <Shadow>[
+                  Shadow(
+                    offset: Offset(3.0, 3.0),
+                    blurRadius: 5.0,
+                    color: Color.fromARGB(120, 0, 0, 0),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: 50),
+        child: SizedBox(
+          height: 0,
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/history');
+            },
+            child: const Text(
+              'History',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFda6237),
+                shadows: <Shadow>[
+                  Shadow(
+                    offset: Offset(3.0, 3.0),
+                    blurRadius: 5.0,
+                    color: Color.fromARGB(120, 0, 0, 0),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: 50),
+        child: SizedBox(
+          height: 0,
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/landing');
+            },
+            child: const Text(
+              'Log Out',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFda6237),
+                shadows: <Shadow>[
+                  Shadow(
+                    offset: Offset(3.0, 3.0),
+                    blurRadius: 5.0,
+                    color: Color.fromARGB(120, 0, 0, 0),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: 50),
+        child: SizedBox(
+          child: IconButton(
+            onPressed: () {
+              currPageKey.currentState?.openEndDrawer();
+            },
+            icon: const Icon(
+              Icons.menu,
+              color: Color(0xFFda6237),
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(3.0, 3.0),
+                  blurRadius: 5.0,
+                  color: Color.fromARGB(120, 0, 0, 0),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 class CourseManagerScreen extends StatelessWidget {
   const CourseManagerScreen();
 
@@ -168,36 +341,36 @@ class AdvisorManagerScreen extends StatelessWidget {
           Container(
               height: 75,
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(top: 25, left: 40),
+              padding: const EdgeInsets.only(top: 25, left: 40),
               margin: EdgeInsets.zero,
-              child: Text('Advisor Information',
+              child: const Text('Advisor Information',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
           Flexible(
               child: Container(
             height: 50,
             alignment: Alignment.bottomCenter,
             child: Row(children: <Widget>[
-              Spacer(flex: 1),
-              Expanded(
+              const Spacer(flex: 1),
+              const Expanded(
                   flex: 2,
                   child: Text('Name',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: Text('Department',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: Text('Role',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: Text('Email',
                       style: TextStyle(fontWeight: FontWeight.bold))),
             ]),
           )),
-          Container(width: 1250, child: Divider(color: Colors.grey)),
+          Container(width: 1250, child: const Divider(color: Colors.grey)),
           Flexible(
             child: ListView.builder(
                 itemCount: advisors.length,
@@ -205,7 +378,7 @@ class AdvisorManagerScreen extends StatelessWidget {
                   return Container(
                     height: 50,
                     child: Row(children: <Widget>[
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Expanded(flex: 2, child: Text(advisors[index])),
                       Expanded(
                           flex: 2,
@@ -363,19 +536,19 @@ class HistoryScreenState extends State<HistoryScreen> {
           Container(
               height: 75,
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(top: 25, left: 40),
+              padding: const EdgeInsets.only(top: 25, left: 40),
               margin: EdgeInsets.zero,
-              child: Text('Course List',
+              child: const Text('Course List',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30))),
           Container(
             width: 2500,
             height: 45,
             alignment: Alignment.topRight,
-            padding: EdgeInsets.only(left: 1050, right: 75),
+            padding: const EdgeInsets.only(left: 1050, right: 75),
             margin: EdgeInsets.zero,
             child: TextField(
                 onChanged: searchCourses,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: 'Search...',
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 3, color: Colors.grey)))),
@@ -385,33 +558,33 @@ class HistoryScreenState extends State<HistoryScreen> {
             height: 50,
             alignment: Alignment.bottomCenter,
             child: Row(children: <Widget>[
-              Spacer(flex: 1),
-              Expanded(
+              const Spacer(flex: 1),
+              const Expanded(
                   flex: 2,
                   child: Text('Course ID',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   flex: 5,
                   child: Text('Course Title',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: Text('Term',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   child: Text('Grade',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   child: Text('Credits',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: Text('Status',
                       style: TextStyle(fontWeight: FontWeight.bold)))
             ]),
           )),
-          Container(width: 1400, child: Divider(color: Colors.grey)),
+          Container(width: 1400, child: const Divider(color: Colors.grey)),
           Flexible(
             child: ListView.builder(
                 itemCount: courses.length,
@@ -419,7 +592,7 @@ class HistoryScreenState extends State<HistoryScreen> {
                   return Container(
                     height: 50,
                     child: Row(children: <Widget>[
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Expanded(flex: 2, child: Text(courses[index])),
                       Expanded(
                           flex: 5,
@@ -531,73 +704,92 @@ class LandingScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: const Text(
-                  'Welcome to',
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.w100,
-                    color: Colors.white,
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(4.0, 4.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(150, 50, 0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: const Text(
+                        'Welcome to',
+                        style: TextStyle(
+                          fontSize: 34,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.white,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 5.0,
+                              color: Color.fromARGB(120, 0, 0, 0),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: const Text(
+                        'Majorizer',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 126,
+                          fontFamily: 'Montserrat',
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 5.0,
+                              color: Color.fromARGB(120, 0, 0, 0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: const Text(
+                        'Where you plan courses until graduation',
+                        style: TextStyle(
+                          fontSize: 34,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.white,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 5.0,
+                              color: Color.fromARGB(120, 0, 0, 0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: const Text(
-                  'Majorizer',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 126,
-                    fontFamily: 'Montserrat',
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(4.0, 4.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(bottom: 350),
-                child: const Text(
-                  'Where you plan courses until graduation',
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.w100,
-                    color: Colors.white,
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(4.0, 4.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(right: 480),
+                child: SizedBox(
+                  width: 675,
+                  height: 450,
+                  child:
+                      Image.asset('assets/images/man_holding_laptop_art.png'),
                 ),
               ),
             ],
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(35),
-              //NOTE:
-              //Drop shadow for sign up button still needs to be implemented properly
-              //the boxShadow below is what I currently have, but I can't get it to not drop to the bottom of the window
-              /*boxShadow: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 81, 250),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                //NOTE:
+                //Drop shadow for sign up button still needs to be implemented properly
+                //the boxShadow below is what I currently have, but I can't get it to not drop to the bottom of the window
+                /*boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.2),
                   spreadRadius: 4,
@@ -605,30 +797,31 @@ class LandingScreen extends StatelessWidget {
                   //offset: const Offset(0, )\,
                 ),
               ],*/
-            ),
-            padding: const EdgeInsets.fromLTRB(0, 0, 80, 250),
-            child: SizedBox(
-              height: 70,
-              width: 300,
-              child: ElevatedButton(
-                onPressed: () {
-                  navToSignUp(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(35),
+              ),
+              //padding: const EdgeInsets.fromLTRB(0, 0, 100, 250),
+              child: SizedBox(
+                height: 70,
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    navToSignUp(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                    elevation: 20,
+                    shadowColor: const Color.fromARGB(
+                        120, 0, 0, 0), //still need to add shadow to this widget
                   ),
-                  elevation: 20,
-                  shadowColor: const Color.fromARGB(
-                      120, 0, 0, 0), //still need to add shadow to this widget
-                ),
-                child: const Text(
-                  "Sign Up",
-                  style: TextStyle(
-                    color: Color(0xFFda6237),
-                    fontSize: 44,
-                    fontWeight: FontWeight.w500,
+                  child: const Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Color(0xFFda6237),
+                      fontSize: 44,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
@@ -687,114 +880,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> homeKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+      key: homeKey,
       backgroundColor: const Color(0xFFF3956F),
-      //drawer: SideMenu()
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              iconSize: 35,
-              onPressed: () {
-                Navigator.of(context).pushNamed('/home');
-              },
-              icon: const Icon(
-                Icons.home,
-                color: Color(0xFFda6237),
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(3.0, 3.0),
-                    blurRadius: 5.0,
-                    color: Color.fromARGB(80, 0, 0, 0),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        leadingWidth: 150,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 50),
-            child: SizedBox(
-              height: 0,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/advisorManager');
-                },
-                child: const Text(
-                  'Advisor Manager',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFda6237),
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(3.0, 3.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 50),
-            child: SizedBox(
-              height: 0,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/history');
-                },
-                child: const Text(
-                  'History',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFda6237),
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(3.0, 3.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 50),
-            child: SizedBox(
-              height: 0,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/landing');
-                },
-                child: const Text(
-                  'Log Out',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFda6237),
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(3.0, 3.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: mainAppBar(context, homeKey),
       ),
+      endDrawer: sideMenu(context),
       body: Row(
         children: <Widget>[
           Column(
@@ -822,10 +917,10 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                  width: 675,
-                  height: 450,
-                  child:
-                      Image.asset('assets/images/man_holding_laptop_art.png')),
+                width: 675,
+                height: 450,
+                child: Image.asset('assets/images/man_holding_laptop_art.png'),
+              ),
             ],
           ),
         ],
@@ -861,8 +956,10 @@ class _SignUpFormState extends State<SignUpForm> {
       }
     }
 
-    firstName = _firstNameTextController.text;
-    var password = _passwordTextController.text;
+    firstName = _firstNameTextController.text.trim();
+    var lastName = _lastNameTextController.text
+        .trim(); //Added for potential interaction with
+    var password = _passwordTextController.text.trim();
     if ((password.length >= 5) &&
         (_passwordTextController.value.text.isNotEmpty)) {
       progress += 1 / (controllers.length + 1);
