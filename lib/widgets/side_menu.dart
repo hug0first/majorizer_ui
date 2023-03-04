@@ -29,9 +29,18 @@ Widget sideMenu(BuildContext context) {
           },
         ),
         ListTile(
+          title: const Text(
+            'Student Manager',
+            style: TextStyle(color: Color(0xFFda6237)),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/studentManager');
+          },
+        ),
+        ListTile(
           //leading: Icon(Icons.account_circle),
           title: const Text(
-            'History',
+            'Course History',
             style: TextStyle(
               color: Color(0xFFda6237),
             ),
