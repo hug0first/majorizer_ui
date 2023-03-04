@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'size_config.dart';
+
 class LandingScreen extends StatelessWidget {
   const LandingScreen();
 
@@ -9,6 +11,7 @@ class LandingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Scaffold(
       backgroundColor: const Color(0xFFF3956F),
       appBar: AppBar(
@@ -140,8 +143,8 @@ class LandingScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 480),
                 child: SizedBox(
-                  width: 675,
-                  height: 450,
+                  width: SizeConfig.blockSizeHorizontal * 43.9,
+                  height: SizeConfig.blockSizeVertical * 54.37,
                   child:
                       Image.asset('assets/images/man_holding_laptop_art.png'),
                 ),
