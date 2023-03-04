@@ -13,18 +13,33 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
           icon: const Icon(
             Icons.home,
             color: Color(0xFFda6237),
-            shadows: <Shadow>[
+            /*shadows: <Shadow>[
               Shadow(
                 offset: Offset(3.0, 3.0),
                 blurRadius: 5.0,
                 color: Color.fromARGB(80, 0, 0, 0),
               ),
-            ],
+            ],*/
           ),
         );
       },
     ),
     leadingWidth: 150,
+    title: const Text(
+      "Majorizer",
+      style: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
+        color: Color(0xFFda6237),
+        /*shadows: <Shadow>[
+          Shadow(
+            offset: Offset(3.0, 3.0),
+            blurRadius: 3.0,
+            color: Color.fromARGB(120, 0, 0, 0),
+          ),
+        ],*/
+      ),
+    ),
     actions: <Widget>[
       Padding(
         padding: const EdgeInsets.only(right: 50),
@@ -40,13 +55,13 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFFda6237),
-                shadows: <Shadow>[
+                /*shadows: <Shadow>[
                   Shadow(
                     offset: Offset(3.0, 3.0),
                     blurRadius: 5.0,
                     color: Color.fromARGB(120, 0, 0, 0),
                   ),
-                ],
+                ],*/
               ),
             ),
           ),
@@ -62,13 +77,13 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
             icon: const Icon(
               Icons.menu,
               color: Color(0xFFda6237),
-              shadows: <Shadow>[
+              /*shadows: <Shadow>[
                 Shadow(
                   offset: Offset(3.0, 3.0),
                   blurRadius: 5.0,
                   color: Color.fromARGB(120, 0, 0, 0),
                 ),
-              ],
+              ],*/
             ),
           ),
         ),
