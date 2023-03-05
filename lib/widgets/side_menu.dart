@@ -49,6 +49,15 @@ Widget sideMenu(BuildContext context) {
             Navigator.of(context).pushNamed('/studentBuild');
           },
         ),
+        ListTile(
+          title: const Text(
+            'Course Catalog',
+            style: TextStyle(color: Color(0xFFda6237)),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/catalog');
+          },
+        ),
       ],
     ),
   );
