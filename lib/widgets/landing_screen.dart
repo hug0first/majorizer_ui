@@ -26,13 +26,6 @@ class LandingScreen extends StatelessWidget {
               icon: const Icon(
                 Icons.home,
                 color: Color(0xFFda6237),
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(3.0, 3.0),
-                    blurRadius: 5.0,
-                    color: Color.fromARGB(80, 0, 0, 0),
-                  ),
-                ],
               ),
             );
           },
@@ -55,13 +48,6 @@ class LandingScreen extends StatelessWidget {
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFFda6237),
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(3.0, 3.0),
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -71,96 +57,112 @@ class LandingScreen extends StatelessWidget {
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(150, 50, 0, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: const Text(
-                        'Welcome to',
-                        style: TextStyle(
-                          fontSize: 34,
-                          fontWeight: FontWeight.w100,
-                          color: Colors.white,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(4.0, 4.0),
-                              blurRadius: 5.0,
-                              color: Color.fromARGB(120, 0, 0, 0),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(150, 50, 0, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: const FittedBox(
+                          fit: BoxFit.fill,
+                          child: Text(
+                            'Welcome to',
+                            style: TextStyle(
+                              fontSize: 34,
+                              fontWeight: FontWeight.w100,
+                              color: Colors.white,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(4.0, 4.0),
+                                  blurRadius: 5.0,
+                                  color: Color.fromARGB(120, 0, 0, 0),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: const Text(
-                        'Majorizer',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 126,
-                          fontFamily: 'Montserrat',
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(4.0, 4.0),
-                              blurRadius: 5.0,
-                              color: Color.fromARGB(120, 0, 0, 0),
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: const FittedBox(
+                          fit: BoxFit.fill,
+                          child: Text(
+                            'Majorizer',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 126,
+                              fontFamily: 'Montserrat',
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(4.0, 4.0),
+                                  blurRadius: 5.0,
+                                  color: Color.fromARGB(120, 0, 0, 0),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: const Text(
-                        'Where you plan courses until graduation',
-                        style: TextStyle(
-                          fontSize: 34,
-                          fontWeight: FontWeight.w100,
-                          color: Colors.white,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(4.0, 4.0),
-                              blurRadius: 5.0,
-                              color: Color.fromARGB(120, 0, 0, 0),
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: const FittedBox(
+                          fit: BoxFit.fill,
+                          child: Text(
+                            'Where you plan courses until graduation',
+                            style: TextStyle(
+                              fontSize: 34,
+                              fontWeight: FontWeight.w100,
+                              color: Colors.white,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(4.0, 4.0),
+                                  blurRadius: 5.0,
+                                  color: Color.fromARGB(120, 0, 0, 0),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 480),
-                child: Image.asset(
-                  'assets/images/man_holding_laptop_art.png',
-                  alignment: Alignment.centerLeft,
-                  fit: BoxFit.contain,
-                  width: SizeConfig.blockSizeHorizontal * 54.37,
-                  height: SizeConfig.blockSizeVertical * 36.2467,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 50),
+                    child: Image.asset(
+                      'assets/images/man_holding_laptop_art.png',
+                      alignment: Alignment.centerLeft,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 81, 250),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35),
-                //NOTE:
-                //Drop shadow for sign up button still needs to be implemented properly
-                //the boxShadow below is what I currently have, but I can't get it to not drop to the bottom of the window
-                /*boxShadow: [
+          // ConstrainedBox(
+          // constraints: const BoxConstraints(maxWidth: 300, maxHeight: 70),
+          //child: Expanded(
+          Expanded(
+            child: FractionallySizedBox(
+              widthFactor: .6,
+              heightFactor: .2,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(35),
+                  //NOTE:
+                  //Drop shadow for sign up button still needs to be implemented properly
+                  //the boxShadow below is what I currently have, but I can't get it to not drop to the bottom of the window
+                  /*boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.2),
                   spreadRadius: 4,
@@ -168,36 +170,42 @@ class LandingScreen extends StatelessWidget {
                   //offset: const Offset(0, )\,
                 ),
               ],*/
-              ),
-              //padding: const EdgeInsets.fromLTRB(0, 0, 100, 250),
-              child: SizedBox(
-                height: 70,
-                width: 300,
-                child: ElevatedButton(
-                  onPressed: () {
-                    navToSignUp(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35),
+                ),
+                //padding: const EdgeInsets.fromLTRB(0, 0, 100, 250),
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  height: 70,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      navToSignUp(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35),
+                      ),
+                      elevation: 20,
+                      shadowColor: const Color.fromARGB(120, 0, 0,
+                          0), //still need to add shadow to this widget
                     ),
-                    elevation: 20,
-                    shadowColor: const Color.fromARGB(
-                        120, 0, 0, 0), //still need to add shadow to this widget
-                  ),
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      color: Color(0xFFda6237),
-                      fontSize: 44,
-                      fontWeight: FontWeight.w500,
+                    child: const FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Color(0xFFda6237),
+                          fontSize: 44,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
+          //  ),
         ],
       ),
       /*const Center(
