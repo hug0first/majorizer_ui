@@ -142,11 +142,12 @@ class LandingScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 480),
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal * 43.9,
-                  height: SizeConfig.blockSizeVertical * 54.37,
-                  child:
-                      Image.asset('assets/images/man_holding_laptop_art.png'),
+                child: Image.asset(
+                  'assets/images/man_holding_laptop_art.png',
+                  alignment: Alignment.centerLeft,
+                  fit: BoxFit.contain,
+                  width: SizeConfig.blockSizeHorizontal * 54.37,
+                  height: SizeConfig.blockSizeVertical * 36.2467,
                 ),
               ),
             ],
