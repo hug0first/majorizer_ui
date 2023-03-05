@@ -19,12 +19,13 @@ class HomeScreen extends StatelessWidget {
       ),
       endDrawer: sideMenu(context),
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.only(bottom: 50),
+                padding: const EdgeInsets.only(top: 95),
                 child: Text(
                   'Welcome, $firstName!',
                   style: const TextStyle(
@@ -44,40 +45,66 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 675,
-                height: 450,
-                child: Image.asset('assets/images/man_holding_laptop_art.png'),
+              Stack(
+                children: <Widget>[
+                  Positioned(
+                    //left: 0.0,
+                    //bottom: 108.0,
+                    child: SizedBox(
+                      width: 500,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                        child: const Text(
+                          '''
+Current Major(s):
+Computer Science
+
+
+Current Minor(s):
+Psychology 
+
+                ''',
+                          style: TextStyle(
+                            color: Color(0xFFda6237),
+                            fontSize: 42.0,
+                            fontWeight: FontWeight.w500,
+                            height: 1.1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          Align(
-            alignment: const Alignment(1, 1),
-            child: SizedBox(
-              height: 400,
-              width: 600,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: const Text(
-                  '''
-                Current Major(s):
-                Computer Science
-  
-                Current Minor(s):
-                Psychology
-  
+          Stack(
+            children: <Widget>[
+              Positioned(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                  child: const Text(
+                    '''
+Another Widget to 
+display info on classes
                 ''',
-                  style: TextStyle(
-                    fontSize: 48,
-                    color: Color(0xFFda6237),
-                    fontWeight: FontWeight.w500,
+                    style: TextStyle(
+                        color: Color(0xFFda6237),
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),

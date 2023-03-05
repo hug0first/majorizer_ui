@@ -95,6 +95,12 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: const InputDecoration(hintText: 'Password'),
             ),
           ),
+          const Text(
+            "Password must be at least 5 character in length",
+            style: TextStyle(
+              color: Color(0xFF757575),
+            ),
+          ),
           TextButton(
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.resolveWith(
