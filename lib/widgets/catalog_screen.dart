@@ -10,6 +10,7 @@ class CatalogScreen extends StatelessWidget {
     GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
+      backgroundColor: Color(0xFFF3956F),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
@@ -17,16 +18,32 @@ class CatalogScreen extends StatelessWidget {
       body: Column(
         children: [
           TitleBar(),
+          Divider(
+            color: Colors.white,
+            thickness: 4,
+            indent: 20,
+            endIndent: 20,
+          ),
           Container(
             alignment: Alignment.topCenter,
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: ProgramList(
-              items: [
-                ProgramListItem('CS', 'Computer\nScience'),
-                ProgramListItem('CM', 'Chemistry'),
-                ProgramListItem('PY', 'Psychology'),
-                ProgramListItem('MA', 'Mathematics'),
-              ],
+            height: MediaQuery.of(context).size.height * 0.67,
+            child: Container(
+              child: ProgramList(
+                items: [
+                  ProgramListItem('CS', 'Computer\nScience'),
+                  ProgramListItem('CM', 'Chemistry'),
+                  ProgramListItem('PY', 'Psychology'),
+                  ProgramListItem('MA', 'Mathematics'),
+                  ProgramListItem('CS', 'Computer\nScience'),
+                  ProgramListItem('CM', 'Chemistry'),
+                  ProgramListItem('PY', 'Psychology'),
+                  ProgramListItem('MA', 'Mathematics'),
+                  ProgramListItem('CS', 'Computer\nScience'),
+                  ProgramListItem('CM', 'Chemistry'),
+                  ProgramListItem('PY', 'Psychology'),
+                  ProgramListItem('MA', 'Mathematics'),
+                ],
+              ),
             ),
           ),
         ],
@@ -48,7 +65,7 @@ class TitleBar extends StatelessWidget {
           Text(
             'Course Catalog',
             style: TextStyle(
-              color: Color(0xFFda6237),
+              color: Colors.white,
               decoration: TextDecoration.none,
               fontSize: 50,
               fontWeight: FontWeight.bold,
@@ -115,7 +132,7 @@ class ProgramListItem extends StatelessWidget {
       onPressed: () {},
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(180),
         ),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
