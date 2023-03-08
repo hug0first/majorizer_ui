@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:majorizer_ui/widgets/main_app_bar.dart';
-import 'package:majorizer_ui/widgets/size_config.dart';
+import 'package:majorizer_ui/widgets/side_menu.dart';
 
 class CatalogScreen extends StatelessWidget {
   const CatalogScreen({super.key});
@@ -10,15 +10,16 @@ class CatalogScreen extends StatelessWidget {
     GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      backgroundColor: Color(0xFFF3956F),
+      backgroundColor: const Color(0xFFF3956F),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
       ),
+      endDrawer: sideMenu(context),
       body: Column(
         children: [
-          TitleBar(),
-          Divider(
+          const TitleBar(),
+          const Divider(
             color: Colors.white,
             thickness: 4,
             indent: 20,
@@ -62,7 +63,7 @@ class TitleBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Course Catalog',
             style: TextStyle(
               color: Colors.white,
@@ -71,7 +72,7 @@ class TitleBar extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Flexible(child: search(context)),
         ],
       ),
@@ -80,8 +81,8 @@ class TitleBar extends StatelessWidget {
 
   Widget search(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: 400, maxHeight: 100),
-      child: TextField(
+      constraints: const BoxConstraints(maxWidth: 400, maxHeight: 100),
+      child: const TextField(
         decoration: InputDecoration(
           hintText: 'Search Courses',
           focusedBorder: UnderlineInputBorder(
