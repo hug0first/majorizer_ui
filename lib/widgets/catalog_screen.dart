@@ -3,7 +3,6 @@ import 'package:majorizer_ui/widgets/main_app_bar.dart';
 import 'package:majorizer_ui/widgets/side_menu.dart';
 
 class CatalogScreen extends StatelessWidget {
-  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   static const List<DeptListItem> items = [
     DeptListItem('CS', 'Computer\nScience'),
     DeptListItem('CM', 'Chemistry'),
@@ -15,13 +14,14 @@ class CatalogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF3956F),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
       ),
-      endDrawer: sideMenu(context),
       body: Column(
         children: [
           CatalogTitle(),
@@ -166,7 +166,7 @@ class DeptPage extends StatelessWidget {
     CourseListItem(
       iD: 'ID',
       semOffered: 'Sem',
-      name: 'Name',
+      name: 'NamesadfasdfasdfS',
       description: 'Description',
       credits: 'Credits',
       commPoints: 'Comm Points',
@@ -222,7 +222,6 @@ class DeptPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(90),
               color: Color(0xFFF3956F),
               border: Border.all(
-                color: Colors.white,
                 width: 6,
               ),
             ),
