@@ -145,10 +145,10 @@ class Course {
 
   List<Course> get allCourses {
     List<Course> allCourses = [
-      Course("Computer Science", "100", "01", "Fall 2023"),
-      Course("Chemistry", "100", "05", "Fall 2023"),
-      Course("Mathematics", "200", "03", "Fall 2023"),
-      Course("Computer Science", "200", "04", "Spring 2024")
+      Course("Computer Science", "300", "41", "Fall 2023"),
+      Course("Chemistry", "100", "31", "Fall 2023"),
+      Course("Mathematics", "100", "31", "Fall 2023"),
+      Course("Computer Science", "200", "42", "Spring 2024")
     ];
     return allCourses;
   }
@@ -200,6 +200,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
+    int semesterNum = 1;
 
     return Scaffold(
       key: scaffoldKey,
@@ -319,7 +320,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         const FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
-                            "Click a course to add a course to your selected course list.",
+                            "Click a course to add it to your selected course list.",
                             style: TextStyle(
                               color: Color(0xFFda6237),
                               fontSize: 42.0,
@@ -528,6 +529,57 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         ],
                       ),
                       const Padding(padding: EdgeInsets.only(bottom: 25)),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        width: MediaQuery.of(context).size.width * .6,
+                        height: MediaQuery.of(context).size.height * .05,
+                        padding: const EdgeInsets.fromLTRB(28.0, 4, 28.0, 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            FittedBox(
+                              fit: BoxFit.fitHeight,
+                              child: Text(
+                                "Semester $semesterNum",
+                                style: const TextStyle(
+                                  fontSize: 42.0,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.1,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                IconButton(
+                                    onPressed: () {
+                                      if (semesterNum == 1) {
+                                        Null;
+                                      } else {
+                                        setState(() {
+                                          semesterNum = semesterNum - 1;
+                                        });
+                                      }
+                                    },
+                                    icon: const Icon(Icons.arrow_left)),
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        semesterNum = semesterNum + 1;
+                                      });
+                                    },
+                                    icon: const Icon(Icons.arrow_right)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .65,
+                        height: MediaQuery.of(context).size.height * .05,
+                        child: const Divider(
+                          color: Colors.grey,
+                        ),
+                      ),
                       Expanded(
                         child: Container(
                           width: MediaQuery.of(context).size.width * .6,
@@ -568,7 +620,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           ),
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(bottom: 50)),
+                      const Padding(padding: EdgeInsets.only(bottom: 25)),
                       Expanded(
                         child: Container(
                           width: MediaQuery.of(context).size.width * .6,
@@ -608,7 +660,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           ),
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(bottom: 50)),
+                      const Padding(padding: EdgeInsets.only(bottom: 25)),
                       Expanded(
                         child: Container(
                           width: MediaQuery.of(context).size.width * .6,
@@ -648,7 +700,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           ),
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(bottom: 50)),
+                      const Padding(padding: EdgeInsets.only(bottom: 25)),
                       Expanded(
                         child: Container(
                           width: MediaQuery.of(context).size.width * .6,
@@ -688,7 +740,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           ),
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(bottom: 50)),
+                      const Padding(padding: EdgeInsets.only(bottom: 25)),
                       Expanded(
                         child: Container(
                           width: MediaQuery.of(context).size.width * .6,
@@ -760,38 +812,48 @@ List<ListTile> filter(String departmentFilter, String levelFilter,
     bool moduleBool = true;
     bool termBool = true;
 
-    if (courseDepartment == departmentFilter)
+    if (courseDepartment == departmentFilter) {
       departmentBool = true;
-    else if (departmentFilter == "Department")
+    } else if (departmentFilter == "Department") {
       departmentBool = true;
-    else
+    } else {
       departmentBool = false;
+    }
 
-    if (courseLevel == levelFilter)
+    if (courseLevel == levelFilter) {
       levelBool = true;
-    else if (levelFilter == "Level")
+    } else if (levelFilter == "Level") {
       levelBool = true;
-    else
+    } else {
       levelBool = false;
+    }
 
-    if (courseModule == moduleFilter)
+    if (courseModule == moduleFilter) {
       moduleBool = true;
-    else if (moduleFilter == "module")
+    } else if (moduleFilter == "module") {
       moduleBool = true;
-    else
+    } else {
       moduleBool = false;
+    }
 
-    if (courseTerm == termFilter)
+    if (courseTerm == termFilter) {
       termBool = true;
-    else if (termFilter == "term")
+    } else if (termFilter == "term") {
       termBool = true;
-    else
+    } else {
       termBool = false;
-
-    if ((departmentBool) && (levelBool) && (moduleBool) && (termBool)) {
+    }
+    var courseLevelNum = courseLevel[0];
+    if ((departmentBool) || (levelBool) || (moduleBool) || (termBool)) {
       filteredCourses.add(ListTile(
-        title:
-            Text("$courseDepartment $courseLevel[0]$courseModule $courseTerm"),
+        title: Text(
+          "$courseDepartment $courseLevelNum$courseModule",
+          style: const TextStyle(),
+        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+            side: const BorderSide(width: 2)),
+        leading: const Icon(Icons.list_alt),
       ));
     }
   }
@@ -800,10 +862,10 @@ List<ListTile> filter(String departmentFilter, String levelFilter,
 
 List<Course> get allCourses {
   List<Course> allCourses = [
-    Course("Computer Science", "100", "01", "Fall 2023"),
-    Course("Chemistry", "100", "05", "Fall 2023"),
-    Course("Mathematics", "200", "03", "Fall 2023"),
-    Course("Computer Science", "200", "04", "Spring 2024")
+    Course("Computer Science", "300", "41", "Fall 2023"),
+    Course("Chemistry", "100", "31", "Fall 2023"),
+    Course("Mathematics", "100", "31", "Fall 2023"),
+    Course("Computer Science", "200", "42", "Spring 2024")
   ];
   return allCourses;
 }
