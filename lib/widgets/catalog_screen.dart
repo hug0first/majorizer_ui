@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main_app_bar.dart';
+import 'package:majorizer_ui/widgets/main_app_bar.dart';
+import 'package:majorizer_ui/widgets/side_menu.dart';
 
 class CatalogScreen extends StatelessWidget {
   static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -15,11 +16,12 @@ class CatalogScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF3956F),
+      backgroundColor: const Color(0xFFF3956F),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
       ),
+      endDrawer: sideMenu(context),
       body: Column(
         children: [
           CatalogTitle(),
@@ -50,7 +52,7 @@ class CatalogTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Course Catalog',
             style: TextStyle(
               color: Colors.white,
@@ -59,7 +61,7 @@ class CatalogTitle extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Flexible(child: search(context)),
         ],
       ),
