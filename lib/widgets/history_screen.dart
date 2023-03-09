@@ -34,80 +34,97 @@ class HistoryScreenState extends State<HistoryScreen> {
         ),
         endDrawer: sideMenu(context),
         body: Column(children: [
+          // Title, Search, and Column Labels ----------------------------------
           Container(
-              height: 75,
-              alignment: Alignment.topLeft,
-              padding: const EdgeInsets.only(top: 25, left: 40),
-              margin: EdgeInsets.zero,
-              child: const Text('Course History',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Color(0xFFda6237),
-                      fontFamily: 'Montserrat'))),
-          Container(
-            width: 2500,
-            height: 45,
-            alignment: Alignment.topRight,
-            padding: const EdgeInsets.only(left: 1050, right: 75),
-            margin: EdgeInsets.zero,
-            child: TextField(
-                onChanged: searchCourses,
-                decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.grey)))),
-          ),
-          Flexible(
-              child: Container(
-            height: 50,
-            alignment: Alignment.bottomCenter,
-            child: Row(children: <Widget>[
-              const Spacer(flex: 1),
-              const Expanded(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            color: const Color(0xFFF3956F),
+            child: Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                // Title -------------------------------------------------------
+                const Expanded(
                   flex: 2,
-                  child: Text('Course ID',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
-                  flex: 5,
-                  child: Text('Course Title',
+                  child: Text('Course history',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
-                  flex: 2,
-                  child: Text('Term',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
-                  child: Text('Grade',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
-                  child: Text('Credits',
-                      style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
-                  flex: 2,
-                  child: Text('Status',
-                      style: TextStyle(fontWeight: FontWeight.bold)))
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 45,
+                      )),
+                ),
+                // Search Bar --------------------------------------------------
+                Container(
+                  height: 45,
+                  alignment: Alignment.topRight,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 5,
+                  ),
+                  margin: EdgeInsets.zero,
+                  constraints:
+                      const BoxConstraints(maxWidth: 400, minWidth: 200),
+                  child: TextField(
+                    onChanged: searchCourses,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                      fontSize: 20,
+                    ),
+                    decoration: const InputDecoration(
+                      suffixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                        fontSize: 20,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(width: 3, color: Colors.white),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 3, color: Color(0xFFda6237))),
+                    ),
+                  ),
+                ),
+              ]),
+              // Column Labels -------------------------------------------------
+              Container(
+                height: 50,
+                margin: const EdgeInsets.only(top: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFFF3956F), width: 4),
+                  color: Colors.white,
+                ),
+                child: Row(children: <Widget>[
+                  Expanded(
+                      flex: 2, child: buildColumnLabel(context, 'Course ID')),
+                  Expanded(
+                      flex: 5,
+                      child: buildColumnLabel(context, 'Course Title')),
+                  Expanded(flex: 2, child: buildColumnLabel(context, 'Term')),
+                  Expanded(child: buildColumnLabel(context, 'Grade')),
+                  Expanded(child: buildColumnLabel(context, 'Credits')),
+                  Expanded(flex: 2, child: buildColumnLabel(context, 'Status'))
+                ]),
+              ),
             ]),
-          )),
-          Container(width: 1400, child: const Divider(color: Colors.grey)),
+          ),
+          // Course List -------------------------------------------------------
           Flexible(
+            flex: 4,
             child: ListView.builder(
                 itemCount: courses.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 50,
-                    child: Row(children: <Widget>[
-                      const Spacer(flex: 1),
-                      Expanded(flex: 2, child: Text(courses[index])),
-                      Expanded(
-                          flex: 5,
-                          child: Text(titles[index],
-                              overflow: TextOverflow.ellipsis)),
-                      Expanded(flex: 2, child: Text(term[index])),
-                      Expanded(child: Text(grades[index])),
-                      Expanded(child: Text(credits[index])),
-                      Expanded(flex: 2, child: Text(status[index]))
-                    ]),
+                  return CourseListItem(
+                    courseID: courses[index],
+                    courseTitle: titles[index],
+                    term: term[index],
+                    grade: grades[index],
+                    credits: credits[index],
+                    status: status[index],
                   );
                 }),
           ),
@@ -116,4 +133,73 @@ class HistoryScreenState extends State<HistoryScreen> {
 
   // these are the event handler for searching and filtering courses...will figure this out later
   searchCourses(String text) async {}
+
+  Widget buildColumnLabel(BuildContext context, String label) {
+    return Text(
+      label,
+      textAlign: TextAlign.left,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        color: const Color(0xFFF3956F),
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
+        fontFamily: 'Montserrat',
+      ),
+    );
+  }
+}
+
+class CourseListItem extends StatelessWidget {
+  final String courseID;
+  final String courseTitle;
+  final String term;
+  final String grade;
+  final String credits;
+  final String status;
+  static Color primaryColor = const Color(0xFFF3956F);
+  static Color secondaryColor = const Color(0xFFFFFFFF);
+
+  const CourseListItem(
+      {super.key,
+      required this.courseID,
+      required this.courseTitle,
+      required this.term,
+      required this.grade,
+      required this.credits,
+      required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 75,
+        margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [
+            Expanded(flex: 2, child: buildTextItem(context, courseID)),
+            Expanded(flex: 5, child: buildTextItem(context, courseTitle)),
+            Expanded(flex: 2, child: buildTextItem(context, term)),
+            Expanded(child: buildTextItem(context, grade)),
+            Expanded(child: buildTextItem(context, credits)),
+            Expanded(flex: 2, child: buildTextItem(context, status)),
+          ],
+        ));
+  }
+
+  Widget buildTextItem(BuildContext context, String text) {
+    return Text(
+      text,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        color: secondaryColor,
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Montserrat',
+      ),
+    );
+  }
 }
