@@ -19,6 +19,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFFF3956F),
@@ -66,22 +69,20 @@ class HomeScreen extends StatelessWidget {
                     heightFactor: .8,
                     widthFactor: .7,
                     child: Container(
+                      alignment: Alignment.topLeft,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       padding:
                           const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 16.0),
-                      child: const FittedBox(
-                        fit: BoxFit.contain,
-                        child: Text(
-                          "Current Major(s):\nComputer Science",
-                          style: TextStyle(
-                            color: Color(0xFFda6237),
-                            fontSize: 42.0,
-                            fontWeight: FontWeight.w500,
-                            height: 1.1,
-                          ),
+                      child: Text(
+                        "Current Major(s):\nComputer Science",
+                        style: TextStyle(
+                          color: const Color(0xFFda6237),
+                          fontSize: screenWidth / 30,
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
                         ),
                       ),
                     ),
@@ -93,22 +94,20 @@ class HomeScreen extends StatelessWidget {
                     heightFactor: .8,
                     widthFactor: .7,
                     child: Container(
+                      alignment: Alignment.topLeft,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50),
                       ),
                       padding:
                           const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 16.0),
-                      child: const FittedBox(
-                        fit: BoxFit.contain,
-                        child: Text(
-                          "Current Minor(s):\nPsychology",
-                          style: TextStyle(
-                            color: Color(0xFFda6237),
-                            fontSize: 42.0,
-                            fontWeight: FontWeight.w500,
-                            height: 1.1,
-                          ),
+                      child: Text(
+                        "Current Minor(s):\nPsychology",
+                        style: TextStyle(
+                          color: const Color(0xFFda6237),
+                          fontSize: screenWidth / 30,
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
                         ),
                       ),
                     ),
@@ -130,16 +129,29 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 0.0),
                 child: FittedBox(
                   fit: BoxFit.contain,
-                  child: Container(
+                  child: SizedBox(
                       width: MediaQuery.of(context).size.width / 8,
                       height: MediaQuery.of(context).size.height / 5,
                       child: Column(
                         children: <Widget>[
                           Container(
-                              height: 20,
-                              alignment: Alignment.topLeft,
-                              child: Text("Current Courses",
-                                  style: TextStyle(color: Color(0xFFda6237)))),
+                            height: 20,
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Current Courses",
+                              style: TextStyle(
+                                color: const Color(0xFFda6237),
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth / 85,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 8,
+                            child: const Divider(
+                              color: Colors.grey,
+                            ),
+                          ),
                           Flexible(
                               child: ListView.builder(
                                   itemCount: courses.length,
@@ -152,14 +164,14 @@ class HomeScreen extends StatelessWidget {
                                           children: <Widget>[
                                             Flexible(
                                                 child: Text(courses[index],
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 7))),
                                             Flexible(
                                                 child: Text(titles[index],
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    style:
-                                                        TextStyle(fontSize: 7)))
+                                                    style: const TextStyle(
+                                                        fontSize: 7)))
                                           ]),
                                     );
                                   }))
