@@ -67,6 +67,15 @@ Widget sideMenu(BuildContext context) {
             Navigator.of(context).pushNamed('/catalog');
           },
         ),
+        ListTile(
+          title: const Text(
+            'Admin Advisor View',
+            style: TextStyle(color: Color(0xFFda6237)),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/adminAdvisor');
+          },
+        ),
       ],
     ),
   );
