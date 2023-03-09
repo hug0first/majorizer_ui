@@ -68,7 +68,6 @@ class CatalogTitle extends StatelessWidget {
               color: Colors.white,
               decoration: TextDecoration.none,
               fontSize: 50,
-              fontWeight: FontWeight.bold,
             ),
           ),
           const Spacer(),
@@ -311,6 +310,15 @@ class DeptPage extends StatelessWidget {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          padding: const EdgeInsets.all(20),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          )),
                       // Title -------------------------------------------------------
                       Expanded(
                         flex: 2,
@@ -397,9 +405,12 @@ class DeptPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              height: 550,
-              child: ListView(
-                children: courses,
+              height: 540,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  for (index = index; index < 5; index++) return courses[index];
+                },
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               ),
             ),
