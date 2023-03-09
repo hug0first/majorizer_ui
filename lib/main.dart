@@ -8,6 +8,7 @@ import 'widgets/sign_up_form.dart';
 import 'widgets/landing_screen.dart';
 import 'widgets/student_build_screen.dart';
 import 'widgets/student_manager_screen.dart';
+import 'widgets/admin_advisor_screen.dart';
 
 void main() => runApp(const Majorizer());
 String firstName = "";
@@ -30,6 +31,7 @@ class Majorizer extends StatelessWidget {
         //'/advisorBuild': (context) => const AdvisorBuildScreen(),
         '/studentManager': (context) => StudentManagerScreen(),
         '/courseManager': (context) => const CourseManagerScreen(),
+        '/adminAdvisor': (context) => const AdminAdvisorScreen(),
       },
       initialRoute: '/landing',
     );
