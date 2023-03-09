@@ -4,7 +4,16 @@ import 'side_menu.dart';
 import 'main_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen();
+  HomeScreen();
+
+  final courses = ['CS 341', 'UNIV 190', 'MA 132', 'CM 131', 'PH 131'];
+  final titles = [
+    'Programming Languages',
+    'The Clarkson Seminar',
+    'Calculus II',
+    'General Chemistry I',
+    'Physics I'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -111,25 +120,51 @@ class HomeScreen extends StatelessWidget {
           ),
           Expanded(
             child: FractionallySizedBox(
-              widthFactor: .2,
-              heightFactor: .2,
+              widthFactor: .65,
+              heightFactor: .5,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(50),
                 ),
-                padding: const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 16.0),
-                child: const FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text(
-                    "Another Widget to\ndisplay info on classes",
-                    style: TextStyle(
-                      color: Color(0xFFda6237),
-                      fontSize: 42.0,
-                      fontWeight: FontWeight.w500,
-                      height: 1.1,
-                    ),
-                  ),
+                padding: const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 0.0),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width / 8,
+                      height: MediaQuery.of(context).size.height / 5,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              height: 20,
+                              alignment: Alignment.topLeft,
+                              child: Text("Current Courses",
+                                  style: TextStyle(color: Color(0xFFda6237)))),
+                          Flexible(
+                              child: ListView.builder(
+                                  itemCount: courses.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      height: 25,
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Flexible(
+                                                child: Text(courses[index],
+                                                    style: TextStyle(
+                                                        fontSize: 7))),
+                                            Flexible(
+                                                child: Text(titles[index],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style:
+                                                        TextStyle(fontSize: 7)))
+                                          ]),
+                                    );
+                                  }))
+                        ],
+                      )),
                 ),
               ),
             ),

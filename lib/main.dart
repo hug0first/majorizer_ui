@@ -21,7 +21,7 @@ class Majorizer extends StatelessWidget {
       title: 'Majorizer',
       routes: {
         '/signUp': (context) => const SignUpScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => HomeScreen(),
         '/landing': (context) => const LandingScreen(),
         '/catalog': (context) => const CatalogScreen(),
         '/studentBuild': (context) => const StudentBuildScreen(),
