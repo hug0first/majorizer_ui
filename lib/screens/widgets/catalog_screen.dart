@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:majorizer_ui/widgets/main_app_bar.dart';
-import 'package:majorizer_ui/widgets/side_menu.dart';
+import 'package:majorizer_ui/screens/widgets/main_app_bar.dart';
+import 'package:majorizer_ui/screens/widgets/side_menu.dart';
 
 class CatalogScreen extends StatelessWidget {
   static const List<DeptListItem> items = [

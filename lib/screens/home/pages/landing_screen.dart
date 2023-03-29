@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'size_config.dart';
+import '../../widgets/size_config.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen();
