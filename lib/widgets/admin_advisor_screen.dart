@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'package:flutter/material.dart';
-import '../../widgets/main_app_bar.dart';
-import '../../widgets/side_menu.dart';
+import 'main_app_bar.dart';
+import 'side_menu.dart';
 
 class AdminAdvisorScreen extends StatefulWidget {
   const AdminAdvisorScreen();
