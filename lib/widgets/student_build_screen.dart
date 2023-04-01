@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/main.dart';
 import 'main_app_bar.dart';
 import 'side_menu.dart';
 
@@ -22,6 +23,10 @@ List<DropdownMenuItem<String>> get major1Items {
     const DropdownMenuItem(
         value: "Chemical Engineering", child: Text("Chemical Engineering")),
   ];
+  /* if (currMajors.isNotEmpty) {
+    items[0] =
+        DropdownMenuItem(value: currMajors[0], child: Text(currMajors[0]));
+  } */
   return items;
 }
 
@@ -36,6 +41,11 @@ List<DropdownMenuItem<String>> get major2Items {
     const DropdownMenuItem(
         value: "Chemical Engineering", child: Text("Chemical Engineering")),
   ];
+  if (currMajors.length >= 2) {
+    items[0] =
+        DropdownMenuItem(value: currMajors[1], child: Text(currMajors[1]));
+  }
+
   return items;
 }
 
@@ -256,7 +266,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
 
                   children: <Widget>[
-                    //Department Selection
+                    //TODO: Department Selection
                     Container(
                       padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                       decoration: BoxDecoration(

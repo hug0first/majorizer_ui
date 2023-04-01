@@ -12,6 +12,13 @@ import 'widgets/admin_advisor_screen.dart';
 
 void main() => runApp(const Majorizer());
 String firstName = "";
+List<String> currMajors = ['Computer Science'];
+List<String> currMinors = ['Psychology'];
+
+String currMajor = 'Computer Science';
+String currMajor2 = '';
+String currMinor = 'Psychology';
+String currMinor2 = '';
 
 class Majorizer extends StatelessWidget {
   const Majorizer();
