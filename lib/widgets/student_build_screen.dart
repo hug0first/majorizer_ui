@@ -41,10 +41,6 @@ List<DropdownMenuItem<String>> get major2Items {
     const DropdownMenuItem(
         value: "Chemical Engineering", child: Text("Chemical Engineering")),
   ];
-  if (currMajors.length >= 2) {
-    items[0] =
-        DropdownMenuItem(value: currMajors[1], child: Text(currMajors[1]));
-  }
 
   return items;
 }
