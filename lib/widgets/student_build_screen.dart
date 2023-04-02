@@ -336,10 +336,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         const FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
-                            "Click a course to add it to your selected course list.",
+                            "Add to Selected Semester",
                             style: TextStyle(
                               color: Color(0xFFda6237),
-                              fontSize: 42.0,
+                              fontSize: 36.0,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -350,7 +350,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                             color: Colors.grey,
                           ),
                         ),
-                        Expanded(
+                        SizedBox(
+                          //TODO: This is the filtered course list
+
+                          height: screenHeight * .385,
                           child: ListView(
                             children: filter(context, selectedDepartment,
                                 selectedLevel, "Module", selectedTerm),
@@ -686,7 +689,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
       if (courseModule == moduleFilter) {
         moduleBool = true;
-      } else if (moduleFilter == "module") {
+      } else if (moduleFilter == "Module") {
         moduleBool = true;
       } else {
         moduleBool = false;
@@ -694,33 +697,34 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
       if (courseTerm == termFilter) {
         termBool = true;
-      } else if (termFilter == "term") {
+      } else if (termFilter == "Term") {
         termBool = true;
       } else {
         termBool = false;
       }
-      var courseLevelNum = courseLevel[0];
-      if ((departmentBool) || (levelBool) || (moduleBool) || (termBool)) {
+
+      if ((departmentBool) && (levelBool) && (moduleBool) && (termBool)) {
         filteredCourses.add(ListTile(
-          title: Text(
+          leading: Text(
             "${course.deptAbbrev} ${course.fullModule}",
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: MediaQuery.of(context).size.width / 60,
+              fontSize: MediaQuery.of(context).size.width / 75,
               color: const Color(0xFFda6237),
             ),
           ),
-          trailing: Text(
+          title: Text(
             course.name,
+            textAlign: TextAlign.end,
             style: TextStyle(
               fontWeight: FontWeight.w500,
-              fontSize: MediaQuery.of(context).size.width / 65,
+              fontSize: MediaQuery.of(context).size.width / 80,
             ),
           ),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
               side: const BorderSide(width: 2)),
-          leading: IconButton(
+          trailing: IconButton(
             onPressed: () {
               setState(() {
                 classes.add(course);
