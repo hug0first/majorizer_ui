@@ -148,18 +148,28 @@ class Course {
   String level;
   String module;
   String term;
+  String deptAbbrev;
+  String fullModule;
+  String name;
 
   List<Course> get allCourses {
     List<Course> allCourses = [
-      Course("Computer Science", "300", "41", "Fall 2023"),
-      Course("Chemistry", "100", "31", "Fall 2023"),
-      Course("Mathematics", "100", "31", "Fall 2023"),
-      Course("Computer Science", "200", "42", "Spring 2024")
+      Course("Computer Science", "300", "41", "Fall 2023", "CS", "341",
+          "Intro to CS"),
+      Course("Chemistry", "100", "31", "Fall 2023", "CH", "131",
+          "Intro Chemistry"),
+      Course(
+          "Mathematics", "100", "31", "Fall 2023", "MA", "131", "Calculuis I"),
+      Course("Computer Science", "200", "42", "Spring 2024", "CS", "242",
+          "Intro to CS 2"),
+      Course("Univ", "100", "00", "Fall 2023", "UNIV", "100",
+          "The Clarkson Seminar"),
     ];
     return allCourses;
   }
 
-  Course(this.department, this.level, this.module, this.term);
+  Course(this.department, this.level, this.module, this.term, this.deptAbbrev,
+      this.fullModule, this.name);
 
   List<ListTile> filter(String departmentFilter, String levelFilter,
       String moduleFilter, String termFilter) {
@@ -342,8 +352,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         ),
                         Expanded(
                           child: ListView(
-                            children: filter(selectedDepartment, selectedLevel,
-                                "Module", selectedTerm),
+                            children: filter(context, selectedDepartment,
+                                selectedLevel, "Module", selectedTerm),
                           ),
                         ),
                       ],
@@ -556,24 +566,36 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                             ),
                             Row(
                               children: <Widget>[
-                                IconButton(
-                                    onPressed: () {
-                                      if (semesterNum == 1) {
-                                        Null;
-                                      } else {
-                                        setState(() {
-                                          semesterNum = semesterNum - 1;
-                                        });
-                                      }
-                                    },
-                                    icon: const Icon(Icons.arrow_left)),
-                                IconButton(
-                                    onPressed: () {
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (semesterNum == 1) {
+                                      Null;
+                                    } else {
                                       setState(() {
-                                        semesterNum = semesterNum + 1;
+                                        semesterNum--;
                                       });
-                                    },
-                                    icon: const Icon(Icons.arrow_right)),
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFda6237),
+                                    shape: const CircleBorder(),
+                                  ),
+                                  child: const Icon(
+                                    Icons.arrow_left,
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      semesterNum++;
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFda6237),
+                                    shape: const CircleBorder(),
+                                  ),
+                                  child: const Icon(Icons.arrow_right),
+                                ),
                               ],
                             ),
                           ],
@@ -587,206 +609,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * .6,
-                          height: MediaQuery.of(context).size.height * .2,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3956F),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          padding: const EdgeInsets.fromLTRB(28.0, 4, 28.0, 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const <Widget>[
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "CS 341",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "Programming Languages",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        child: classList(context),
                       ),
-                      const Padding(padding: EdgeInsets.only(bottom: 25)),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * .6,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3956F),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          padding: const EdgeInsets.fromLTRB(28.0, 4, 28.0, 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const <Widget>[
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "CM 131",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "General Chemistry I",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Padding(padding: EdgeInsets.only(bottom: 25)),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * .6,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3956F),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          padding: const EdgeInsets.fromLTRB(28.0, 4, 28.0, 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const <Widget>[
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "MA 132",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "Calculus 2",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Padding(padding: EdgeInsets.only(bottom: 25)),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * .6,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3956F),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          padding: const EdgeInsets.fromLTRB(28.0, 4, 28.0, 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const <Widget>[
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "CS 242",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "Advanced Programming Concepts in Java",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Padding(padding: EdgeInsets.only(bottom: 25)),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * .6,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3956F),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          padding: const EdgeInsets.fromLTRB(28.0, 4, 28.0, 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const <Widget>[
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "UNIV 190",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                  "The Clarkson Seminar",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 42.0,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Padding(padding: EdgeInsets.only(bottom: 25)),
                     ],
                   ),
                 ),
@@ -797,102 +621,148 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
       ),
     );
   }
-}
 
-List<ListTile> filter(String departmentFilter, String levelFilter,
-    String moduleFilter, String termFilter) {
-  String department = "";
-  String level = "";
-  String module = "";
-  String term = "";
-  List<ListTile> filteredCourses = [];
-
-  for (var course in allCourses) {
-    String courseDepartment = course.department;
-    String courseLevel = course.level;
-    String courseModule = course.module;
-    String courseTerm = course.term;
-
-    bool departmentBool = true;
-    bool levelBool = true;
-    bool moduleBool = true;
-    bool termBool = true;
-
-    if (courseDepartment == departmentFilter) {
-      departmentBool = true;
-    } else if (departmentFilter == "Department") {
-      departmentBool = true;
-    } else {
-      departmentBool = false;
-    }
-
-    if (courseLevel == levelFilter) {
-      levelBool = true;
-    } else if (levelFilter == "Level") {
-      levelBool = true;
-    } else {
-      levelBool = false;
-    }
-
-    if (courseModule == moduleFilter) {
-      moduleBool = true;
-    } else if (moduleFilter == "module") {
-      moduleBool = true;
-    } else {
-      moduleBool = false;
-    }
-
-    if (courseTerm == termFilter) {
-      termBool = true;
-    } else if (termFilter == "term") {
-      termBool = true;
-    } else {
-      termBool = false;
-    }
-    var courseLevelNum = courseLevel[0];
-    if ((departmentBool) || (levelBool) || (moduleBool) || (termBool)) {
-      filteredCourses.add(ListTile(
-        title: Text(
-          "$courseDepartment $courseLevelNum$courseModule",
-          style: const TextStyle(),
-        ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-            side: const BorderSide(width: 2)),
-        leading: const Icon(Icons.list_alt),
-      ));
-    }
+  ListView classList(BuildContext context) {
+    return ListView.separated(
+      separatorBuilder: (context, index) =>
+          SizedBox(height: MediaQuery.of(context).size.width * .01),
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Text(
+            "${classes[index].deptAbbrev} ${allCourses[index].fullModule}",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: MediaQuery.of(context).size.width / 60,
+              color: const Color(0xFFda6237),
+            ),
+          ),
+          trailing: Text(
+            classes[index].name,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: MediaQuery.of(context).size.width / 65,
+            ),
+          ),
+        );
+      },
+      itemCount: allCourses.length,
+    );
   }
-  return filteredCourses;
+
+  List<ListTile> filter(BuildContext context, String departmentFilter,
+      String levelFilter, String moduleFilter, String termFilter) {
+    String department = "";
+    String level = "";
+    String module = "";
+    String term = "";
+    List<ListTile> filteredCourses = [];
+
+    for (var course in allCourses) {
+      String courseDepartment = course.department;
+      String courseLevel = course.level;
+      String courseModule = course.module;
+      String courseTerm = course.term;
+
+      bool departmentBool = true;
+      bool levelBool = true;
+      bool moduleBool = true;
+      bool termBool = true;
+
+      if (courseDepartment == departmentFilter) {
+        departmentBool = true;
+      } else if (departmentFilter == "Department") {
+        departmentBool = true;
+      } else {
+        departmentBool = false;
+      }
+
+      if (courseLevel == levelFilter) {
+        levelBool = true;
+      } else if (levelFilter == "Level") {
+        levelBool = true;
+      } else {
+        levelBool = false;
+      }
+
+      if (courseModule == moduleFilter) {
+        moduleBool = true;
+      } else if (moduleFilter == "module") {
+        moduleBool = true;
+      } else {
+        moduleBool = false;
+      }
+
+      if (courseTerm == termFilter) {
+        termBool = true;
+      } else if (termFilter == "term") {
+        termBool = true;
+      } else {
+        termBool = false;
+      }
+      var courseLevelNum = courseLevel[0];
+      if ((departmentBool) || (levelBool) || (moduleBool) || (termBool)) {
+        filteredCourses.add(ListTile(
+          title: Text(
+            "${course.deptAbbrev} ${course.fullModule}",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: MediaQuery.of(context).size.width / 60,
+              color: const Color(0xFFda6237),
+            ),
+          ),
+          trailing: Text(
+            course.name,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: MediaQuery.of(context).size.width / 65,
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: const BorderSide(width: 2)),
+          leading: IconButton(
+            onPressed: () {
+              setState(() {
+                classes.add(course);
+              });
+            },
+            icon: const Icon(
+              Icons.add,
+              color: Color(0xFFda6237),
+            ),
+          ),
+        ));
+      }
+    }
+    return filteredCourses;
+  }
 }
 
 List<Course> get allCourses {
   List<Course> allCourses = [
-    Course("Computer Science", "300", "41", "Fall 2023"),
-    Course("Chemistry", "100", "31", "Fall 2023"),
-    Course("Mathematics", "100", "31", "Fall 2023"),
-    Course("Computer Science", "200", "42", "Spring 2024")
+    Course("Computer Science", "300", "41", "Fall 2023", "CS", "341",
+        "Intro to CS"),
+    Course(
+        "Chemistry", "100", "31", "Fall 2023", "CH", "131", "Intro Chemistry"),
+    Course("Mathematics", "100", "31", "Fall 2023", "MA", "131", "Calculuis I"),
+    Course("Computer Science", "200", "42", "Spring 2024", "CS", "242",
+        "Intro to CS 2"),
+    Course("Univ", "100", "00", "Fall 2023", "UNIV", "100",
+        "The Clarkson Seminar"),
   ];
   return allCourses;
 }
 
-List<ListTile> get classes {
-  List<ListTile> classes = [
-    const ListTile(
-      title: Text("CS 101 Fall 2023"),
-    ),
-    const ListTile(
-      title: Text("CH 105 Fall 2023"),
-    ),
-    const ListTile(
-      title: Text("MA 203 Fall 2023"),
-    ),
-    const ListTile(
-      title: Text("CS 204 Fall 2023"),
-    ),
-    const ListTile(
-      title: Text("UNIV 101 Fall 2023"),
-    ),
+List<Course> get classes {
+  List<Course> classes = [
+    Course("Computer Science", "100", "01", "Fall 2023", "CS", "101",
+        "Intro CS 101"),
+    Course(
+        "Chemistry", "100", "05", "Fall 2023", "CH", "105", "Intro Chem 105"),
+    Course("Mathematics", "200", "03", "Fall 2023", "MA", "203", "Calc II"),
+    Course("Computer Science", "200", "04", "Fall 2023", "CS", "204",
+        "Advanced Programming Concepts in Java"),
+    Course("Univ", "100", "01", "Fall 2023", "UNIV", "101", "UNIV 101"),
   ];
   return classes;
 }
