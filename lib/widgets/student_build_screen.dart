@@ -202,6 +202,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   String selectedTerm = "Term";
   String selectedDepartment = "Department";
   String selectedLevel = "Level";
+  String selectedModule = "Module";
   String selectedStudyAbroad = "Study Abroad Term";
   String selectedCoop = "Coop Term";
   String selectedGraduation = "Graduation Term";
@@ -209,6 +210,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   String selectedMajor2 = "Major 2";
   String selectedMinor1 = "Minor 1";
   String selectedMinor2 = "Minor 2";
+  bool classSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -354,9 +356,21 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           //TODO: This is the filtered course list
 
                           height: screenHeight * .385,
-                          child: ListView(
-                            children: filter(context, selectedDepartment,
-                                selectedLevel, "Module", selectedTerm),
+                          child: ListView.builder(
+                            itemCount: filter(context, selectedDepartment,
+                                    selectedLevel, selectedTerm)
+                                .length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                title: Text(
+                                    //CS Intro To Programming, for example
+                                    "${filter(context, selectedDepartment, selectedLevel, selectedTerm)[index].deptAbbrev} ${filter(context, selectedDepartment, selectedLevel, selectedTerm)[index].name}"),
+                                value: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -652,13 +666,13 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
     );
   }
 
-  List<ListTile> filter(BuildContext context, String departmentFilter,
-      String levelFilter, String moduleFilter, String termFilter) {
+  List<Course> filter(BuildContext context, String departmentFilter,
+      String levelFilter, String termFilter) {
     String department = "";
     String level = "";
     String module = "";
     String term = "";
-    List<ListTile> filteredCourses = [];
+    List<Course> filteredCourses = [];
 
     for (var course in allCourses) {
       String courseDepartment = course.department;
@@ -687,13 +701,13 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
         levelBool = false;
       }
 
-      if (courseModule == moduleFilter) {
+      /* if (courseModule == moduleFilter) {
         moduleBool = true;
       } else if (moduleFilter == "Module") {
         moduleBool = true;
       } else {
         moduleBool = false;
-      }
+      } */
 
       if (courseTerm == termFilter) {
         termBool = true;
@@ -704,69 +718,46 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
       }
 
       if ((departmentBool) && (levelBool) && (moduleBool) && (termBool)) {
-        filteredCourses.add(ListTile(
-          leading: Text(
-            "${course.deptAbbrev} ${course.fullModule}",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: MediaQuery.of(context).size.width / 75,
-              color: const Color(0xFFda6237),
-            ),
-          ),
-          title: Text(
-            course.name,
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: MediaQuery.of(context).size.width / 80,
-            ),
-          ),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-              side: const BorderSide(width: 2)),
-          trailing: IconButton(
-            onPressed: () {
-              setState(() {
-                classes.add(course);
-              });
-            },
-            icon: const Icon(
-              Icons.add,
-              color: Color(0xFFda6237),
-            ),
-          ),
-        ));
+        filteredCourses.add(Course(
+            course.department,
+            course.level,
+            course.module,
+            course.term,
+            course.deptAbbrev,
+            course.fullModule,
+            course.name));
       }
     }
     return filteredCourses;
   }
-}
 
-List<Course> get allCourses {
-  List<Course> allCourses = [
-    Course("Computer Science", "300", "41", "Fall 2023", "CS", "341",
-        "Intro to CS"),
-    Course(
-        "Chemistry", "100", "31", "Fall 2023", "CH", "131", "Intro Chemistry"),
-    Course("Mathematics", "100", "31", "Fall 2023", "MA", "131", "Calculuis I"),
-    Course("Computer Science", "200", "42", "Spring 2024", "CS", "242",
-        "Intro to CS 2"),
-    Course("Univ", "100", "00", "Fall 2023", "UNIV", "100",
-        "The Clarkson Seminar"),
-  ];
-  return allCourses;
-}
+  List<Course> get allCourses {
+    List<Course> allCourses = [
+      Course("Computer Science", "300", "41", "Fall 2023", "CS", "341",
+          "Intro to CS"),
+      Course("Chemistry", "100", "31", "Fall 2023", "CH", "131",
+          "Intro Chemistry"),
+      Course(
+          "Mathematics", "100", "31", "Fall 2023", "MA", "131", "Calculuis I"),
+      Course("Computer Science", "200", "42", "Spring 2024", "CS", "242",
+          "Intro to CS 2"),
+      Course("Univ", "100", "00", "Fall 2023", "UNIV", "100",
+          "The Clarkson Seminar"),
+    ];
+    return allCourses;
+  }
 
-List<Course> get classes {
-  List<Course> classes = [
-    Course("Computer Science", "100", "01", "Fall 2023", "CS", "101",
-        "Intro CS 101"),
-    Course(
-        "Chemistry", "100", "05", "Fall 2023", "CH", "105", "Intro Chem 105"),
-    Course("Mathematics", "200", "03", "Fall 2023", "MA", "203", "Calc II"),
-    Course("Computer Science", "200", "04", "Fall 2023", "CS", "204",
-        "Advanced Programming Concepts in Java"),
-    Course("Univ", "100", "01", "Fall 2023", "UNIV", "101", "UNIV 101"),
-  ];
-  return classes;
+  List<Course> get classes {
+    List<Course> classes = [
+      Course("Computer Science", "100", "01", "Fall 2023", "CS", "101",
+          "Intro CS 101"),
+      Course(
+          "Chemistry", "100", "05", "Fall 2023", "CH", "105", "Intro Chem 105"),
+      Course("Mathematics", "200", "03", "Fall 2023", "MA", "203", "Calc II"),
+      Course("Computer Science", "200", "04", "Fall 2023", "CS", "204",
+          "Advanced Programming Concepts in Java"),
+      Course("Univ", "100", "01", "Fall 2023", "UNIV", "101", "UNIV 101"),
+    ];
+    return classes;
+  }
 }
