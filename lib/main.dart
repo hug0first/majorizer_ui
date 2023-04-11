@@ -11,7 +11,7 @@ import 'widgets/student_manager_screen.dart';
 import 'widgets/admin_advisor_screen.dart';
 import 'widgets/new_build_screen.dart';
 
-void main() => runApp(const Majorizer());
+void main() => runApp(Majorizer());
 String firstName = "";
 List<String> currMajors = ['Computer Science'];
 List<String> currMinors = ['Psychology'];
@@ -22,11 +22,13 @@ String currMinor = 'Psychology';
 String currMinor2 = '';
 
 class Majorizer extends StatelessWidget {
-  const Majorizer();
+  Majorizer();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Majorizer',
       routes: {
         '/signUp': (context) => const SignUpScreen(),
