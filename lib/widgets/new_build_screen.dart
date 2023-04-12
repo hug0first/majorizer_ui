@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:majorizer_ui/widgets/student_build_screen.dart';
 import 'dropdown_button_lists.dart';
