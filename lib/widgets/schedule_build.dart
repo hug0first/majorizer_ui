@@ -17,7 +17,11 @@ class ScheduleBuildClass extends StatefulWidget {
   ScheduleBuildClass();
   ScheduleBuildClass.semesterNum(int semesterNum) {
     scheduleMap = mapInit();
-    currSchedule = scheduleMap[semesterNum]!;
+    if (scheduleMap.containsKey(semesterNum)) {
+      currSchedule = scheduleMap[semesterNum]!;
+    } else {
+      currSchedule = [];
+    }
   }
 
   ListView scheduleBuild() {
@@ -50,10 +54,7 @@ class ScheduleBuildClass extends StatefulWidget {
     );
   }
 
-  String selectedItem = "Major 1";
-
-  Widget buildDropdowns(int semesterNum) {
-    initState() {}
+  /* Widget buildDropdowns(int semesterNum) {
     return Column(
       children: <Widget>[
         Row(
@@ -106,64 +107,14 @@ class ScheduleBuildClass extends StatefulWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "Semester $semesterNum",
-                style: const TextStyle(
-                  fontSize: 42.0,
-                  fontWeight: FontWeight.w500,
-                  height: 1.1,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (semesterNum == 1) {
-                    Null;
-                  } else {
-                    initState() {
-                      //StudentBuildScreenState.semesterNum--;
-                    }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFda6237),
-                  shape: const CircleBorder(),
-                ),
-                child: const Icon(
-                  Icons.arrow_left,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (StudentBuildScreenState().buildContext.mounted) {
-                    StudentBuildScreenState().changeSemester(
-                        semesterNum, StudentBuildScreenState().buildContext);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFda6237),
-                  shape: const CircleBorder(),
-                ),
-                child: const Icon(Icons.arrow_right),
-              ),
-            ],
-          ),
+        const Padding(
+          padding: EdgeInsets.all(15),
         ),
       ],
     );
-  }
-
-  /* void changeSemester(int num) {
-    
-      StudentBuildScreenState().changeSemester(num, context);
-    
   } */
 
-  Widget dropdownScheduleButton(
+  /* Widget dropdownScheduleButton(
       List<DropdownMenuItem<String>> items, String selected) {
     return Container(
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -175,9 +126,9 @@ class ScheduleBuildClass extends StatefulWidget {
         items: items,
         value: selected,
         onChanged: (String? newValue) {
-          StudentBuildScreenState().setState(() {
+          /* setState(() {
             selected = newValue!;
-          });
+          }); */
         },
         style: const TextStyle(
           color: Colors.black,
@@ -186,7 +137,7 @@ class ScheduleBuildClass extends StatefulWidget {
         borderRadius: BorderRadius.circular(30),
       ),
     );
-  }
+  } */
 
   mapInit() {
     Map<int, List<Course>> semesterSchedulesMap = {
