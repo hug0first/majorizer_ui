@@ -19,6 +19,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   StudentBuildScreenState();
 
   int semesterNum = 1;
+  int scheduleVersion = 1;
   bool showSchedule = false;
   String selectedMajor1 = 'Major 1';
   String selectedMajor2 = 'Major 2';
@@ -31,11 +32,6 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    /* List<Course> currSchedule = [
-      Course('department', 'level', 'module', 'term', 'deptAbbrev',
-          'fullModule', 'name')
-    ]; */
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -55,7 +51,6 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              //put the dropdown menus here
               SizedBox(
                 height: screenHeight * .8,
                 width: screenWidth * .6,
@@ -73,7 +68,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           //First row of dropdowns TODO
                           children: <Widget>[
                             DropdownButton<String>(
-                              items: major1Items,
+                              items: dropdownMenuItemClass().major1Items,
                               value: selectedMajor1,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -87,7 +82,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             DropdownButton<String>(
-                              items: major2Items,
+                              items: dropdownMenuItemClass().major2Items,
                               value: selectedMajor2,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -101,7 +96,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             DropdownButton<String>(
-                              items: minor1Items,
+                              items: dropdownMenuItemClass().minor1Items,
                               value: selectedMinor1,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -115,7 +110,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             DropdownButton<String>(
-                              items: minor2Items,
+                              items: dropdownMenuItemClass().minor2Items,
                               value: selectedMinor2,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -135,7 +130,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             DropdownButton<String>(
-                              items: coopItems,
+                              items: dropdownMenuItemClass().coopItems,
                               value: selectedCoop,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -149,7 +144,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             DropdownButton<String>(
-                              items: studyAbroadItems,
+                              items: dropdownMenuItemClass().studyAbroadItems,
                               value: selectedStudyAbroad,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -163,7 +158,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             DropdownButton<String>(
-                              items: graduationItems,
+                              items: dropdownMenuItemClass().graduationItems,
                               value: selectedGraduation,
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -188,6 +183,23 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               ),
                               child: const Text("Build Schedule"),
                             ),
+                            showSchedule //hides dropdown if not built
+                                ? DropdownButton<int>(
+                                    items: dropdownMenuItemClass()
+                                        .scheduleVersionItems,
+                                    value: scheduleVersion,
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        scheduleVersion = newValue!;
+                                      });
+                                    },
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    dropdownColor: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                  )
+                                : Container(),
                           ],
                         ),
                         semesterRow(),

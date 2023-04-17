@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class dropdownMenuItemClass {
+  List<DropdownMenuItem<int>> get scheduleVersionItems {
+    List<DropdownMenuItem<int>> items = List.generate(
+        120,
+        (index) =>
+            DropdownMenuItem(value: index + 1, child: Text('${index + 1}')));
+    return items;
+  }
+
   List<DropdownMenuItem<String>> get major1Items {
     List<DropdownMenuItem<String>> items = [
       const DropdownMenuItem(value: "Major 1", child: Text("Major 1")),
