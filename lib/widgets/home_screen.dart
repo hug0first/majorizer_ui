@@ -28,9 +28,6 @@ class HomeScreenState extends State<HomeScreen> {
     'Physics I'
   ];
 
-  //List<String> currMajors = ['Computer Science'];
-  List<String> currMinors = ['Psychology'];
-
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -474,11 +471,7 @@ class HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontSize: MediaQuery.of(context).size.width / 60),
         ),
         trailing: IconButton(
-          onPressed: () {
-            setState(() {
-              currMinors.add(minor);
-            });
-          },
+          onPressed: () => addToCurrMinors(minor),
           icon: const Icon(Icons.add),
           color: const Color(0xFFda6237),
           style: IconButton.styleFrom(
@@ -496,12 +489,9 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    (context as Element).visitChildren(rebuild);
+  void addToCurrMinors(String minor) {
+    setState(() {
+      currMinors.add(minor);
+    });
   }
 }

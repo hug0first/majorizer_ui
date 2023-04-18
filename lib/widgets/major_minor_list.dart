@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:majorizer_ui/widgets/home_screen.dart';
 import '../main.dart';
 import 'home_screen.dart';
 
@@ -63,7 +62,7 @@ class MajorMinorList extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // this just needs to be here for compliation - there is nothing to build
+    // this just needs to be here for compilation - there is nothing to build
     throw UnimplementedError();
   }
 }
