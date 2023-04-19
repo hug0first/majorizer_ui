@@ -1,205 +1,162 @@
 import 'package:flutter/material.dart';
 import 'main_app_bar.dart';
 import 'side_menu.dart';
+import '../api/api.dart';
+import '../models/course_history.dart';
 
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen();
+  const HistoryScreen({super.key});
 
   @override
   State<HistoryScreen> createState() => HistoryScreenState();
 }
 
 class HistoryScreenState extends State<HistoryScreen> {
-  // These are temporary values until the backend/database connection is made
-  final courses = ['CS 141', 'CS 142', 'CS 241'];
-  final titles = [
-    'Introduction to Computer Science I',
-    'Introduction to Computer Science II',
-    'Computer Organization'
-  ];
-  final term = ['Fall 2021', 'Fall 2021', 'Spring 2022'];
-  final grades = ['T', 'A', 'B'];
-  final credits = ['4', '3', '3'];
-  final status = ['Transferred', 'Taken', 'Taken'];
-
+  late Future<List<CourseHistory>> courseHistory;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    courseHistory = getCourseHistory();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
-          child: mainAppBar(context, scaffoldKey),
-        ),
-        endDrawer: sideMenu(context),
-        body: Column(children: [
-          // Title, Search, and Column Labels ----------------------------------
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-            color: const Color(0xFFF3956F),
-            child: Column(children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                // Title -------------------------------------------------------
-                const Expanded(
-                  flex: 2,
-                  child: Text('Course history',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 45,
-                      )),
+      key: scaffoldKey,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: mainAppBar(context, scaffoldKey),
+      ),
+      endDrawer: sideMenu(context),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height * 0.81,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(35),
+          ),
+          padding: const EdgeInsets.all(30),
+          child: Column(children: [
+            // Title, Search, and Column Labels ----------------------------------
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              // Title -------------------------------------------------------
+              Text(
+                'Course history',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 50,
                 ),
-                // Search Bar --------------------------------------------------
-                Container(
-                  height: 45,
-                  alignment: Alignment.topRight,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 5,
-                  ),
-                  margin: EdgeInsets.zero,
-                  constraints:
-                      const BoxConstraints(maxWidth: 400, minWidth: 200),
-                  child: TextField(
-                    onChanged: searchCourses,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                      fontSize: 20,
-                    ),
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.search, color: Colors.white),
-                      hintText: 'Search...',
-                      hintStyle: TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.none,
-                        fontSize: 20,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 3, color: Color(0xFFda6237))),
-                    ),
-                  ),
-                ),
-              ]),
-              // Column Labels -------------------------------------------------
-              Container(
-                height: 50,
-                margin: const EdgeInsets.only(top: 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFF3956F), width: 4),
-                  color: Colors.white,
-                ),
-                child: Row(children: <Widget>[
-                  Expanded(
-                      flex: 2, child: buildColumnLabel(context, 'Course ID')),
-                  Expanded(
-                      flex: 5,
-                      child: buildColumnLabel(context, 'Course Title')),
-                  Expanded(flex: 2, child: buildColumnLabel(context, 'Term')),
-                  Expanded(child: buildColumnLabel(context, 'Grade')),
-                  Expanded(child: buildColumnLabel(context, 'Credits')),
-                  Expanded(flex: 2, child: buildColumnLabel(context, 'Status'))
-                ]),
+              ),
+              IconButton(
+                onPressed: () => {
+                  sendCourseHistory(CourseHistory(
+                      courseid: 'CS 141',
+                      coursename: 'Intro to Computer Science I',
+                      grade: 4.0,
+                      semester: 'Fall 2023',
+                      status: 'T'))
+                },
+                icon: const Icon(Icons.add),
+              ),
+              // Search Bar --------------------------------------------------
+              // Container(
+              //   height: 45,
+              //   alignment: Alignment.topRight,
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 40,
+              //     vertical: 5,
+              //   ),
+              //   margin: EdgeInsets.zero,
+              //   constraints: const BoxConstraints(maxWidth: 400, minWidth: 200),
+              //   child: TextField(
+              //     onChanged: searchCourses,
+              //     style: const TextStyle(
+              //       color: Colors.white,
+              //       decoration: TextDecoration.none,
+              //       fontSize: 20,
+              //     ),
+              //     decoration: const InputDecoration(
+              //       suffixIcon: Icon(Icons.search, color: Colors.white),
+              //       hintText: 'Search...',
+              //       hintStyle: TextStyle(
+              //         color: Colors.white,
+              //         decoration: TextDecoration.none,
+              //         fontSize: 20,
+              //       ),
+              //       enabledBorder: UnderlineInputBorder(
+              //         borderSide: BorderSide(width: 3, color: Colors.white),
+              //       ),
+              //       focusedBorder: UnderlineInputBorder(
+              //           borderSide:
+              //               BorderSide(width: 3, color: Color(0xFFda6237))),
+              //     ),
+              //   ),
+              // ),
+            ]),
+            // const SizedBox(height: 20),
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              Expanded(
+                child: FutureBuilder<List<CourseHistory>>(
+                    future: courseHistory,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: DataTable(
+                          headingRowHeight: 80,
+                          headingTextStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          dataRowHeight: 60,
+                          dataTextStyle: const TextStyle(
+                            color: Color(0xFF000000),
+                            fontSize: 25,
+                          ),
+                          columns: const [
+                            DataColumn(label: Text('Course ID')),
+                            DataColumn(label: Text('Course Name')),
+                            DataColumn(label: Text('Semester')),
+                            DataColumn(label: Text('Grade')),
+                            DataColumn(label: Text('Status')),
+                          ],
+                          rows: List<DataRow>.generate(
+                              growable: true,
+                              snapshot.data!.length,
+                              (int index) => DataRow(cells: <DataCell>[
+                                    DataCell(
+                                        Text(snapshot.data![index].courseid)),
+                                    DataCell(
+                                        Text(snapshot.data![index].coursename)),
+                                    DataCell(
+                                        Text(snapshot.data![index].semester)),
+                                    DataCell(Text(snapshot.data![index].grade
+                                        .toString())),
+                                    DataCell(
+                                        Text(snapshot.data![index].status)),
+                                  ])),
+                        ),
+                      );
+                    }),
               ),
             ]),
-          ),
-          // Course List -------------------------------------------------------
-          Flexible(
-            flex: 4,
-            child: ListView.builder(
-                itemCount: courses.length,
-                itemBuilder: (context, index) {
-                  return CourseListItem(
-                    courseID: courses[index],
-                    courseTitle: titles[index],
-                    term: term[index],
-                    grade: grades[index],
-                    credits: credits[index],
-                    status: status[index],
-                  );
-                }),
-          ),
-        ]));
+          ]),
+        ),
+      ),
+    );
   }
 
   // these are the event handler for searching and filtering courses...will figure this out later
   searchCourses(String text) async {}
-
-  Widget buildColumnLabel(BuildContext context, String label) {
-    return Text(
-      label,
-      textAlign: TextAlign.left,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        color: const Color(0xFFF3956F),
-        fontWeight: FontWeight.bold,
-        fontSize: 22,
-        fontFamily: 'Montserrat',
-      ),
-    );
-  }
-}
-
-class CourseListItem extends StatelessWidget {
-  final String courseID;
-  final String courseTitle;
-  final String term;
-  final String grade;
-  final String credits;
-  final String status;
-  static Color primaryColor = const Color(0xFFF3956F);
-  static Color secondaryColor = const Color(0xFFFFFFFF);
-
-  const CourseListItem(
-      {super.key,
-      required this.courseID,
-      required this.courseTitle,
-      required this.term,
-      required this.grade,
-      required this.credits,
-      required this.status});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 75,
-        margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          children: [
-            Expanded(flex: 2, child: buildTextItem(context, courseID)),
-            Expanded(flex: 5, child: buildTextItem(context, courseTitle)),
-            Expanded(flex: 2, child: buildTextItem(context, term)),
-            Expanded(child: buildTextItem(context, grade)),
-            Expanded(child: buildTextItem(context, credits)),
-            Expanded(flex: 2, child: buildTextItem(context, status)),
-          ],
-        ));
-  }
-
-  Widget buildTextItem(BuildContext context, String text) {
-    return Text(
-      text,
-      textAlign: TextAlign.left,
-      style: TextStyle(
-        color: secondaryColor,
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
-        fontFamily: 'Montserrat',
-      ),
-    );
-  }
 }

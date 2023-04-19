@@ -1,0 +1,40 @@
+import 'dart:convert';
+
+List<CourseHistory> courseHistoryFromJson(String str) =>
+    List<CourseHistory>.from(
+        json.decode(str).map((x) => CourseHistory.fromJson(x)));
+
+String courseHistoryToJson(List<CourseHistory> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class CourseHistory {
+  CourseHistory({
+    required this.courseid,
+    required this.coursename,
+    required this.semester,
+    required this.grade,
+    required this.status,
+  });
+
+  String courseid;
+  String coursename;
+  String semester;
+  dynamic grade;
+  String status;
+
+  factory CourseHistory.fromJson(Map<String, dynamic> json) => CourseHistory(
+        courseid: json["courseid"],
+        coursename: json["coursename"],
+        semester: json["semester"],
+        grade: json["grade"] ?? 0,
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "courseid": courseid,
+        "coursename": coursename,
+        "semester": semester,
+        "grade": grade,
+        "status": status,
+      };
+}

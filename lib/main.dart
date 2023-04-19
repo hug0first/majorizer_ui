@@ -46,6 +46,21 @@ class Majorizer extends StatelessWidget {
         '/addTransfer': (context) => TransferScreen()
       },
       initialRoute: '/landing',
+      theme: ThemeData(
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xFFF3956F),
+          onPrimary: Color(0xFFFFFFFF),
+          secondary: Color(0xFFda6237),
+          onSecondary: Color(0xFFFFFFFF),
+          error: Color(0xFFB00020),
+          onError: Color(0xFFFFFFFF),
+          background: Color(0xFFFFFFFF),
+          onBackground: Color(0xFF000000),
+          surface: Color(0xFFFFFFFF),
+          onSurface: Color(0xFFFFFFFF),
+        ),
+      ),
     );
   }
 }
