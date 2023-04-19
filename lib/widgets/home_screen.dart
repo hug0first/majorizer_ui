@@ -178,7 +178,6 @@ class HomeScreenState extends State<HomeScreen> {
                                         },
                                       ),
                                     ),
-                                    //MajorSearch().search(context),
                                     Column(
                                       children: <Widget>[
                                         SizedBox(
@@ -186,14 +185,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                   .size
                                                   .width /
                                               4.5,
-                                          child: TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Add Major',
-                                              hintText: 'Major Title',
-                                            ),
-                                            controller:
-                                                majorTitleTextController,
-                                          ),
+                                          child: MajorMinorList().majorSearch(),
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
@@ -324,14 +316,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                   .size
                                                   .width /
                                               4.5,
-                                          child: TextFormField(
-                                            decoration: const InputDecoration(
-                                              labelText: 'Add Minor',
-                                              hintText: 'Minor Title',
-                                            ),
-                                            controller:
-                                                minorTitleTextController,
-                                          ),
+                                          child: MajorMinorList().minorSearch(),
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)

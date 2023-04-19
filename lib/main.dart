@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/widgets/add_transfer_page.dart';
 import 'widgets/advisor_build_screen.dart';
 import 'widgets/catalog_screen.dart';
 import 'widgets/course_manager_screen.dart';
@@ -42,6 +43,7 @@ class Majorizer extends StatelessWidget {
         '/studentManager': (context) => StudentManagerScreen(),
         '/courseManager': (context) => const CourseManagerScreen(),
         '/adminAdvisor': (context) => const AdminAdvisorScreen(),
+        '/addTransfer': (context) => TransferScreen()
       },
       initialRoute: '/landing',
     );

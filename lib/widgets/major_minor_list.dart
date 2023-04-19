@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/widgets/dropdown_search.dart';
 import '../main.dart';
 import 'home_screen.dart';
 
@@ -58,6 +59,26 @@ class MajorMinorList extends State<HomeScreen> {
       }
     }
     return possibleMinors;
+  }
+
+  TextFormField majorSearch() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        labelText: 'Add Major',
+        hintText: 'Major Title',
+      ),
+      controller: majorTitleTextController,
+    );
+  }
+
+  TextFormField minorSearch() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        labelText: 'Add Minor',
+        hintText: 'Minor Title',
+      ),
+      controller: minorTitleTextController,
+    );
   }
 
   @override
