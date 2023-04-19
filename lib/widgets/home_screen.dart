@@ -324,7 +324,7 @@ class HomeScreenState extends State<HomeScreen> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              .3,
+                                              .25,
                                           child: ListView(
                                             children: possibleMinorListTiles(),
                                           ),
