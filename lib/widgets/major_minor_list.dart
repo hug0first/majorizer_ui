@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:majorizer_ui/widgets/dropdown_search.dart';
 import '../main.dart';
 import 'home_screen.dart';
 

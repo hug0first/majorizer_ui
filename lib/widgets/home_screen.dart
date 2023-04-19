@@ -4,8 +4,6 @@ import 'major_minor_list.dart';
 import 'side_menu.dart';
 import 'main_app_bar.dart';
 
-import 'dropdown_search.dart';
-
 var majorTitleTextController = TextEditingController();
 var minorTitleTextController = TextEditingController();
 
