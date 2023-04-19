@@ -379,9 +379,7 @@ class HomeScreenState extends State<HomeScreen> {
                       // Padding(
                       //   padding: EdgeInsets.only(bottom: screenHeight / 50)),
                       Expanded(
-                        child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: screenHeight * .01),
+                        child: ListView.builder(
                             itemCount: courses.length,
                             itemBuilder: (context, index) {
                               return ListTile(
