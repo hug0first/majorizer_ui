@@ -6,7 +6,7 @@ class LandingScreen extends StatelessWidget {
   const LandingScreen();
 
   void navToSignUp(BuildContext context) {
-    Navigator.of(context).pushNamed('/signUp');
+    Navigator.of(context).pushNamed('/logIn');
   }
 
   @override
@@ -39,7 +39,7 @@ class LandingScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                      '/signUp'); //eventually should be changed to a separate Login page
+                      '/logIn'); //eventually should be changed to a separate Login page
                   //user is just making a new account every time they visit, essentially
                 },
                 child: const Text(

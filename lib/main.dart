@@ -12,9 +12,22 @@ import 'widgets/landing_screen.dart';
 import 'widgets/student_manager_screen.dart';
 import 'widgets/admin_advisor_screen.dart';
 import 'widgets/new_build_screen.dart';
+import 'widgets/log_in_form.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(Majorizer());
+void main() async { 
+  // Firebase 초기화
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
+
+  runApp(Majorizer());
+}
 String firstName = "";
+String lastName = "";
+String emailAdrs = "";
 List<String> currMajors = ['Computer Science'];
 List<String> currMinors = ['Psychology'];
 
@@ -45,7 +58,8 @@ class Majorizer extends StatelessWidget {
         '/studentManager': (context) => StudentManagerScreen(),
         '/courseManager': (context) => const CourseManagerScreen(),
         '/adminAdvisor': (context) => const AdminAdvisorScreen(),
-        '/addTransfer': (context) => TransferScreen()
+        '/addTransfer': (context) => TransferScreen(),
+        '/logIn' : (context) => const LoginPage()
       },
       initialRoute: '/landing',
       theme: ThemeData(
