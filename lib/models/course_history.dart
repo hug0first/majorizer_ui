@@ -19,14 +19,14 @@ class CourseHistory {
   String courseid;
   String coursename;
   String semester;
-  dynamic grade;
+  String grade;
   String status;
 
   factory CourseHistory.fromJson(Map<String, dynamic> json) => CourseHistory(
         courseid: json["courseid"],
         coursename: json["coursename"],
         semester: json["semester"],
-        grade: json["grade"] ?? 0,
+        grade: json["grade"] ?? "-",
         status: json["status"],
       );
 

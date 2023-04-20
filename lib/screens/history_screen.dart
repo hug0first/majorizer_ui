@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main_app_bar.dart';
-import 'side_menu.dart';
+import '../widgets/main_app_bar.dart';
+import '../widgets/side_menu.dart';
 import '../api/api.dart';
 import '../models/course_history.dart';
 
@@ -42,11 +42,11 @@ class HistoryScreenState extends State<HistoryScreen> {
           ),
           padding: const EdgeInsets.all(30),
           child: Column(children: [
-            // Title, Search, and Column Labels ----------------------------------
+            // Title, ////Search ----------------------------------
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               // Title -------------------------------------------------------
               Text(
-                'Course history',
+                'Course Catalog',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onBackground,
@@ -58,7 +58,7 @@ class HistoryScreenState extends State<HistoryScreen> {
                   sendCourseHistory(CourseHistory(
                       courseid: 'CS 141',
                       coursename: 'Intro to Computer Science I',
-                      grade: 4.0,
+                      grade: 'A',
                       semester: 'Fall 2023',
                       status: 'T'))
                 },

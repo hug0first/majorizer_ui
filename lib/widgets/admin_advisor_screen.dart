@@ -10,7 +10,7 @@ class AdminAdvisorScreen extends StatefulWidget {
   State<AdminAdvisorScreen> createState() => AdminAdvisorScreenState();
 }
 
-class AdminAdvisorScreenState extends State<AdminAdvisorScreen>{
+class AdminAdvisorScreenState extends State<AdminAdvisorScreen> {
   // These are temporary values until the backend/database connection is made
   final advisors = ['unassigned', 'Sean Banerjee', 'Chuck Thorpe'];
   final unassigned = ['Robert Licata', 'hello', 'hello1'];
@@ -50,39 +50,34 @@ class AdminAdvisorScreenState extends State<AdminAdvisorScreen>{
                       fontFamily: 'Montserrat'))),
           Flexible(
               child: Container(
-            height: 50,
-            alignment: Alignment.bottomLeft,
-            padding: const EdgeInsets.only(left: 40),
-            child: DropdownButton(
-              hint: Text('choose the advisor'),
-              value: selected_value,
-              items: advisors.map((value){
-                return DropdownMenuItem(value:value, child: Text(value));
-              }).toList(),
-              onChanged: (nvalue){
-                print(nvalue);
-                if (nvalue == 'unassigned') {
-                  selected_list=unassigned;
-                  selected_length=unassigned.length;
-                }
-                else if (nvalue == 'Sean Banerjee') {
-                  selected_list=students_1;
-                  selected_length=students_1.length;
-                }
-                else {
-                  selected_list=students_2;
-                  selected_length=students_2.length;
-                }
+                  height: 50,
+                  alignment: Alignment.bottomLeft,
+                  padding: const EdgeInsets.only(left: 40),
+                  child: DropdownButton(
+                      hint: Text('choose the advisor'),
+                      value: selected_value,
+                      items: advisors.map((value) {
+                        return DropdownMenuItem(
+                            value: value, child: Text(value));
+                      }).toList(),
+                      onChanged: (nvalue) {
+                        print(nvalue);
+                        if (nvalue == 'unassigned') {
+                          selected_list = unassigned;
+                          selected_length = unassigned.length;
+                        } else if (nvalue == 'Sean Banerjee') {
+                          selected_list = students_1;
+                          selected_length = students_1.length;
+                        } else {
+                          selected_list = students_2;
+                          selected_length = students_2.length;
+                        }
 
-                setState(() {
-                  selected_value = nvalue!;
-                });
-              }
-            )
-          )),
-          
+                        setState(() {
+                          selected_value = nvalue!;
+                        });
+                      }))),
           Container(width: 1250, child: const Divider(color: Colors.grey)),
-
           Flexible(
             child: ListView.builder(
                 itemCount: selected_length,
@@ -97,10 +92,7 @@ class AdminAdvisorScreenState extends State<AdminAdvisorScreen>{
                   );
                 }),
           ),
-
         ]));
-
-        
   }
 }
 

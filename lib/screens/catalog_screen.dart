@@ -1,115 +1,113 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/api/api.dart';
+import 'package:majorizer_ui/models/course_catalog.dart';
 import 'package:majorizer_ui/widgets/main_app_bar.dart';
 import 'package:majorizer_ui/widgets/side_menu.dart';
+import 'package:majorizer_ui/widgets/department.dart';
 
-class CatalogScreen extends StatelessWidget {
-  static const List<DeptListItem> items = [
-    DeptListItem('AC', 'Accounting'),
-    DeptListItem('AE', 'Aeronautical Engineering'),
-    DeptListItem('AMST', 'American Studies'),
-    DeptListItem('ANTH', 'Anthropology'),
-    DeptListItem('ARTS', 'Visual and Performing Arts'),
-    DeptListItem('AS', 'Air, Space, & Cyberspace'),
-    DeptListItem('BIE', 'Bioethics'),
-    DeptListItem('BR', 'Biomedical/Rehabilitation Engineering'),
-    DeptListItem('BY', 'Biology'),
-    DeptListItem('CE', 'Civil and Environmental Engineering'),
-    DeptListItem('CH', 'Chemical Engineering'),
-    DeptListItem('CM', 'Chemistry'),
-    DeptListItem('COMM', 'Communication'),
-    DeptListItem('CS', 'Computer Science'),
-    DeptListItem('PY', 'Psychology'),
-    DeptListItem('MA', 'Mathematics'),
-  ];
-
+class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  State<CatalogScreen> createState() => CatalogScreenState();
+}
 
+class CatalogScreenState extends State<CatalogScreen> {
+  late Future<List<CourseCatalog>> courseCatalog;
+  late Future<Set<Department>> departments;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  CatalogScreenState();
+
+  @override
+  void initState() {
+    super.initState();
+    courseCatalog = getCourseCatalog();
+    departments = parseCatalog();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
       ),
       endDrawer: sideMenu(context),
-      body: Column(
-        children: [
-          CatalogTitle(),
-          Container(
-            height: 550,
-            child: DeptList(
-              items: items,
-            ),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height * 0.81,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(35),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class CatalogTitle extends StatelessWidget {
-  const CatalogTitle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xFFF3956F),
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Course Catalog',
-            style: TextStyle(
-              color: Colors.white,
-              decoration: TextDecoration.none,
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Spacer(),
-          Flexible(child: search(context)),
-        ],
-      ),
-    );
-  }
-
-  Widget search(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 400, maxHeight: 100),
-      child: const TextField(
-        style: TextStyle(
-          color: Colors.white,
-          decoration: TextDecoration.none,
-          fontSize: 20,
-        ),
-        decoration: InputDecoration(
-          hintText: 'Search Courses',
-          hintStyle: TextStyle(
-            color: Colors.white,
-            decoration: TextDecoration.none,
-            fontSize: 20,
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(width: 3, color: Color(0xFFda6237)),
-          ),
-          suffixIcon: Icon(
-            Icons.search,
-            color: Colors.white,
-          ),
-          focusColor: Color(0xFFda6237),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(width: 3, color: Colors.white),
-          ),
+          padding: const EdgeInsets.all(30),
+          child: Column(children: [
+            // Title, Search ----------------------------------
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              // Title -------------------------------------------------------
+              Text(
+                'Course Catalog',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 50,
+                ),
+              ),
+            ]),
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              Expanded(
+                child: FutureBuilder<List<CourseCatalog>>(
+                    future: courseCatalog,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Container(
+                          height: 550,
+                          child: GridView(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(20),
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              childAspectRatio: 1,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20,
+                            ),
+                            children: [],
+                          ));
+                    }),
+              ),
+            ]),
+          ]),
         ),
       ),
     );
   }
 }
+
+// SingleChildScrollView(
+//   controller: ScrollController(),
+//   child: Column(
+//     children: snapshot.data!
+//         .map((course) => CourseListItem(
+//               iD: course.courseid,
+//               semOffered: course.semestersoffered,
+//               name: course.coursename,
+//               description: course.description,
+//               credits: course.credits.toString(),
+//               commPoints: course.commpoints.toString(),
+//               instructor: course.instructorname,
+//             ))
+//         .toList(),
+//   ));
 
 class DeptListItem extends StatelessWidget {
   final String programID;
@@ -189,92 +187,7 @@ class DeptListItem extends StatelessWidget {
 
 class DeptPage extends StatelessWidget {
   final DeptListItem item;
-  static List<CourseListItem> courses = [
-    CourseListItem(
-      iD: 'CS 1',
-      semOffered: 'Transfer Credit Only',
-      name: 'Computer Science Elective',
-      description:
-          'A college level course for which there is no comparable Clarkson '
-          'course. Used for transfer credit only. Check with major department '
-          'to determine whether credits count toward graduation.',
-      credits: '2-4',
-      commPoints: '-',
-      designation: 'CS',
-      instructor: 'None',
-    ),
-    CourseListItem(
-      iD: 'CS 2',
-      semOffered: 'Transfer Credit Only',
-      name: 'Computer Science Elective',
-      description:
-          'A college level course for which there is no comparable Clarkson '
-          'course. Used for transfer credit only. This course may be used to '
-          'satisfy a Programming Foundation Curriculum Requirement.',
-      credits: '2-4',
-      commPoints: '-',
-      designation: 'CS',
-      instructor: 'None',
-    ),
-    CourseListItem(
-      iD: 'CS 141',
-      semOffered: 'Every Semester',
-      name: 'Introduction to Computer Science I',
-      description:
-          'This course is an introduction to basic concepts of computer '
-          'science, with emphasis on programming. Computer programming is to '
-          'the study of computer science what writing is to the study of '
-          'literature. It is a primary tool for implementing algorithms in '
-          'computer science. Fundamental techniques for software design and '
-          'implementation will be covered and these concepts demonstrated in a '
-          'programming language like C++. Additional topics include top-down '
-          'modular design, developing general-purpose software tools, '
-          'procedural and data abstraction, algorithms, and an introduction '
-          'to recursion and dynamic data structures. The course consists of '
-          'three hours of lecture and a one hour computer laboratory session '
-          'per week.',
-      credits: '4',
-      commPoints: '-',
-      designation: 'CS',
-      instructor: 'Chuck Thorpe',
-    ),
-    CourseListItem(
-      iD: 'CS 142',
-      semOffered: 'Every Semester',
-      name: 'Introduction to Computer Science I',
-      description: 'This course will further develop and expand upon the '
-          'topics introduced in CS 141. Advanced programming techniques will '
-          'be covered, with extensive use of recursion and dynamic data '
-          'structures. Abstract data types, including lists, queues, trees '
-          'and graphs, will be studied. Specific emphasis will be given to '
-          'tree traversals and binary search trees. Algorithms for searching '
-          'and sorting will be explored along with methods of comparative '
-          'analysis. The topics in this course provide an essential foundation '
-          'for the further study of computer science.',
-      credits: '3',
-      commPoints: '-',
-      designation: 'CS',
-      instructor: 'Alexis Maciel',
-    ),
-    CourseListItem(
-      iD: 'CS 241',
-      semOffered: 'Spring Only',
-      name: 'Computer Organization',
-      description:
-          'An introduction to computer organization and assembly language '
-          'programming. Topics include the functional organization of computer '
-          'hardware; data representation, and computer arithmetic; instruction '
-          'sets, addressing modes and low-level I/O. Introduces machine and '
-          'assembly language, and systems programming techniques in the '
-          'programming language C. This course serves as a foundation for '
-          'courses on operating systems, compilers, networks, and computer '
-          'artchitecture.',
-      credits: '3',
-      commPoints: '-',
-      designation: 'CS',
-      instructor: 'Chuck Thorpe',
-    ),
-  ];
+  static List<CourseListItem> courses = [];
   const DeptPage(this.item, {super.key});
 
   @override
@@ -431,7 +344,6 @@ class CourseListItem extends StatelessWidget {
   final String description;
   final String credits;
   final String commPoints;
-  final String designation;
   final String instructor;
   static Color primaryColor = const Color(0xFFF3956F);
   static Color secondaryColor = const Color(0xFFFFFFFF);
@@ -444,7 +356,6 @@ class CourseListItem extends StatelessWidget {
     required this.description,
     required this.credits,
     required this.commPoints,
-    required this.designation,
     required this.instructor,
   });
 
@@ -571,26 +482,6 @@ class ProgramListBodyRoute extends MaterialPageRoute {
     return FadeTransition(
       opacity: animation,
       child: child,
-    );
-  }
-}
-
-class DeptList extends StatelessWidget {
-  final List<DeptListItem> items;
-  const DeptList({super.key, required this.items});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(20),
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        childAspectRatio: 1,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-      ),
-      children: items,
     );
   }
 }

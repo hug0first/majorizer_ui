@@ -1,33 +1,15 @@
 import 'package:flutter/material.dart';
-import 'main_app_bar.dart';
-import 'side_menu.dart';
+import '../widgets/main_app_bar.dart';
+import '../widgets/side_menu.dart';
 
-class StudentManagerScreen extends StatelessWidget {
-  StudentManagerScreen();
+class AdvisorManagerScreen extends StatelessWidget {
+  AdvisorManagerScreen();
 
   // These are temporary values until the backend/database connection is made
-  final students = [
-    'Tyler Yankee',
-    'Niall Pepper',
-    'Peter Dorovitsine',
-    'Robert Licata',
-    'Sangwon Youn'
-  ];
-  final majors = [
-    'Computer Science',
-    'Computer Science',
-    'Chemical Engineering',
-    'Computer Science',
-    'Computer Science'
-  ];
-  final roles = ['Research', 'Academic', 'Honors', 'Academic', 'Academic'];
-  final emails = [
-    'yankeets@clarkson.edu',
-    'peppernj@clarkson.edu',
-    'dorovip@clarkson.edu',
-    'licatar@clarkson.edu',
-    'youns@clarkson.edu'
-  ];
+  final advisors = ['Sean Banerjee', 'Chuck Thorpe'];
+  final depts = ['Computer Science', 'Computer Science'];
+  final roles = ['Research', 'Academic'];
+  final emails = ['sbanerje@clarkson.edu', 'cthorpe@clarkson.edu'];
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -46,7 +28,7 @@ class StudentManagerScreen extends StatelessWidget {
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(top: 25, left: 40),
               margin: EdgeInsets.zero,
-              child: const Text('Student Manager',
+              child: const Text('Advisor Manager',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -64,12 +46,12 @@ class StudentManagerScreen extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold))),
               const Expanded(
                   flex: 2,
-                  child: Text('Major',
+                  child: Text('Department',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.bold))),
               const Expanded(
                   flex: 2,
-                  child: Text('Advising Capacity',
+                  child: Text('Role',
                       style: TextStyle(fontWeight: FontWeight.bold))),
               const Expanded(
                   flex: 2,
@@ -80,16 +62,16 @@ class StudentManagerScreen extends StatelessWidget {
           Container(width: 1250, child: const Divider(color: Colors.grey)),
           Flexible(
             child: ListView.builder(
-                itemCount: students.length,
+                itemCount: advisors.length,
                 itemBuilder: (context, index) {
                   return Container(
                     height: 50,
                     child: Row(children: <Widget>[
                       const Spacer(flex: 1),
-                      Expanded(flex: 2, child: Text(students[index])),
+                      Expanded(flex: 2, child: Text(advisors[index])),
                       Expanded(
                           flex: 2,
-                          child: Text(majors[index],
+                          child: Text(depts[index],
                               overflow: TextOverflow.ellipsis)),
                       Expanded(flex: 2, child: Text(roles[index])),
                       Expanded(flex: 2, child: Text(emails[index]))

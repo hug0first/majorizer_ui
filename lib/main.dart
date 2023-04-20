@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:majorizer_ui/widgets/add_transfer_page.dart';
 import 'package:majorizer_ui/widgets/catalog_map.dart';
-import 'widgets/advisor_build_screen.dart';
-import 'widgets/catalog_screen.dart';
+import 'screens/advisor_build_screen.dart';
+import 'screens/catalog_screen.dart';
 import 'widgets/course_manager_screen.dart';
-import 'widgets/history_screen.dart';
+import 'screens/history_screen.dart';
 import 'widgets/home_screen.dart';
 import 'widgets/sign_up_form.dart';
 import 'widgets/landing_screen.dart';
 //import 'widgets/student_build_screen.dart';
-import 'widgets/student_manager_screen.dart';
+import 'screens/student_manager_screen.dart';
 import 'widgets/admin_advisor_screen.dart';
 import 'widgets/new_build_screen.dart';
 import 'widgets/log_in_form.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-void main() async { 
+void main() async {
   // Firebase 초기화
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
 
   runApp(Majorizer());
 }
+
 String firstName = "";
 String lastName = "";
 String emailAdrs = "";
@@ -59,7 +60,7 @@ class Majorizer extends StatelessWidget {
         '/courseManager': (context) => const CourseManagerScreen(),
         '/adminAdvisor': (context) => const AdminAdvisorScreen(),
         '/addTransfer': (context) => TransferScreen(),
-        '/logIn' : (context) => const LoginPage()
+        '/logIn': (context) => const LoginPage()
       },
       initialRoute: '/landing',
       theme: ThemeData(

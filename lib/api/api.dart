@@ -16,10 +16,6 @@ Future<List<AdvisorStudents>> getAdvisorStudents() async {
   try {
     final response = await http.get(
       Uri.parse(urlBase + advisorStudentsEndpoint),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     );
 
     List<AdvisorStudents> advisorStudents =
@@ -36,7 +32,6 @@ Future<List<CourseHistory>> getCourseHistory() async {
   try {
     final response = await http.get(
       Uri.parse(urlBase + courseHistoryEndpoint),
-      headers: {'Origin': 'http://localhost:33921/'},
     );
 
     List<CourseHistory> courseHistory = courseHistoryFromJson(response.body);
@@ -61,10 +56,6 @@ Future<List<CourseCatalog>> getCourseCatalog() async {
   try {
     final response = await http.get(
       Uri.parse(urlBase + courseCatalogEndpoint),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     );
 
     List<CourseCatalog> courseCatalog = courseCatalogFromJson(response.body);
@@ -80,10 +71,6 @@ Future<List<StudentAdvisors>> getStudentAdvisors() async {
   try {
     final response = await http.get(
       Uri.parse(urlBase + studentAdvisorsEndpoint),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     );
 
     List<StudentAdvisors> studentAdvisors =
