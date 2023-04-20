@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:majorizer_ui/widgets/add_transfer_page.dart';
+import 'package:majorizer_ui/widgets/catalog_map.dart';
 import 'widgets/advisor_build_screen.dart';
 import 'widgets/catalog_screen.dart';
 import 'widgets/course_manager_screen.dart';
@@ -28,6 +29,7 @@ class Majorizer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CatalogMap().initMap();
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'Majorizer',
