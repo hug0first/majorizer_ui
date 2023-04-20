@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:majorizer_ui/widgets/catalog_map.dart';
 import 'package:majorizer_ui/widgets/dropdown_button_lists.dart';
 import '../main.dart';
+import 'course_class.dart';
 import 'main_app_bar.dart';
 import 'side_menu.dart';
 
@@ -51,11 +52,14 @@ class TransferScreenState extends State<TransferScreen> {
       moduleDropdownItems = [];
     }
 
+    Map<String, DepartmentMap> catalogMap =
+        Majorizer().catalogMap as Map<String, DepartmentMap>;
+    DepartmentMap? departmentMap = catalogMap[departmentItem];
+
     return Row(
       children: <Widget>[
         DropdownButton(
-          items: CatalogMap().catalogMap.keys.toList()
-              as List<DropdownMenuItem<String>>,
+          items: catalogMap.keys.toList() as List<DropdownMenuItem<String>>,
           value: departmentItem,
           onChanged: (String? newValue) {
             setState(() {
@@ -64,7 +68,7 @@ class TransferScreenState extends State<TransferScreen> {
           },
         ),
         DropdownButton(
-          items: moduleDropdownItems,
+          items: departmentMap?.keys.toList() as List<DropdownMenuItem<String>>,
           value: moduleItem,
           onChanged: (String? newValue) {
             if (departmentItem == "Department") {

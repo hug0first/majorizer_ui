@@ -8,7 +8,7 @@ class CatalogMap {
     //use the addToMap for the DepartmentMapspecific to the key using the dept as the String for the constructor
     initMap();
   }
-  Future<void> initMap() async {
+  Future<Map<String, DepartmentMap>> initMap() async {
     List<CourseCatalog> catalog = await getCourseCatalog();
     for (CourseCatalog course in catalog) {
       String courseDept = course.courseid.replaceAll(RegExp('[0-9]'), '');
@@ -17,6 +17,7 @@ class CatalogMap {
       }
       (catalogMap[courseDept])?.addToMap(course);
     }
+    return catalogMap;
   }
 
   late Map<String, DepartmentMap>
@@ -26,6 +27,10 @@ class CatalogMap {
 
 class DepartmentMap {
   DepartmentMap(String dept);
+
+  get keys {
+    return departmentMap.keys;
+  }
 
   void addToMap(CourseCatalog course) {
     String courseIdString = course.courseid.replaceAll(RegExp(r'[^0-9]'), '');

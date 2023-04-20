@@ -16,15 +16,16 @@ import 'widgets/log_in_form.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-void main() async { 
+void main() async {
   // Firebase 초기화
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
 
   runApp(Majorizer());
 }
+
 String firstName = "";
 String lastName = "";
 String emailAdrs = "";
@@ -39,10 +40,11 @@ String currMinor2 = '';
 class Majorizer extends StatelessWidget {
   Majorizer();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  late Future<Map<String, DepartmentMap>> catalogMap;
 
   @override
   Widget build(BuildContext context) {
-    CatalogMap().initMap();
+    catalogMap = CatalogMap().initMap();
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'Majorizer',
@@ -59,7 +61,7 @@ class Majorizer extends StatelessWidget {
         '/courseManager': (context) => const CourseManagerScreen(),
         '/adminAdvisor': (context) => const AdminAdvisorScreen(),
         '/addTransfer': (context) => TransferScreen(),
-        '/logIn' : (context) => const LoginPage()
+        '/logIn': (context) => const LoginPage()
       },
       initialRoute: '/landing',
       theme: ThemeData(
