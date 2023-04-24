@@ -367,17 +367,12 @@ class HomeScreenState extends State<HomeScreen> {
                           fontSize: screenWidth / 30,
                         ),
                       ),
-
-                      //Padding(
-                      //  padding: EdgeInsets.only(bottom: screenHeight / 50)),
                       SizedBox(
                         width: screenWidth / 4,
                         child: const Divider(
                           color: Colors.grey,
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(bottom: screenHeight / 50)),
                       Expanded(
                         child: ListView.builder(
                             itemCount: courses.length,

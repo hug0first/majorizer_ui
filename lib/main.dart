@@ -40,11 +40,9 @@ String currMinor2 = '';
 class Majorizer extends StatelessWidget {
   Majorizer();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  late Future<Map<String, DepartmentMap>> catalogMap;
 
   @override
   Widget build(BuildContext context) {
-    catalogMap = CatalogMap().initMap();
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'Majorizer',
@@ -65,6 +63,7 @@ class Majorizer extends StatelessWidget {
       },
       initialRoute: '/landing',
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFF3956F),
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: Color(0xFFF3956F),
