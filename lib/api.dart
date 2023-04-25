@@ -1,16 +1,13 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-import '../models/advisor_students.dart';
-import '../models/course_catalog.dart';
-import '../models/course_history.dart';
-import '../models/student_advisors.dart';
+import 'models/models.dart';
 
 const String urlBase = 'http://127.0.0.1:8000/';
-const String advisorStudentsEndpoint = '/advisor_students/';
-const String courseCatalogEndpoint = '/course_catalog/';
+const String advisorStudentsEndpoint = 'advisor_students/';
+const String courseCatalogEndpoint = 'course_catalog/';
 const String courseHistoryEndpoint = 'course_history/';
-const String studentAdvisorsEndpoint = '/student_advisors/';
+const String studentAdvisorsEndpoint = 'student_advisors/';
 
 Future<List<AdvisorStudents>> getAdvisorStudents() async {
   try {

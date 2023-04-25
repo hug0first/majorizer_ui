@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:majorizer_ui/api/api.dart';
+import 'package:animations/animations.dart';
+import 'package:majorizer_ui/api.dart';
 import 'package:majorizer_ui/models/course_catalog.dart';
 import 'package:majorizer_ui/widgets/main_app_bar.dart';
 import 'package:majorizer_ui/widgets/side_menu.dart';
@@ -14,7 +15,7 @@ class CatalogScreen extends StatefulWidget {
 
 class CatalogScreenState extends State<CatalogScreen> {
   late Future<List<CourseCatalog>> courseCatalog;
-  late Future<Set<Department>> departments;
+  late Future<List<Department>> departments;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   CatalogScreenState();
@@ -23,7 +24,7 @@ class CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     courseCatalog = getCourseCatalog();
-    departments = parseCatalog();
+    departments = parseCatalog(courseCatalog);
   }
 
   @override
@@ -38,8 +39,8 @@ class CatalogScreenState extends State<CatalogScreen> {
       endDrawer: sideMenu(context),
       body: Center(
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: MediaQuery.of(context).size.height * 0.81,
+          width: MediaQuery.of(context).size.width * 0.85,
+          height: MediaQuery.of(context).size.height * 0.85,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
@@ -59,33 +60,38 @@ class CatalogScreenState extends State<CatalogScreen> {
                 ),
               ),
             ]),
-            Row(mainAxisSize: MainAxisSize.min, children: [
-              Expanded(
-                child: FutureBuilder<List<CourseCatalog>>(
-                    future: courseCatalog,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return Container(
-                          height: 550,
-                          child: GridView(
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(20),
-                            gridDelegate:
-                                const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 1,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20,
-                            ),
-                            children: [],
-                          ));
-                    }),
-              ),
-            ]),
+
+            Expanded(
+              child: FutureBuilder<List<Department>>(
+                  future: departments,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text('Error: No courses recieved.'),
+                      );
+                    }
+                    // departments = parseCatalog(snapshot.data!);
+                    return GridView(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(20),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 300,
+                        childAspectRatio: 4 / 3,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                      ),
+                      children: [
+                        for (Department dept in snapshot.data!)
+                          DepartmentGridItem(department: dept)
+                      ],
+                    );
+                  }),
+            ),
           ]),
         ),
       ),
@@ -93,21 +99,76 @@ class CatalogScreenState extends State<CatalogScreen> {
   }
 }
 
-// SingleChildScrollView(
-//   controller: ScrollController(),
-//   child: Column(
-//     children: snapshot.data!
-//         .map((course) => CourseListItem(
-//               iD: course.courseid,
-//               semOffered: course.semestersoffered,
-//               name: course.coursename,
-//               description: course.description,
-//               credits: course.credits.toString(),
-//               commPoints: course.commpoints.toString(),
-//               instructor: course.instructorname,
-//             ))
-//         .toList(),
-//   ));
+class DepartmentGridItem extends StatefulWidget {
+  final Department department;
+
+  const DepartmentGridItem({required this.department, super.key});
+
+  @override
+  State<DepartmentGridItem> createState() => DepartmentGridItemState();
+}
+
+class DepartmentGridItemState extends State<DepartmentGridItem> {
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // TODO:
+        // Implement selected department as parent widget data
+
+        setState(() {
+          isSelected = true;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40),
+        ),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.secondary,
+          width: 5,
+        ),
+        elevation: 5,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.department.id,
+              overflow: TextOverflow.fade,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                fontSize: 55,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: Text(
+                widget.department.name,
+                overflow: TextOverflow.fade,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  decoration: TextDecoration.none,
+                  fontSize: 30,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class DeptListItem extends StatelessWidget {
   final String programID;
@@ -134,7 +195,7 @@ class DeptListItem extends StatelessWidget {
           children: [
             buildID(context),
             Divider(
-              color: Colors.white,
+              color: Colors.black,
               thickness: 2,
             ),
             buildName(context),

@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final courseCatalog = courseCatalogFromJson(jsonString);
+
 import 'dart:convert';
 
 List<CourseCatalog> courseCatalogFromJson(String str) =>
@@ -16,6 +20,7 @@ class CourseCatalog {
     required this.credits,
     required this.semestersoffered,
     required this.commpoints,
+    required this.designation,
     this.knowledgeareas,
     this.prerequisites,
     this.corequisites,
@@ -28,6 +33,7 @@ class CourseCatalog {
   int credits;
   String semestersoffered;
   int commpoints;
+  String designation;
   String? knowledgeareas;
   String? prerequisites;
   String? corequisites;
@@ -40,6 +46,7 @@ class CourseCatalog {
         credits: json["credits"],
         semestersoffered: json["semestersoffered"],
         commpoints: json["commpoints"],
+        designation: json["designation"],
         knowledgeareas: json["knowledgeareas"],
         prerequisites: json["prerequisites"],
         corequisites: json["corequisites"],
@@ -53,6 +60,7 @@ class CourseCatalog {
         "credits": credits,
         "semestersoffered": semestersoffered,
         "commpoints": commpoints,
+        "designation": designation,
         "knowledgeareas": knowledgeareas,
         "prerequisites": prerequisites,
         "corequisites": corequisites,
