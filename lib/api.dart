@@ -9,6 +9,7 @@ const String courseCatalogEndpoint = 'course_catalog/';
 const String courseHistoryEndpoint = 'course_history/';
 const String studentAdvisorsEndpoint = 'student_advisors/';
 const String scheduleBuilderEndpoint = 'schedule_builder/';
+const String majorMinorEndPoint = 'student_majorminor/';
 
 Future<List<AdvisorStudents>> getAdvisorStudents() async {
   try {

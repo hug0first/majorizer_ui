@@ -3,22 +3,22 @@ import '../api.dart';
 import '../models/models.dart';
 import '../widgets/datatable_page.dart';
 
-class StudentManagerScreen extends StatefulWidget {
-  final pageName = 'Manage Students';
+class AdvisorScreen extends StatefulWidget {
+  final pageName = 'Advisors';
 
-  const StudentManagerScreen({super.key});
+  const AdvisorScreen({super.key});
 
   @override
-  State<StudentManagerScreen> createState() => StudentManagerScreenState();
+  State<AdvisorScreen> createState() => AdvisorScreenState();
 }
 
-class StudentManagerScreenState extends State<StudentManagerScreen> {
-  late Future<List<AdvisorStudents>> advisorStudents;
+class AdvisorScreenState extends State<AdvisorScreen> {
+  late Future<List<StudentAdvisors>> studentAdvisors;
 
   @override
   void initState() {
     super.initState();
-    advisorStudents = getAdvisorStudents();
+    studentAdvisors = getStudentAdvisors();
   }
 
   @override
@@ -27,8 +27,8 @@ class StudentManagerScreenState extends State<StudentManagerScreen> {
       pageName: widget.pageName,
       pageBody: Row(mainAxisSize: MainAxisSize.min, children: [
         Expanded(
-          child: FutureBuilder<List<AdvisorStudents>>(
-              future: advisorStudents,
+          child: FutureBuilder<List<StudentAdvisors>>(
+              future: studentAdvisors,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -61,5 +61,15 @@ class StudentManagerScreenState extends State<StudentManagerScreen> {
         ),
       ]),
     );
+  }
+}
+
+class AdvisorBuildScreen extends StatelessWidget {
+  const AdvisorBuildScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

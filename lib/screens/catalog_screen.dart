@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-import 'package:majorizer_ui/api.dart';
-import 'package:majorizer_ui/models/course_catalog.dart';
-import 'package:majorizer_ui/widgets/main_app_bar.dart';
-import 'package:majorizer_ui/widgets/side_menu.dart';
-import 'package:majorizer_ui/widgets/department.dart';
+import '../api.dart';
+import '../models/models.dart';
+import 'department_screen.dart';
+import '../widgets/datatable_page.dart';
+import '../widgets/department.dart';
+import '../widgets/main_app_bar.dart';
+import '../widgets/side_menu.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
@@ -29,71 +31,37 @@ class CatalogScreenState extends State<CatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: mainAppBar(context, scaffoldKey),
-      ),
-      endDrawer: sideMenu(context),
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.85,
-          height: MediaQuery.of(context).size.height * 0.85,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            borderRadius: BorderRadius.circular(35),
-          ),
-          padding: const EdgeInsets.all(30),
-          child: Column(children: [
-            // Title, Search ----------------------------------
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              // Title -------------------------------------------------------
-              Text(
-                'Course Catalog',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 50,
+    return DataTablePage(
+      pageName: 'Course Catalog',
+      pageBody: Expanded(
+        child: FutureBuilder<List<Department>>(
+            future: departments,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text('Error: No courses recieved.'),
+                );
+              }
+              // departments = parseCatalog(snapshot.data!);
+              return GridView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(20),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 300,
+                  childAspectRatio: 4 / 3,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
                 ),
-              ),
-            ]),
-
-            Expanded(
-              child: FutureBuilder<List<Department>>(
-                  future: departments,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.data!.isEmpty) {
-                      return const Center(
-                        child: Text('Error: No courses recieved.'),
-                      );
-                    }
-                    // departments = parseCatalog(snapshot.data!);
-                    return GridView(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(20),
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 300,
-                        childAspectRatio: 4 / 3,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 15,
-                      ),
-                      children: [
-                        for (Department dept in snapshot.data!)
-                          DepartmentGridItem(department: dept)
-                      ],
-                    );
-                  }),
-            ),
-          ]),
-        ),
+                children: [
+                  for (Department dept in snapshot.data!)
+                    DepartmentGridItem(department: dept)
+                ],
+              );
+            }),
       ),
     );
   }
@@ -115,12 +83,7 @@ class DepartmentGridItemState extends State<DepartmentGridItem> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        // TODO:
-        // Implement selected department as parent widget data
-
-        setState(() {
-          isSelected = true;
-        });
+        Navigator.of(context).push(ProgramListBodyRoute(widget.department));
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -182,7 +145,7 @@ class DeptListItem extends StatelessWidget {
       tag: programID,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).push(ProgramListBodyRoute(this));
+          // Navigator.of(context).push(ProgramListBodyRoute(this));
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xFFF3956F),
@@ -530,12 +493,8 @@ class CourseListItem extends StatelessWidget {
 }
 
 class ProgramListBodyRoute extends MaterialPageRoute {
-  ProgramListBodyRoute(DeptListItem item)
-      : super(
-          builder: (context) => DeptPage(
-            item,
-          ),
-        );
+  ProgramListBodyRoute(Department dept)
+      : super(builder: (context) => DepartmentScreen(selectedDepartment: dept));
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

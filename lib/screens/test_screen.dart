@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
-import '../api.dart';
-import '../models/models.dart';
+import 'package:majorizer_ui/models/models.dart';
 import '../widgets/datatable_page.dart';
+import '../models/student_advisors.dart';
+import '../api.dart';
 
-class StudentManagerScreen extends StatefulWidget {
-  final pageName = 'Manage Students';
-
-  const StudentManagerScreen({super.key});
+class AdvisorScreen extends StatefulWidget {
+  const AdvisorScreen({super.key});
 
   @override
-  State<StudentManagerScreen> createState() => StudentManagerScreenState();
+  State<AdvisorScreen> createState() => AdvisorScreenState();
 }
 
-class StudentManagerScreenState extends State<StudentManagerScreen> {
-  late Future<List<AdvisorStudents>> advisorStudents;
+class AdvisorScreenState extends State<AdvisorScreen> {
+  late Future<List<StudentAdvisors>> studentAdvisors;
 
   @override
   void initState() {
     super.initState();
-    advisorStudents = getAdvisorStudents();
+    studentAdvisors = getStudentAdvisors();
   }
 
   @override
   Widget build(BuildContext context) {
     return DataTablePage(
-      pageName: widget.pageName,
+      pageName: 'Advisors',
       pageBody: Row(mainAxisSize: MainAxisSize.min, children: [
         Expanded(
-          child: FutureBuilder<List<AdvisorStudents>>(
-              future: advisorStudents,
+          child: FutureBuilder<List<StudentAdvisors>>(
+              future: studentAdvisors,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
