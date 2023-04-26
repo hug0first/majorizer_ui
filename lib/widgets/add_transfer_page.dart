@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:majorizer_ui/widgets/catalog_map.dart';
 import 'package:majorizer_ui/widgets/dropdown_button_lists.dart';
-import '../api/api.dart';
+import '../api.dart';
 import '../main.dart';
 import '../models/course_catalog.dart';
 import 'course_class.dart';

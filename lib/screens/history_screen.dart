@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/main_app_bar.dart';
 import '../widgets/side_menu.dart';
-import '../api/api.dart';
+import '../api.dart';
 import '../models/course_history.dart';
 
 class HistoryScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:majorizer_ui/models/course_catalog.dart';
 import 'package:majorizer_ui/widgets/course_class.dart';
-import '../api/api.dart';
+import '../api.dart';
 
 class CatalogMap {
   CatalogMap() {
