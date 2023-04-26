@@ -56,33 +56,35 @@ class StudentManagerScreen extends StatelessWidget {
               child: Container(
             height: 50,
             alignment: Alignment.bottomCenter,
-            child: Row(children: <Widget>[
-              const Spacer(flex: 1),
-              const Expanded(
+            child: Row(children: const <Widget>[
+              Spacer(flex: 1),
+              Expanded(
                   flex: 2,
                   child: Text('Name',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
+              Expanded(
                   flex: 2,
                   child: Text('Major',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
+              Expanded(
                   flex: 2,
                   child: Text('Advising Capacity',
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              const Expanded(
+              Expanded(
                   flex: 2,
                   child: Text('Email',
                       style: TextStyle(fontWeight: FontWeight.bold))),
             ]),
           )),
-          Container(width: 1250, child: const Divider(color: Colors.grey)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width * .82,
+              child: const Divider(color: Colors.grey)),
           Flexible(
             child: ListView.builder(
                 itemCount: students.length,
                 itemBuilder: (context, index) {
-                  return Container(
+                  return SizedBox(
                     height: 50,
                     child: Row(children: <Widget>[
                       const Spacer(flex: 1),
