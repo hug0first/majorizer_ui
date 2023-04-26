@@ -15,6 +15,7 @@ import 'widgets/new_build_screen.dart';
 import 'widgets/log_in_form.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'api.dart';
 
 void main() async {
   // Firebase 초기화

@@ -8,6 +8,7 @@ const String advisorStudentsEndpoint = 'advisor_students/';
 const String courseCatalogEndpoint = 'course_catalog/';
 const String courseHistoryEndpoint = 'course_history/';
 const String studentAdvisorsEndpoint = 'student_advisors/';
+const String scheduleBuilderEndpoint = 'schedule_builder/';
 
 Future<List<AdvisorStudents>> getAdvisorStudents() async {
   try {
@@ -74,6 +75,23 @@ Future<List<StudentAdvisors>> getStudentAdvisors() async {
         studentAdvisorsFromJson(response.body);
 
     return studentAdvisors;
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
+
+Future<List<Schedule>> getSchedule() async {
+  try {
+    final response = await http.get(
+      Uri.parse(urlBase + scheduleBuilderEndpoint),
+    );
+    String parsedResponse = response.body.replaceAll(RegExp(r'"{'), '{');
+    parsedResponse = parsedResponse.replaceAll(RegExp(r'}"'), '}');
+    parsedResponse = parsedResponse.replaceAll(RegExp(r'\\"'), '"');
+    List<Schedule> schedule = scheduleFromJson(parsedResponse);
+
+    return schedule;
   } catch (e) {
     print(e);
     return [];
