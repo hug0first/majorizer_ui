@@ -87,11 +87,7 @@ Future<List<Schedule>> getSchedule() async {
     final response = await http.get(
       Uri.parse(urlBase + scheduleBuilderEndpoint),
     );
-    String parsedResponse = response.body.replaceAll(RegExp(r'"{'), '{');
-    parsedResponse = parsedResponse.replaceAll(RegExp(r'}"'), '}');
-    parsedResponse = parsedResponse.replaceAll(RegExp(r'\\"'), '"');
-    List<Schedule> schedule = scheduleFromJson(parsedResponse);
-
+    List<Schedule> schedule = scheduleFromJson(response.body);
     return schedule;
   } catch (e) {
     print(e);
