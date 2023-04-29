@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:majorizer_ui/widgets/catalog_map.dart';
-import 'package:majorizer_ui/widgets/dropdown_button_lists.dart';
 import '../api.dart';
-import '../main.dart';
 import '../models/course_catalog.dart';
-import 'course_class.dart';
 import 'main_app_bar.dart';
 import 'side_menu.dart';
 
@@ -27,7 +23,6 @@ class TransferScreenState extends State<TransferScreen> {
       String currDept) async {
     catalog = await getCourseCatalog();
     List<DropdownMenuItem<String>> uniqueDepts = [];
-    List<DropdownMenuItem<String>> uniqueModules = [];
     List<DropdownMenuItem<String>> departments = [
       const DropdownMenuItem(
           value: "Select Department", child: Text("Select Department"))
@@ -99,8 +94,8 @@ class TransferScreenState extends State<TransferScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: screenWidth * .4,
-            height: screenHeight * .4,
+            width: screenWidth * .45,
+            height: screenHeight * .45,
             child: Container(
               decoration: BoxDecoration(
                 color: const Color(0xFFFFFFFF),
@@ -112,16 +107,24 @@ class TransferScreenState extends State<TransferScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Transfer Course Selection',
-                        style: TextStyle(
-                          color: const Color(0xFFda6237),
-                          fontWeight: FontWeight.w500,
-                          fontSize: screenWidth / 30,
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              screenWidth * 0.02, 0, screenWidth * 0.02, 0),
+                          child: Text(
+                            'Previously Taken Course Selection',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: const Color(0xFFda6237),
+                              fontWeight: FontWeight.w500,
+                              fontSize: screenWidth / 30,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
-                        width: screenWidth * .38,
+                        width: screenWidth * .42,
                         child: const Divider(
                           color: Colors.grey,
                         ),
@@ -230,7 +233,7 @@ class TransferScreenState extends State<TransferScreen> {
                       "Add course",
                       style: TextStyle(
                         color: const Color(0xFFFFFFFF),
-                        fontSize: screenWidth / 135,
+                        fontSize: screenWidth / 100,
                       ),
                     ),
                   ),

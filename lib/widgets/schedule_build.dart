@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/models/models.dart';
 import 'package:majorizer_ui/widgets/dropdown_button_lists.dart';
 import 'package:majorizer_ui/widgets/new_build_screen.dart';
 
@@ -14,8 +15,8 @@ import 'course_class.dart';
 
 class ScheduleBuildClass extends StatefulWidget {
   //ScheduleBuildState> {
-  ScheduleBuildClass();
-  ScheduleBuildClass.semesterNum(int semesterNum) {
+  //ScheduleBuildClass();
+  ScheduleBuildClass.semesterNum(this.semesterNum) {
     scheduleMap = mapInit();
     if (scheduleMap.containsKey(semesterNum)) {
       currSchedule = scheduleMap[semesterNum]!;
@@ -24,7 +25,45 @@ class ScheduleBuildClass extends StatefulWidget {
     }
   }
 
-  ListView scheduleBuild() {
+  Future<ListView> scheduleBuild(int scheduleVersion) async {
+    //use scheduleVersion to index from list of schedules
+    //use semesterNum to index from list of semesters in a schedule
+    //from there return list of courses from the data member
+    var scheduleList =
+        await scheduleFromJson(''); //am unsure what the arg should be???
+    Schedule schedule = scheduleList[scheduleVersion];
+    Sem currSemester = schedule.sems[semesterNum];
+    List<String> courseList = currSemester.courses;
+
+    return ListView.separated(
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: Text(
+              "courses value: ${courseList[index]}",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: MediaQuery.of(context).size.width / 60,
+                color: const Color(0xFFda6237),
+              ),
+            ),
+            trailing: Text(
+              "testing",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: MediaQuery.of(context).size.width / 65,
+              ),
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const Padding(
+            padding: EdgeInsets.only(bottom: 0),
+          );
+        },
+        itemCount: courseList.length);
+  }
+
+  /* ListView scheduleBuild() {
     return ListView.separated(
       separatorBuilder: (context, index) {
         return const Padding(
@@ -51,91 +90,6 @@ class ScheduleBuildClass extends StatefulWidget {
         );
       },
       itemCount: currSchedule.length,
-    );
-  }
-
-  /* Widget buildDropdowns(int semesterNum) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.white,
-              ),
-              child: DropdownButton<String>(
-                items: dropdownMenuItemClass().major1Items,
-                value: selectedItem,
-                onChanged: (String? newValue) {
-                  StudentBuildScreenState().setState(() {
-                    selectedItem = newValue!;
-                  });
-                },
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
-                dropdownColor: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-            dropdownScheduleButton(dropdownMenuItemClass().major2Items,
-                dropdownMenuItemClass().major2Items[0].value!),
-            dropdownScheduleButton(dropdownMenuItemClass().minor1Items,
-                dropdownMenuItemClass().minor1Items[0].value!),
-            dropdownScheduleButton(dropdownMenuItemClass().minor2Items,
-                dropdownMenuItemClass().minor2Items[0].value!),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            dropdownScheduleButton(dropdownMenuItemClass().studyAbroadItems,
-                dropdownMenuItemClass().studyAbroadItems[0].value!),
-            dropdownScheduleButton(dropdownMenuItemClass().coopItems,
-                dropdownMenuItemClass().coopItems[0].value!),
-            dropdownScheduleButton(dropdownMenuItemClass().graduationItems,
-                dropdownMenuItemClass().graduationItems[0].value!),
-            ElevatedButton(
-              onPressed: () {}, //api request
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFda6237),
-              ),
-              child: const Text("Build Schedule"),
-            ),
-          ],
-        ),
-        const Padding(
-          padding: EdgeInsets.all(15),
-        ),
-      ],
-    );
-  } */
-
-  /* Widget dropdownScheduleButton(
-      List<DropdownMenuItem<String>> items, String selected) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        color: Colors.white,
-      ),
-      child: DropdownButton<String>(
-        items: items,
-        value: selected,
-        onChanged: (String? newValue) {
-          /* setState(() {
-            selected = newValue!;
-          }); */
-        },
-        style: const TextStyle(
-          color: Colors.black,
-        ),
-        dropdownColor: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-      ),
     );
   } */
 
@@ -168,6 +122,7 @@ class ScheduleBuildClass extends StatefulWidget {
 
   late Map<int, List<Course>> scheduleMap;
   late List<Course> currSchedule;
+  int semesterNum;
 
   @override
   Widget build(BuildContext context) {

@@ -5,15 +5,11 @@ import 'home_screen.dart';
 class MajorMinorList extends State<HomeScreen> {
   List<String> majors = [
     'Computer Science',
-    'Mathematics',
-    'Chemistry',
-    'Psychology',
+    'Chemical Engineering',
   ];
 
   List<String> minors = [
-    'Computer Science',
     'Mathematics',
-    'Chemistry',
     'Psychology',
   ];
 
@@ -58,26 +54,6 @@ class MajorMinorList extends State<HomeScreen> {
       }
     }
     return possibleMinors;
-  }
-
-  TextFormField majorSearch() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Add Major',
-        hintText: 'Major Title',
-      ),
-      controller: majorTitleTextController,
-    );
-  }
-
-  TextFormField minorSearch() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Add Minor',
-        hintText: 'Minor Title',
-      ),
-      controller: minorTitleTextController,
-    );
   }
 
   @override

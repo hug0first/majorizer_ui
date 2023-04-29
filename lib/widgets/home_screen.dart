@@ -178,12 +178,21 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Column(
                                       children: <Widget>[
+                                        Text(
+                                          "Add A Major",
+                                          style: TextStyle(
+                                            fontSize: screenWidth / 60,
+                                            color: const Color(0xFFda6237),
+                                          ),
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
                                               4.5,
-                                          child: MajorMinorList().majorSearch(),
+                                          child: const Divider(
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
@@ -309,12 +318,21 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Column(
                                       children: <Widget>[
+                                        Text(
+                                          "Add A Minor",
+                                          style: TextStyle(
+                                            fontSize: screenWidth / 60,
+                                            color: const Color(0xFFda6237),
+                                          ),
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
                                               4.5,
-                                          child: MajorMinorList().minorSearch(),
+                                          child: const Divider(
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)

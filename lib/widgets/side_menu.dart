@@ -77,7 +77,7 @@ Widget sideMenu(BuildContext context) {
         ),
         ListTile(
           title: const Text(
-            'Add Transfer Credit',
+            'Add Previously Taken Course',
             style: TextStyle(color: Color(0xFFda6237)),
           ),
           onTap: () {

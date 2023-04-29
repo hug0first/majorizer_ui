@@ -18,6 +18,8 @@ class StudentBuildScreen extends StatefulWidget {
 class StudentBuildScreenState extends State<StudentBuildScreen> {
   StudentBuildScreenState();
 
+  late ListView builtSchedule;
+  late var scheduleView;
   int semesterNum = 1;
   int scheduleVersion = 1;
   bool showSchedule = false;
@@ -73,6 +75,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMajor1 = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -87,6 +90,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMajor2 = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -101,6 +105,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMinor1 = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -115,6 +120,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMinor2 = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -135,6 +141,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCoop = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -149,6 +156,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedStudyAbroad = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -163,6 +171,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedGraduation = newValue!;
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               },
                               style: const TextStyle(
@@ -176,6 +185,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                 setState(() {
                                   showSchedule =
                                       true; //Shows the schedule once user clicks build schedule button
+                                  scheduleView = scheduleViewBuilder();
                                 });
                               }, //TODO: api request
                               style: ElevatedButton.styleFrom(
@@ -191,6 +201,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                     onChanged: (int? newValue) {
                                       setState(() {
                                         scheduleVersion = newValue!;
+                                        scheduleView = scheduleViewBuilder();
                                       });
                                     },
                                     style: const TextStyle(
@@ -209,11 +220,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               color: Colors.grey,
                             )),
                         Expanded(
-                          child:
-                              showSchedule //hides schedule until user presses build schedule button
-                                  ? ScheduleBuildClass.semesterNum(semesterNum)
-                                      .scheduleBuild()
-                                  : Container(),
+                          child: showSchedule //hides schedule until user presses build schedule button
+                              ? scheduleView
+
+                              /* ScheduleBuildClass.semesterNum(semesterNum)
+                                      .scheduleBuild() */
+                              : Container(),
                         ),
                       ],
                     ),
@@ -225,6 +237,30 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
         ],
       ),
     );
+  }
+
+  FutureBuilder scheduleViewBuilder() {
+    return FutureBuilder(
+        future: ScheduleBuildClass.semesterNum(semesterNum)
+            .scheduleBuild(scheduleVersion)
+            .then((value) => builtSchedule = value),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(
+              color: Color(0xFFFFFFFF),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
+              return builtSchedule;
+            } else {
+              return const Text('Empty data');
+            }
+          } else {
+            return Text('State: ${snapshot.connectionState}');
+          }
+        });
   }
 
   void updateSemester(int num) {
