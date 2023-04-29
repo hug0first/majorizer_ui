@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/models/models.dart';
+import 'package:majorizer_ui/widgets/size_config.dart';
 import 'package:majorizer_ui/widgets/student_build_screen.dart';
 import 'dropdown_button_lists.dart';
 import 'main_app_bar.dart';
@@ -19,9 +21,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   StudentBuildScreenState();
 
   late ListView builtSchedule;
+  late List<ListView> semesterList;
+  late List<Schedule> allSchedules;
   late var scheduleView;
   int semesterNum = 1;
   int scheduleVersion = 1;
+  int numSemesters = 1;
   bool showSchedule = false;
   String selectedMajor1 = 'Major 1';
   String selectedMajor2 = 'Major 2';
@@ -185,9 +190,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                 setState(() {
                                   showSchedule =
                                       true; //Shows the schedule once user clicks build schedule button
+                                  ScheduleBuildClass.semesterNum(semesterNum)
+                                      .initSchedules()
+                                      .then((value) => allSchedules = value);
                                   scheduleView = scheduleViewBuilder();
                                 });
-                              }, //TODO: api request
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFda6237),
                               ),
@@ -241,19 +249,21 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
   FutureBuilder scheduleViewBuilder() {
     return FutureBuilder(
-        future: ScheduleBuildClass.semesterNum(semesterNum)
-            .scheduleBuild(scheduleVersion)
-            .then((value) => builtSchedule = value),
+        future: ScheduleBuildClass.semesterNum(semesterNum).initSchedules(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator(
-              color: Color(0xFFFFFFFF),
+              color: Color(0xFFda6237),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
-              return builtSchedule;
+              numSemesters = ScheduleBuildClass.semesterNum(semesterNum)
+                  .numberOfSemesters(
+                      semesterNum, scheduleVersion, allSchedules);
+              return ScheduleBuildClass.semesterNum(semesterNum)
+                  .scheduleBuild(semesterNum, scheduleVersion, allSchedules);
             } else {
               return const Text('Empty data');
             }
@@ -264,7 +274,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   }
 
   void updateSemester(int num) {
-    if (0 < (semesterNum + num) && (semesterNum + num) < 9) {
+    if (0 < (semesterNum + num) && (semesterNum + num) < numSemesters) {
       setState(() {
         semesterNum += num;
       });

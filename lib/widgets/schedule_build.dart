@@ -3,6 +3,7 @@ import 'package:majorizer_ui/models/models.dart';
 import 'package:majorizer_ui/widgets/dropdown_button_lists.dart';
 import 'package:majorizer_ui/widgets/new_build_screen.dart';
 
+import '../api.dart';
 import 'course_class.dart';
 //import 'course_class.dart';
 
@@ -25,34 +26,57 @@ class ScheduleBuildClass extends StatefulWidget {
     }
   }
 
-  Future<ListView> scheduleBuild(int scheduleVersion) async {
+  Future<List<Schedule>> initSchedules() async {
+    return await getSchedule();
+  }
+
+  int numberOfSemesters(
+      int semesterNum, int scheduleVersion, List<Schedule> allSchedules) {
+    Schedule schedule = allSchedules[scheduleVersion - 1];
+    Sem semester = schedule.sems[semesterNum];
+    return semester.courses.length;
+  }
+
+  Future<String> getCourseName(String courseID) async {
+    var catalog = await getCourseCatalog();
+    for (CourseCatalog course in catalog) {
+      if (course.courseid == courseID) return course.coursename;
+    }
+    return 'No Course Name Available';
+  }
+
+  ListView scheduleBuild(
+      int semesterNum, int scheduleVersion, List<Schedule> allSchedules) {
     //use scheduleVersion to index from list of schedules
     //use semesterNum to index from list of semesters in a schedule
     //from there return list of courses from the data member
-    var scheduleList =
-        await scheduleFromJson(''); //am unsure what the arg should be???
-    Schedule schedule = scheduleList[scheduleVersion];
-    Sem currSemester = schedule.sems[semesterNum];
-    List<String> courseList = currSemester.courses;
+    String courseName = '';
+    Schedule schedule = allSchedules[scheduleVersion - 1];
+    Sem semester = schedule.sems[semesterNum];
 
     return ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Text(
-              "courses value: ${courseList[index]}",
+              semester.courses[index],
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: MediaQuery.of(context).size.width / 60,
                 color: const Color(0xFFda6237),
               ),
             ),
-            trailing: Text(
-              "testing",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: MediaQuery.of(context).size.width / 65,
-              ),
-            ),
+            trailing: FutureBuilder(
+                future: getCourseName(semester.courses[index])
+                    .then((value) => courseName = value),
+                builder: ((context, snapshot) {
+                  return Text(
+                    courseName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: MediaQuery.of(context).size.width / 65,
+                    ),
+                  );
+                })),
           );
         },
         separatorBuilder: (context, index) {
@@ -60,7 +84,7 @@ class ScheduleBuildClass extends StatefulWidget {
             padding: EdgeInsets.only(bottom: 0),
           );
         },
-        itemCount: courseList.length);
+        itemCount: semester.courses.length);
   }
 
   /* ListView scheduleBuild() {
