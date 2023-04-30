@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
 
 class dropdownMenuItemClass {
-  List<DropdownMenuItem<int>> get scheduleVersionItems {
-    List<DropdownMenuItem<int>> items = List.generate(
-        120,
-        (index) =>
-            DropdownMenuItem(value: index + 1, child: Text('${index + 1}')));
-    return items;
-  }
-
   List<DropdownMenuItem<String>> get major1Items {
     List<DropdownMenuItem<String>> items = [
       const DropdownMenuItem(value: "Major 1", child: Text("Major 1")),
       const DropdownMenuItem(
           value: "Computer Science", child: Text("Computer Science")),
-      const DropdownMenuItem(value: "Mathematics", child: Text("Mathematics")),
-      const DropdownMenuItem(value: "Chemistry", child: Text("Chemistry")),
-      const DropdownMenuItem(value: "Psychology", child: Text("Psychology")),
       const DropdownMenuItem(
           value: "Chemical Engineering", child: Text("Chemical Engineering")),
     ];
@@ -32,9 +21,6 @@ class dropdownMenuItemClass {
       const DropdownMenuItem(value: "Major 2", child: Text("Major 2")),
       const DropdownMenuItem(
           value: "Computer Science", child: Text("Computer Science")),
-      const DropdownMenuItem(value: "Mathematics", child: Text("Mathematics")),
-      const DropdownMenuItem(value: "Chemistry", child: Text("Chemistry")),
-      const DropdownMenuItem(value: "Psychology", child: Text("Psychology")),
       const DropdownMenuItem(
           value: "Chemical Engineering", child: Text("Chemical Engineering")),
     ];
@@ -45,13 +31,8 @@ class dropdownMenuItemClass {
   List<DropdownMenuItem<String>> get minor1Items {
     List<DropdownMenuItem<String>> items = [
       const DropdownMenuItem(value: "Minor 1", child: Text("Minor 1")),
-      const DropdownMenuItem(
-          value: "Computer Science", child: Text("Computer Science")),
       const DropdownMenuItem(value: "Mathematics", child: Text("Mathematics")),
-      const DropdownMenuItem(value: "Chemistry", child: Text("Chemistry")),
       const DropdownMenuItem(value: "Psychology", child: Text("Psychology")),
-      const DropdownMenuItem(
-          value: "Chemical Engineering", child: Text("Chemical Engineering")),
     ];
     return items;
   }
@@ -59,13 +40,8 @@ class dropdownMenuItemClass {
   List<DropdownMenuItem<String>> get minor2Items {
     List<DropdownMenuItem<String>> items = [
       const DropdownMenuItem(value: "Minor 2", child: Text("Minor 2")),
-      const DropdownMenuItem(
-          value: "Computer Science", child: Text("Computer Science")),
       const DropdownMenuItem(value: "Mathematics", child: Text("Mathematics")),
-      const DropdownMenuItem(value: "Chemistry", child: Text("Chemistry")),
       const DropdownMenuItem(value: "Psychology", child: Text("Psychology")),
-      const DropdownMenuItem(
-          value: "Chemical Engineering", child: Text("Chemical Engineering")),
     ];
     return items;
   }

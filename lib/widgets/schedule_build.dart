@@ -26,8 +26,9 @@ class ScheduleBuildClass extends StatefulWidget {
     }
   }
 
-  Future<List<Schedule>> initSchedules() async {
-    return await getSchedule();
+  Future<List<Schedule>> initSchedules(
+      bool isChanged, List<Schedule> allSchedules) async {
+    return isChanged ? await getSchedule() : allSchedules;
   }
 
   int numberOfSemesters(
@@ -35,6 +36,10 @@ class ScheduleBuildClass extends StatefulWidget {
     Schedule schedule = allSchedules[scheduleVersion - 1];
     Sem semester = schedule.sems[semesterNum];
     return semester.courses.length;
+  }
+
+  int numberOfSchedules(List<Schedule> allSchedules) {
+    return allSchedules.length;
   }
 
   Future<String> getCourseName(String courseID) async {

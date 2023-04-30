@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/main.dart';
 import 'package:majorizer_ui/models/models.dart';
 import 'package:majorizer_ui/widgets/size_config.dart';
 import 'package:majorizer_ui/widgets/student_build_screen.dart';
@@ -22,19 +23,31 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
   late ListView builtSchedule;
   late List<ListView> semesterList;
-  late List<Schedule> allSchedules;
+  late List<Schedule> allSchedules = [];
   late var scheduleView;
   int semesterNum = 1;
   int scheduleVersion = 1;
   int numSemesters = 1;
+  late int numSchedules;
   bool showSchedule = false;
-  String selectedMajor1 = 'Major 1';
-  String selectedMajor2 = 'Major 2';
-  String selectedMinor1 = 'Minor 1';
-  String selectedMinor2 = 'Minor 2';
+  bool scheduleIsChanged = true;
+  String selectedMajor1 = (currMajors.isEmpty) ? 'Major 1' : currMajors[0];
+  String selectedMajor2 = (currMajors.length < 2) ? 'Major 2' : currMajors[1];
+  String selectedMinor1 = (currMinors.isEmpty) ? 'Minor 1' : currMinors[0];
+  String selectedMinor2 = (currMinors.length < 2) ? 'Minor 2' : currMinors[1];
   String selectedCoop = 'Coop Term';
   String selectedStudyAbroad = 'Study Abroad Term';
   String selectedGraduation = 'Graduation Term';
+
+  List<DropdownMenuItem<int>> get scheduleVersionItems {
+    List<DropdownMenuItem<int>> items = List.generate(
+        numSchedules,
+        (index) =>
+            DropdownMenuItem(value: index + 1, child: Text('${index + 1}')));
+    return items;
+  }
+
+  var scheduleVersionDropdown;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +93,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMajor1 = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -95,7 +108,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMajor2 = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -110,7 +123,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMinor1 = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -125,7 +138,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedMinor2 = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -146,7 +159,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCoop = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -161,7 +174,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedStudyAbroad = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -176,7 +189,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedGraduation = newValue!;
-                                  scheduleView = scheduleViewBuilder();
+                                  scheduleView = scheduleViewBuilder(false);
                                 });
                               },
                               style: const TextStyle(
@@ -190,10 +203,11 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                 setState(() {
                                   showSchedule =
                                       true; //Shows the schedule once user clicks build schedule button
-                                  ScheduleBuildClass.semesterNum(semesterNum)
-                                      .initSchedules()
-                                      .then((value) => allSchedules = value);
-                                  scheduleView = scheduleViewBuilder();
+                                  /* ScheduleBuildClass.semesterNum(semesterNum)
+                                      .initSchedules(
+                                          true, allSchedules)
+                                      .then((value) => allSchedules = value); */
+                                  scheduleView = scheduleViewBuilder(true);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -202,22 +216,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               child: const Text("Build Schedule"),
                             ),
                             showSchedule //hides dropdown if not built
-                                ? DropdownButton<int>(
-                                    items: dropdownMenuItemClass()
-                                        .scheduleVersionItems,
-                                    value: scheduleVersion,
-                                    onChanged: (int? newValue) {
-                                      setState(() {
-                                        scheduleVersion = newValue!;
-                                        scheduleView = scheduleViewBuilder();
-                                      });
-                                    },
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    dropdownColor: Colors.white,
-                                    borderRadius: BorderRadius.circular(30),
-                                  )
+                                ? scheduleVersionDropdown
                                 : Container(),
                           ],
                         ),
@@ -247,9 +246,11 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
     );
   }
 
-  FutureBuilder scheduleViewBuilder() {
-    return FutureBuilder(
-        future: ScheduleBuildClass.semesterNum(semesterNum).initSchedules(),
+  FutureBuilder scheduleViewBuilder(bool scheduleIsChanged) {
+    FutureBuilder scheduleView = FutureBuilder(
+        future: ScheduleBuildClass.semesterNum(semesterNum)
+            .initSchedules(scheduleIsChanged, allSchedules)
+            .then((value) => allSchedules = value),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator(
@@ -271,6 +272,32 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
             return Text('State: ${snapshot.connectionState}');
           }
         });
+    setNumSchedules(ScheduleBuildClass.semesterNum(semesterNum)
+        .numberOfSchedules(allSchedules));
+    return scheduleView;
+  }
+
+  void setNumSchedules(int num) {
+    //still doesn't properly update the dropdown
+    setState(() {
+      numSchedules = num;
+      scheduleVersionDropdown = DropdownButton<int>(
+        items: scheduleVersionItems,
+        value: scheduleVersion,
+        onChanged: (int? newValue) {
+          setState(() {
+            scheduleVersion = newValue!;
+
+            scheduleView = scheduleViewBuilder(false);
+          });
+        },
+        style: const TextStyle(
+          color: Colors.black,
+        ),
+        dropdownColor: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+      );
+    });
   }
 
   void updateSemester(int num) {

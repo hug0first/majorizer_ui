@@ -119,7 +119,7 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                     SizedBox(
                                       width: screenWidth / 3.3,
-                                      height: screenHeight / 8,
+                                      height: screenHeight / 6,
                                       child: ListView.separated(
                                         separatorBuilder: (context, index) =>
                                             SizedBox(
@@ -132,7 +132,7 @@ class HomeScreenState extends State<HomeScreen> {
                                             title: Text(
                                               currMajors[index],
                                               style: TextStyle(
-                                                fontSize: screenWidth / 50,
+                                                fontSize: screenWidth / 60,
                                               ),
                                             ),
                                             trailing: IconButton(
@@ -202,7 +202,7 @@ class HomeScreenState extends State<HomeScreen> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              .25,
+                                              .21,
                                           child: ListView(
                                             //children: MajorMinorList().possibleMajorListTiles(),
                                             children: possibleMajorListTiles(),
@@ -259,7 +259,7 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                     SizedBox(
                                       width: screenWidth / 3.3,
-                                      height: screenHeight / 8,
+                                      height: screenHeight / 6,
                                       child: ListView.separated(
                                         separatorBuilder: (context, index) =>
                                             SizedBox(
@@ -272,7 +272,7 @@ class HomeScreenState extends State<HomeScreen> {
                                             title: Text(
                                               currMinors[index],
                                               style: TextStyle(
-                                                fontSize: screenWidth / 50,
+                                                fontSize: screenWidth / 60,
                                               ),
                                             ),
                                             trailing: IconButton(
@@ -342,7 +342,7 @@ class HomeScreenState extends State<HomeScreen> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              .25,
+                                              .21,
                                           child: ListView(
                                             children: possibleMinorListTiles(),
                                           ),

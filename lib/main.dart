@@ -28,10 +28,10 @@ String emailAdrs = "";
 List<String> currMajors = ['Computer Science'];
 List<String> currMinors = ['Psychology'];
 
-String currMajor = 'Computer Science';
-String currMajor2 = '';
-String currMinor = 'Psychology';
-String currMinor2 = '';
+String currMajor = (currMajors.isNotEmpty) ? currMajors[0] : '';
+String currMajor2 = (currMajors.length >= 2) ? currMajors[1] : '';
+String currMinor = (currMinors.isNotEmpty) ? currMinors[0] : '';
+String currMinor2 = (currMinors.length >= 2) ? currMinors[1] : '';
 
 class Majorizer extends StatelessWidget {
   Majorizer();
