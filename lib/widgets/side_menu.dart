@@ -5,9 +5,9 @@ Widget sideMenu(BuildContext context) {
     child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
-        const DrawerHeader(
+        DrawerHeader(
           decoration: BoxDecoration(
-            color: Color(0xFFda6237),
+            color: Theme.of(context).colorScheme.secondary,
           ),
           child: Text(
             'Majorizer Navigation', //Temporary title
@@ -19,18 +19,18 @@ Widget sideMenu(BuildContext context) {
         ),
         ListTile(
           //leading: Icon(Icons.message),
-          title: const Text(
+          title: Text(
             'Advisor Manager',
-            style: TextStyle(color: Color(0xFFda6237)),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           onTap: () {
             Navigator.of(context).pushNamed('/advisorManager');
           },
         ),
         ListTile(
-          title: const Text(
+          title: Text(
             'Student Manager',
-            style: TextStyle(color: Color(0xFFda6237)),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           onTap: () {
             Navigator.of(context).pushNamed('/studentManager');
@@ -38,10 +38,10 @@ Widget sideMenu(BuildContext context) {
         ),
         ListTile(
           //leading: Icon(Icons.account_circle),
-          title: const Text(
+          title: Text(
             'Course History',
             style: TextStyle(
-              color: Color(0xFFda6237),
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onTap: () {
@@ -49,36 +49,36 @@ Widget sideMenu(BuildContext context) {
           },
         ),
         ListTile(
-          title: const Text(
+          title: Text(
             'Schedule Builder',
-            style: TextStyle(color: Color(0xFFda6237)),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           onTap: () {
             Navigator.of(context).pushNamed('/studentBuild');
           },
         ),
         ListTile(
-          title: const Text(
+          title: Text(
             'Course Catalog',
-            style: TextStyle(color: Color(0xFFda6237)),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           onTap: () {
             Navigator.of(context).pushNamed('/catalog');
           },
         ),
         ListTile(
-          title: const Text(
+          title: Text(
             'Admin Advisor View',
-            style: TextStyle(color: Color(0xFFda6237)),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           onTap: () {
             Navigator.of(context).pushNamed('/adminAdvisor');
           },
         ),
         ListTile(
-          title: const Text(
+          title: Text(
             'Add Previously Taken Course',
-            style: TextStyle(color: Color(0xFFda6237)),
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           onTap: () {
             Navigator.of(context).pushNamed('/addTransfer');

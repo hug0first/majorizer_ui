@@ -222,7 +222,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color(0xFFF3956F),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
@@ -335,12 +335,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                     padding: const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 16.0),
                     child: Column(
                       children: <Widget>[
-                        const FittedBox(
+                        FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
                             "Add to Selected Semester",
                             style: TextStyle(
-                              color: Color(0xFFda6237),
+                              color: Theme.of(context).colorScheme.secondary,
                               fontSize: 36.0,
                               fontWeight: FontWeight.w500,
                             ),
@@ -555,7 +555,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFda6237),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
                             ),
                             child: const Text("Build Schedule"),
                           ),
@@ -594,7 +595,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFFda6237),
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.secondary,
                                     shape: const CircleBorder(),
                                   ),
                                   child: const Icon(
@@ -608,7 +610,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFFda6237),
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.secondary,
                                     shape: const CircleBorder(),
                                   ),
                                   child: const Icon(Icons.arrow_right),
@@ -650,7 +653,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: MediaQuery.of(context).size.width / 60,
-              color: const Color(0xFFda6237),
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           trailing: Text(

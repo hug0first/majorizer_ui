@@ -83,7 +83,7 @@ class TransferScreenState extends State<TransferScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color(0xFFF3956F),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
@@ -116,7 +116,7 @@ class TransferScreenState extends State<TransferScreen> {
                             'Previously Taken Course Selection',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: const Color(0xFFda6237),
+                              color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.w500,
                               fontSize: screenWidth / 30,
                             ),
@@ -217,7 +217,7 @@ class TransferScreenState extends State<TransferScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: screenWidth / 65,
-                          color: const Color(0xFFda6237),
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ],
@@ -227,7 +227,7 @@ class TransferScreenState extends State<TransferScreen> {
                         ? () {}
                         : null, //post request to database if module selected
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: const Color(0xFFda6237),
+                      foregroundColor: Theme.of(context).colorScheme.secondary,
                     ),
                     child: Text(
                       "Add course",

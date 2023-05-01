@@ -76,7 +76,7 @@ class Majorizer extends StatelessWidget {
           dataTableTheme: const DataTableThemeData(
             headingRowHeight: 80,
             headingTextStyle: TextStyle(
-              color: Color(0xFFda6237),
+              color: Color(0xFFF3956F),
               fontSize: 35,
               fontWeight: FontWeight.bold,
             ),

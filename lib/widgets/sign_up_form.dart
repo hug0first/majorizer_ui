@@ -6,9 +6,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFF3956F),
-      body: Center(
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      body: const Center(
         child: SizedBox(
           width: 400,
           child: Card(
@@ -113,7 +113,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   (Set<MaterialState> states) {
                 return states.contains(MaterialState.disabled)
                     ? null
-                    : const Color(0xFFda6237);
+                    : Theme.of(context).colorScheme.secondary;
               }),
             ),
             onPressed: _formProgress == 1 ? _showHomeScreen : null,

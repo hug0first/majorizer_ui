@@ -67,7 +67,7 @@ class ScheduleBuildClass extends StatefulWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: MediaQuery.of(context).size.width / 60,
-                color: const Color(0xFFda6237),
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             trailing: FutureBuilder(
@@ -106,7 +106,7 @@ class ScheduleBuildClass extends StatefulWidget {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: MediaQuery.of(context).size.width / 60,
-              color: const Color(0xFFda6237),
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           trailing: Text(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../api.dart';
 import '../models/models.dart';
 import '../widgets/datatable_page.dart';
 import '../widgets/department.dart';
@@ -34,7 +33,7 @@ class DepartmentScreenState extends State<DepartmentScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             //border:
-            //Border.all(color: const Color(0xFFF3956F), width: 4),
+            //Border.all(color: const Theme.of(context).colorScheme.primary, width: 4),
             color: Colors.white,
           ),
           child: Row(
@@ -127,10 +126,10 @@ class CourseCard extends StatelessWidget {
               ],
             )),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        collapsedBackgroundColor: const Color(0xFFF3956F),
-        backgroundColor: const Color(0xFFF3956F),
+        collapsedBackgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         collapsedIconColor: Colors.white,
-        iconColor: Colors.white,
+        iconColor: Theme.of(context).colorScheme.background,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
