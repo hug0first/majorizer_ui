@@ -66,7 +66,7 @@ class ScheduleBuildClass extends StatefulWidget {
               semester.courses[index],
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: MediaQuery.of(context).size.width / 60,
+                fontSize: MediaQuery.of(context).size.width / 45,
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
@@ -78,16 +78,24 @@ class ScheduleBuildClass extends StatefulWidget {
                     courseName,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: MediaQuery.of(context).size.width / 65,
+                      fontSize: MediaQuery.of(context).size.width / 45,
                     ),
                   );
                 })),
           );
         },
         separatorBuilder: (context, index) {
-          return const Padding(
+          return SizedBox(
+            width: MediaQuery.of(context).size.width * .8,
+            child: Divider(
+              color: Colors.grey,
+            ),
+          )
+
+              /* const Padding(
             padding: EdgeInsets.only(bottom: 0),
-          );
+          ) */
+              ;
         },
         itemCount: semester.courses.length);
   }
