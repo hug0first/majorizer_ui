@@ -39,14 +39,6 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   String selectedStudyAbroad = 'Study Abroad Term';
   String selectedGraduation = 'Graduation Term';
 
-  List<DropdownMenuItem<int>> get scheduleVersionItems {
-    List<DropdownMenuItem<int>> items = List.generate(
-        numSchedules,
-        (index) =>
-            DropdownMenuItem(value: index + 1, child: Text('${index + 1}')));
-    return items;
-  }
-
   Widget scheduleVersionDropdown = Container();
 
   @override
@@ -67,13 +59,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Column(),
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
                 height: screenHeight * .8,
-                width: screenWidth * .6,
+                width: screenWidth * .9,
                 child: Container(
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFFFFF),
@@ -223,9 +214,9 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         ),
                         semesterRow(),
                         SizedBox(
-                            width: screenWidth * .5,
+                            width: screenWidth * .875,
                             child: const Divider(
-                              color: Colors.grey,
+                              color: Colors.black,
                             )),
                         Expanded(
                           child:
@@ -252,8 +243,16 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
             .then((value) => allSchedules = value),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.secondary,
+            return Container(
+              width: 200.0,
+              height: 200.0,
+              alignment: Alignment.center,
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -332,14 +331,23 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(
-            "Semester $semesterNum",
-            style: const TextStyle(
-              fontSize: 42.0,
-              fontWeight: FontWeight.w500,
-              height: 1.1,
-            ),
-          ),
+          (showSchedule)
+              ? Text(
+                  "Semester $semesterNum",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * .025,
+                    fontWeight: FontWeight.w500,
+                    height: 1.1,
+                  ),
+                )
+              : Text(
+                  "Semester -",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * .025,
+                    fontWeight: FontWeight.w500,
+                    height: 1.1,
+                  ),
+                ),
           Row(
             children: <Widget>[
               IconButton(
@@ -351,14 +359,17 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                 icon: const Icon(Icons.arrow_left),
               ),
               IconButton(
-                onPressed: () {
-                  numSemesters = ScheduleBuildClass.semesterNum(semesterNum)
-                      .numberOfSemesters(
-                          semesterNum, scheduleVersion, allSchedules);
+                onPressed: (showSchedule)
+                    ? () {
+                        numSemesters =
+                            ScheduleBuildClass.semesterNum(semesterNum)
+                                .numberOfSemesters(
+                                    semesterNum, scheduleVersion, allSchedules);
 
-                  updateSemester(1);
-                  print(numSemesters);
-                },
+                        updateSemester(1);
+                        print(numSemesters);
+                      }
+                    : null,
                 icon: const Icon(Icons.arrow_right),
               ),
             ],
