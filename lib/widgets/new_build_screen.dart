@@ -47,7 +47,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
     return items;
   }
 
-  var scheduleVersionDropdown;
+  Widget scheduleVersionDropdown = Container();
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +216,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               child: const Text("Build Schedule"),
                             ),
                             showSchedule //hides dropdown if not built
-                                ? scheduleVersionDropdown
+                                ? scheduleSelection()
                                 : Container(),
                           ],
                         ),
@@ -227,12 +227,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               color: Colors.grey,
                             )),
                         Expanded(
-                          child: showSchedule //hides schedule until user presses build schedule button
-                              ? scheduleView
-
-                              /* ScheduleBuildClass.semesterNum(semesterNum)
-                                      .scheduleBuild() */
-                              : Container(),
+                          child:
+                              showSchedule //hides schedule until user presses build schedule button
+                                  ? scheduleView
+                                  : Container(),
                         ),
                       ],
                     ),
@@ -263,6 +261,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
               numSemesters = ScheduleBuildClass.semesterNum(semesterNum)
                   .numberOfSemesters(
                       semesterNum, scheduleVersion, allSchedules);
+
               return ScheduleBuildClass.semesterNum(semesterNum)
                   .scheduleBuild(semesterNum, scheduleVersion, allSchedules);
             } else {
@@ -272,36 +271,54 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
             return Text('State: ${snapshot.connectionState}');
           }
         });
-    setNumSchedules(ScheduleBuildClass.semesterNum(semesterNum)
-        .numberOfSchedules(allSchedules));
+
     return scheduleView;
   }
 
-  void setNumSchedules(int num) {
+  Widget scheduleSelection() {
     //still doesn't properly update the dropdown
-    setState(() {
-      numSchedules = num;
-      scheduleVersionDropdown = DropdownButton<int>(
-        items: scheduleVersionItems,
-        value: scheduleVersion,
-        onChanged: (int? newValue) {
-          setState(() {
-            scheduleVersion = newValue!;
 
-            scheduleView = scheduleViewBuilder(false);
-          });
-        },
-        style: const TextStyle(
-          color: Colors.black,
+    numSchedules = ScheduleBuildClass.semesterNum(semesterNum)
+        .numberOfSchedules(allSchedules);
+
+    return Row(
+      children: <Widget>[
+        IconButton(
+          onPressed: (scheduleVersion > 1)
+              ? () {
+                  setState(() {
+                    scheduleVersion--;
+                    numSemesters = ScheduleBuildClass.semesterNum(semesterNum)
+                        .numberOfSemesters(
+                            semesterNum, scheduleVersion, allSchedules);
+                    if (semesterNum > numSemesters) semesterNum = numSemesters;
+                  });
+                }
+              : null,
+          icon: const Icon(Icons.arrow_left),
         ),
-        dropdownColor: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-      );
-    });
+        Text("Schedule $scheduleVersion"),
+        IconButton(
+          onPressed: () {
+            numSchedules = ScheduleBuildClass.semesterNum(semesterNum)
+                .numberOfSchedules(allSchedules);
+
+            setState(() {
+              (scheduleVersion < numSchedules) ? scheduleVersion++ : null;
+              numSemesters = ScheduleBuildClass.semesterNum(semesterNum)
+                  .numberOfSemesters(
+                      semesterNum, scheduleVersion, allSchedules);
+              semesterNum = 1;
+            });
+          },
+          icon: const Icon(Icons.arrow_right),
+        ),
+      ],
+    );
   }
 
   void updateSemester(int num) {
-    if (0 < (semesterNum + num) && (semesterNum + num) < numSemesters) {
+    if ((semesterNum + num) <= numSemesters) {
       setState(() {
         semesterNum += num;
       });
@@ -325,14 +342,21 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
           Row(
             children: <Widget>[
               IconButton(
-                onPressed: () {
-                  updateSemester(-1);
-                },
+                onPressed: (semesterNum > 1)
+                    ? () {
+                        updateSemester(-1);
+                      }
+                    : null,
                 icon: const Icon(Icons.arrow_left),
               ),
               IconButton(
                 onPressed: () {
+                  numSemesters = ScheduleBuildClass.semesterNum(semesterNum)
+                      .numberOfSemesters(
+                          semesterNum, scheduleVersion, allSchedules);
+
                   updateSemester(1);
+                  print(numSemesters);
                 },
                 icon: const Icon(Icons.arrow_right),
               ),
