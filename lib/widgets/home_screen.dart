@@ -35,7 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color(0xFFF3956F),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
@@ -64,11 +64,11 @@ class HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: screenWidth / 10,
                           fontFamily: 'Montserrat',
-                          shadows: const <Shadow>[
+                          shadows: <Shadow>[
                             Shadow(
                               offset: Offset(4.0, 4.0),
                               blurRadius: 5.0,
-                              color: Color.fromARGB(120, 0, 0, 0),
+                              color: Theme.of(context).colorScheme.onBackground,
                             ),
                           ],
                         ),
@@ -105,7 +105,9 @@ class HomeScreenState extends State<HomeScreen> {
                                       "Current Major(s)",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        color: const Color(0xFFda6237),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         fontSize: screenWidth / 32,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
@@ -182,7 +184,9 @@ class HomeScreenState extends State<HomeScreen> {
                                           "Add A Major",
                                           style: TextStyle(
                                             fontSize: screenWidth / 60,
-                                            color: const Color(0xFFda6237),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                           ),
                                         ),
                                         SizedBox(
@@ -245,7 +249,9 @@ class HomeScreenState extends State<HomeScreen> {
                                       "Current Minor(s)",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        color: const Color(0xFFda6237),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         fontSize: screenWidth / 32,
                                         fontWeight: FontWeight.w500,
                                         height: 1.5,
@@ -322,7 +328,9 @@ class HomeScreenState extends State<HomeScreen> {
                                           "Add A Minor",
                                           style: TextStyle(
                                             fontSize: screenWidth / 60,
-                                            color: const Color(0xFFda6237),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                           ),
                                         ),
                                         SizedBox(
@@ -380,7 +388,7 @@ class HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Current Courses",
                         style: TextStyle(
-                          color: const Color(0xFFda6237),
+                          color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.w500,
                           fontSize: screenWidth / 30,
                         ),
@@ -402,7 +410,8 @@ class HomeScreenState extends State<HomeScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: screenWidth / 60,
-                                    color: const Color(0xFFda6237),
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                                 trailing: Text(
@@ -444,7 +453,7 @@ class HomeScreenState extends State<HomeScreen> {
             });
           },
           icon: const Icon(Icons.add),
-          color: const Color(0xFFda6237),
+          color: Theme.of(context).colorScheme.secondary,
           style: IconButton.styleFrom(
             backgroundColor: Colors.white,
           ),
@@ -467,7 +476,7 @@ class HomeScreenState extends State<HomeScreen> {
         trailing: IconButton(
           onPressed: () => addToCurrMinors(minor),
           icon: const Icon(Icons.add),
-          color: const Color(0xFFda6237),
+          color: Theme.of(context).colorScheme.secondary,
           style: IconButton.styleFrom(
             backgroundColor: Colors.white,
           ),

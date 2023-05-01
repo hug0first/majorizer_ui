@@ -45,8 +45,8 @@ class HistoryScreenState extends State<HistoryScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                     dataRowHeight: 60,
-                    dataTextStyle: const TextStyle(
-                      color: Color(0xFF000000),
+                    dataTextStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
                       fontSize: 25,
                     ),
                     columns: const [

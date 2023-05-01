@@ -42,11 +42,11 @@ class AdminAdvisorScreenState extends State<AdminAdvisorScreen> {
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.only(top: 25, left: 40),
               margin: EdgeInsets.zero,
-              child: const Text('Advisor Manager: Administrator',
+              child: Text('Advisor Manager: Administrator',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
-                      color: Color(0xFFda6237),
+                      color: Theme.of(context).colorScheme.secondary,
                       fontFamily: 'Montserrat'))),
           Flexible(
               child: Container(

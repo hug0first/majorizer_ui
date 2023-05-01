@@ -58,7 +58,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color(0xFFF3956F),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: mainAppBar(context, scaffoldKey),
@@ -211,7 +211,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                 });
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFda6237),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                               child: const Text("Build Schedule"),
                             ),
@@ -253,8 +254,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
             .then((value) => allSchedules = value),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(
-              color: Color(0xFFda6237),
+            return CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.secondary,
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {

@@ -13,7 +13,7 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF3956F),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: Builder(
@@ -23,9 +23,9 @@ class LandingScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushNamed('/landing');
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.home,
-                color: Color(0xFFda6237),
+                color: Theme.of(context).colorScheme.secondary,
               ),
             );
           },
@@ -42,12 +42,12 @@ class LandingScreen extends StatelessWidget {
                       '/logIn'); //eventually should be changed to a separate Login page
                   //user is just making a new account every time they visit, essentially
                 },
-                child: const Text(
+                child: Text(
                   'Log In',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFda6237),
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
@@ -71,7 +71,7 @@ class LandingScreen extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: const FittedBox(
+                        child: FittedBox(
                           fit: BoxFit.fill,
                           child: Text(
                             'Welcome to',
@@ -81,10 +81,11 @@ class LandingScreen extends StatelessWidget {
                               color: Colors.white,
                               shadows: <Shadow>[
                                 Shadow(
-                                  offset: Offset(4.0, 4.0),
-                                  blurRadius: 5.0,
-                                  color: Color.fromARGB(120, 0, 0, 0),
-                                ),
+                                    offset: Offset(4.0, 4.0),
+                                    blurRadius: 5.0,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground),
                               ],
                             ),
                           ),
@@ -92,7 +93,7 @@ class LandingScreen extends StatelessWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: const FittedBox(
+                        child: FittedBox(
                           fit: BoxFit.fill,
                           child: Text(
                             'Majorizer',
@@ -103,10 +104,11 @@ class LandingScreen extends StatelessWidget {
                               fontFamily: 'Montserrat',
                               shadows: <Shadow>[
                                 Shadow(
-                                  offset: Offset(4.0, 4.0),
-                                  blurRadius: 5.0,
-                                  color: Color.fromARGB(120, 0, 0, 0),
-                                ),
+                                    offset: Offset(4.0, 4.0),
+                                    blurRadius: 5.0,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground),
                               ],
                             ),
                           ),
@@ -114,7 +116,7 @@ class LandingScreen extends StatelessWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: const FittedBox(
+                        child: FittedBox(
                           fit: BoxFit.fill,
                           child: Text(
                             'Where you plan courses until graduation',
@@ -124,10 +126,11 @@ class LandingScreen extends StatelessWidget {
                               color: Colors.white,
                               shadows: <Shadow>[
                                 Shadow(
-                                  offset: Offset(4.0, 4.0),
-                                  blurRadius: 5.0,
-                                  color: Color.fromARGB(120, 0, 0, 0),
-                                ),
+                                    offset: Offset(4.0, 4.0),
+                                    blurRadius: 5.0,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground),
                               ],
                             ),
                           ),
@@ -189,12 +192,12 @@ class LandingScreen extends StatelessWidget {
                       shadowColor: const Color.fromARGB(120, 0, 0,
                           0), //still need to add shadow to this widget
                     ),
-                    child: const FittedBox(
+                    child: FittedBox(
                       fit: BoxFit.contain,
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
-                          color: Color(0xFFda6237),
+                          color: Theme.of(context).colorScheme.secondary,
                           fontSize: 44,
                           fontWeight: FontWeight.w500,
                         ),
@@ -224,7 +227,7 @@ class LandingScreen extends StatelessWidget {
                 Shadow(
                   offset: Offset(4.0, 4.0),
                   blurRadius: 5.0,
-                  color: Color.fromARGB(120, 0, 0, 0),
+                  color: Theme.of(context).colorScheme.onBackground
                 ),
               ],
             ),

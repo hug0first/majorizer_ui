@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:animations/animations.dart';
 import '../api.dart';
 import '../models/models.dart';
-import 'department_screen.dart';
 import '../widgets/datatable_page.dart';
 import '../widgets/department.dart';
-import '../widgets/main_app_bar.dart';
-import '../widgets/side_menu.dart';
+import 'department_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
@@ -133,234 +130,6 @@ class DepartmentGridItemState extends State<DepartmentGridItem> {
   }
 }
 
-class DeptListItem extends StatelessWidget {
-  final String programID;
-  final String programName;
-
-  const DeptListItem(this.programID, this.programName, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: programID,
-      child: ElevatedButton(
-        onPressed: () {
-          // Navigator.of(context).push(ProgramListBodyRoute(this));
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFF3956F),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
-          ),
-          elevation: 5,
-        ),
-        child: Column(
-          children: [
-            buildID(context),
-            Divider(
-              color: Colors.black,
-              thickness: 2,
-            ),
-            buildName(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildID(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-      child: FittedBox(
-        fit: BoxFit.fill,
-        child: Text(
-          overflow: TextOverflow.visible,
-          programID,
-          style: const TextStyle(
-            decoration: TextDecoration.none,
-            fontSize: 45,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Montserrat',
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildName(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            programName,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              decoration: TextDecoration.none,
-              fontSize: 22,
-              color: Colors.white,
-              fontFamily: 'Montserrat',
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class DeptPage extends StatelessWidget {
-  final DeptListItem item;
-  static List<CourseListItem> courses = [];
-  const DeptPage(this.item, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: mainAppBar(context, scaffoldKey),
-      ),
-      endDrawer: sideMenu(context),
-      backgroundColor: Colors.white,
-      body: Hero(
-        tag: item.programID,
-        flightShuttleBuilder:
-            (flightContext, animation, direction, fromContext, toContext) {
-          return Container(
-            alignment: Alignment.topLeft,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Color(0xFFF3956F),
-            ),
-          );
-        },
-        child: Column(
-          children: [
-            // Title, Search, and Column Labels ----------------------------------
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              color: const Color(0xFFF3956F),
-              child: Column(children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Title -------------------------------------------------------
-                      Expanded(
-                        flex: 2,
-                        child: Text(item.programName,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 45,
-                            )),
-                      ),
-                      // Search Bar --------------------------------------------------
-                      Container(
-                        height: 45,
-                        alignment: Alignment.topRight,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 5,
-                        ),
-                        margin: EdgeInsets.zero,
-                        constraints:
-                            const BoxConstraints(maxWidth: 400, minWidth: 200),
-                        child: TextField(
-                          style: const TextStyle(
-                            color: Colors.white,
-                            decoration: TextDecoration.none,
-                            fontSize: 20,
-                          ),
-                          decoration: const InputDecoration(
-                            suffixIcon: Icon(Icons.search, color: Colors.white),
-                            hintText: 'Search...',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.none,
-                              fontSize: 20,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 3, color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color(0xFFda6237))),
-                          ),
-                        ),
-                      ),
-                    ]),
-                // Column Labels -------------------------------------------------
-                Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(top: 10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    //border:
-                    //Border.all(color: const Color(0xFFF3956F), width: 4),
-                    color: Colors.white,
-                  ),
-                  child: Container(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                              constraints: BoxConstraints(minWidth: 150),
-                              child: buildColumnLabel(context, 'Course ID')),
-                          Container(
-                              constraints: BoxConstraints(minWidth: 400),
-                              child: buildColumnLabel(context, 'Course Title')),
-                          Container(
-                              constraints: BoxConstraints(minWidth: 150),
-                              child: buildColumnLabel(context, 'Credits')),
-                          Container(
-                              constraints: BoxConstraints(minWidth: 300),
-                              child: buildColumnLabel(context, 'Comm Points')),
-                          Container(
-                              constraints: BoxConstraints(minWidth: 250),
-                              child: buildColumnLabel(context, 'Term')),
-                        ]),
-                  ),
-                ),
-              ]),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              height: 550,
-              child: ListView(
-                children: courses,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildColumnLabel(BuildContext context, String label) {
-    return Text(
-      label,
-      textAlign: TextAlign.left,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        color: const Color(0xFFF3956F),
-        fontWeight: FontWeight.bold,
-        fontSize: 22,
-        fontFamily: 'Montserrat',
-      ),
-    );
-  }
-}
-
 class CourseListItem extends StatelessWidget {
   final String iD;
   final String semOffered;
@@ -369,7 +138,6 @@ class CourseListItem extends StatelessWidget {
   final String credits;
   final String commPoints;
   final String instructor;
-  static Color primaryColor = const Color(0xFFF3956F);
   static Color secondaryColor = const Color(0xFFFFFFFF);
 
   const CourseListItem({
@@ -392,44 +160,44 @@ class CourseListItem extends StatelessWidget {
         childrenPadding: const EdgeInsets.only(bottom: 15),
         collapsedShape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(30),
-          side: BorderSide(
+          side: const BorderSide(
             color: Colors.white,
             width: 5,
           ),
         ),
-        title: Container(
+        title: SizedBox(
             height: 75,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                    constraints: BoxConstraints(minWidth: 150),
+                    constraints: const BoxConstraints(minWidth: 150),
                     child: buildTextItem(context, iD)),
                 Container(
-                    constraints: BoxConstraints(minWidth: 400),
+                    constraints: const BoxConstraints(minWidth: 400),
                     child: buildTextItem(context, name)),
                 Container(
-                    constraints: BoxConstraints(minWidth: 150),
+                    constraints: const BoxConstraints(minWidth: 150),
                     child: buildTextItem(context, credits)),
                 Container(
-                    constraints: BoxConstraints(minWidth: 300),
+                    constraints: const BoxConstraints(minWidth: 300),
                     child: buildTextItem(context, commPoints)),
                 Container(
-                    constraints: BoxConstraints(minWidth: 250),
+                    constraints: const BoxConstraints(minWidth: 250),
                     child: buildTextItem(context, semOffered)),
               ],
             )),
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(30),
-          side: BorderSide(
+          side: const BorderSide(
             color: Colors.white,
             width: 4,
           ),
         ),
-        collapsedBackgroundColor: Color(0xFFF3956F),
-        backgroundColor: Color(0xFFF3956F),
-        collapsedIconColor: Colors.white,
-        iconColor: Colors.white,
+        collapsedBackgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        collapsedIconColor: Theme.of(context).colorScheme.onPrimary,
+        iconColor: Theme.of(context).colorScheme.onPrimary,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -437,34 +205,34 @@ class CourseListItem extends StatelessWidget {
             alignment: Alignment.topCenter,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: Column(
               children: [
                 Row(children: [
                   Expanded(
                     child: Text(
-                      'Instructor: ' + instructor,
+                      'Instructor: $instructor',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 20,
-                        color: Color(0xFFF3956F),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
                 ]),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
                       child: Text(
-                        'Course Description:\n' + description,
+                        'Course Description:\n$description',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           decoration: TextDecoration.none,
                           fontSize: 20,
-                          color: Color(0xFFF3956F),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
@@ -483,7 +251,7 @@ class CourseListItem extends StatelessWidget {
       text,
       textAlign: TextAlign.left,
       style: TextStyle(
-        color: secondaryColor,
+        color: Theme.of(context).colorScheme.onPrimary,
         fontSize: 22,
         fontWeight: FontWeight.w500,
         fontFamily: 'Montserrat',

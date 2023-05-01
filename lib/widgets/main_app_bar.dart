@@ -10,9 +10,9 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
           onPressed: () {
             Navigator.of(context).pushNamed('/home');
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.home,
-            color: Color(0xFFda6237),
+            color: Theme.of(context).colorScheme.secondary,
             /*shadows: <Shadow>[
               Shadow(
                 offset: Offset(3.0, 3.0),
@@ -25,17 +25,17 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
       },
     ),
     leadingWidth: 150,
-    title: const Text(
+    title: Text(
       "Majorizer",
       style: TextStyle(
         fontSize: 28,
         fontWeight: FontWeight.w600,
-        color: Color(0xFFda6237),
+        color: Theme.of(context).colorScheme.secondary,
         /*shadows: <Shadow>[
           Shadow(
             offset: Offset(3.0, 3.0),
             blurRadius: 3.0,
-            color: Color.fromARGB(120, 0, 0, 0),
+            color: Theme.of(context).colorScheme.onBackground
           ),
         ],*/
       ),
@@ -49,17 +49,17 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
             onPressed: () {
               Navigator.of(context).pushNamed('/landing');
             },
-            child: const Text(
+            child: Text(
               'Log Out',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFFda6237),
+                color: Theme.of(context).colorScheme.secondary,
                 /*shadows: <Shadow>[
                   Shadow(
                     offset: Offset(3.0, 3.0),
                     blurRadius: 5.0,
-                    color: Color.fromARGB(120, 0, 0, 0),
+                    color: Theme.of(context).colorScheme.onBackground
                   ),
                 ],*/
               ),
@@ -74,14 +74,14 @@ Widget mainAppBar(BuildContext context, GlobalKey<ScaffoldState> currPageKey) {
             onPressed: () {
               currPageKey.currentState?.openEndDrawer();
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.menu,
-              color: Color(0xFFda6237),
+              color: Theme.of(context).colorScheme.secondary,
               /*shadows: <Shadow>[
                 Shadow(
                   offset: Offset(3.0, 3.0),
                   blurRadius: 5.0,
-                  color: Color.fromARGB(120, 0, 0, 0),
+                  color: Theme.of(context).colorScheme.onBackground
                 ),
               ],*/
             ),

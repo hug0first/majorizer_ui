@@ -35,7 +35,7 @@ class MajorMinorList extends State<HomeScreen> {
             HomeScreenState().addToCurrMajors('test');
           }, //add a new major from a search bar
           icon: const Icon(Icons.add),
-          color: const Color(0xFFda6237),
+          color: Theme.of(context).colorScheme.secondary,
           style: IconButton.styleFrom(
             backgroundColor: Colors.white,
           ),
