@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../api.dart';
 import '../models/models.dart';
 import '../widgets/datatable_page.dart';
@@ -50,8 +51,14 @@ class AdvisorScreenState extends State<AdvisorScreen> {
                         (int index) => DataRow(cells: <DataCell>[
                               DataCell(Text(snapshot.data![index].fname)),
                               DataCell(Text(snapshot.data![index].lname)),
-                              DataCell(
-                                  Text(snapshot.data![index].emailaddress)),
+                              DataCell(InkWell(
+                                  child:
+                                      Text(snapshot.data![index].emailaddress),
+                                  onTap: () => launchUrl(Uri(
+                                        scheme: 'mailto',
+                                        path:
+                                            snapshot.data![index].emailaddress,
+                                      )))),
                               DataCell(
                                   Text(snapshot.data![index].advisingcapacity)),
                             ])),
