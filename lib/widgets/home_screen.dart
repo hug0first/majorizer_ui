@@ -66,7 +66,7 @@ class HomeScreenState extends State<HomeScreen> {
                           fontFamily: 'Montserrat',
                           shadows: <Shadow>[
                             Shadow(
-                              offset: Offset(4.0, 4.0),
+                              offset: const Offset(4.0, 4.0),
                               blurRadius: 5.0,
                               color: Theme.of(context).colorScheme.onBackground,
                             ),
