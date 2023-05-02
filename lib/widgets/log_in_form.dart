@@ -18,16 +18,20 @@ GoogleSignIn googleSignIn = GoogleSignIn(
 );
 
 class _userInitData {
+  String? userName;
   String? userFirstName;
   String? userLastName;
   String? userEmail;
+  String? userSorA;
 
-  _userInitData({this.userFirstName, this.userLastName, this.userEmail});
+  _userInitData({this.userName, this.userFirstName, this.userLastName, this.userEmail, this.userSorA});
 
   Map<String, dynamic> toJson() => {
-        'firstname': userFirstName,
-        'lastname': userLastName,
-        'email': userEmail
+        "uname" : userName,
+        "fname" : userFirstName,
+        "lname" : userLastName,
+        "emailaddress" : userEmail,
+        "SorA":userSorA
       };
 }
 
@@ -81,17 +85,30 @@ class LoginPage extends StatelessWidget {
         if (!email.endsWith("clarkson.edu"))
           throw FormatException('Please Log in with Clarkson Account');
 
+        final username = email.split('@')[0];
         final names = displayName.split(' ');
         final gfirstName = names[0];
         final glastName = names[1];
 
+        _data.userName = username;
         _data.userEmail = email;
         _data.userFirstName = gfirstName;
         _data.userLastName = glastName;
+        _data.userSorA = "S";
 
         firstName = gfirstName;
         lastName = glastName;
         emailAdrs = email;
+
+        var response = await http.post(
+          Uri.parse('http://127.0.0.1:8000/user_sign_up/'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(_data.toJson()),
+        );
+
+        print(response.body);
+
+    
 
         Navigator.of(context).pushNamed('/home');
         /*
@@ -102,14 +119,14 @@ class LoginPage extends StatelessWidget {
 
         print(await http.read(Uri.https('example.com', 'foobar.txt')));
         */
-
+/*
         var result = await http.post(Uri.parse('url'),
             body: json.encode(_data.toJson()),
             headers: {'content-type': 'application/json'});
         if (result.statusCode == 201) {
           print('success');
           //Navigator.of(context).pushNamed('/home');
-        }
+        }*/
 
         // InitPost init = await
       }
