@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:majorizer_ui/main.dart';
 import 'package:majorizer_ui/models/models.dart';
-import 'package:majorizer_ui/widgets/size_config.dart';
-import 'package:majorizer_ui/widgets/student_build_screen.dart';
 import 'dropdown_button_lists.dart';
 import 'main_app_bar.dart';
 import 'side_menu.dart';
-import 'course_class.dart';
 import 'schedule_build.dart';
 
 class StudentBuildScreen extends StatefulWidget {
@@ -243,16 +240,29 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
             .then((value) => allSchedules = value),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              width: 200.0,
-              height: 200.0,
-              alignment: Alignment.center,
-              child: AspectRatio(
-                aspectRatio: 1 / 1,
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.secondary,
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 200.0,
+                  height: 200.0,
+                  alignment: Alignment.center,
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * .05)),
+                const FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(
+                      "Please be patient, schedule may take a while to build..."),
+                ),
+              ],
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -318,11 +328,9 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   }
 
   void updateSemester(int num) {
-    if ((semesterNum + num) <= numSemesters) {
-      setState(() {
-        semesterNum += num;
-      });
-    }
+    setState(() {
+      semesterNum += num;
+    });
   }
 
   Widget semesterRow() {
@@ -366,8 +374,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                 .numberOfSemesters(
                                     semesterNum, scheduleVersion, allSchedules);
 
-                        updateSemester(1);
-                        print(numSemesters);
+                        (semesterNum < numSemesters) ? updateSemester(1) : null;
                       }
                     : null,
                 icon: const Icon(Icons.arrow_right),
