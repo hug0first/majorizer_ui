@@ -7,12 +7,12 @@ String studentMinorToJson(List<StudentMinor> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class StudentMinor {
-  int studentminorkey;
+  int? studentminorkey;
   String studentid;
   String minor;
 
   StudentMinor({
-    required this.studentminorkey,
+    this.studentminorkey,
     required this.studentid,
     required this.minor,
   });
@@ -24,7 +24,6 @@ class StudentMinor {
       );
 
   Map<String, dynamic> toJson() => {
-        "studentminorkey": studentminorkey,
         "studentid": studentid,
         "minor": minor,
       };

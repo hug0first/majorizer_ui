@@ -7,12 +7,12 @@ String studentMajorToJson(List<StudentMajor> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class StudentMajor {
-  int studentmajorkey;
+  int? studentmajorkey;
   String studentid;
   String major;
 
   StudentMajor({
-    required this.studentmajorkey,
+    this.studentmajorkey,
     required this.studentid,
     required this.major,
   });
@@ -24,7 +24,6 @@ class StudentMajor {
       );
 
   Map<String, dynamic> toJson() => {
-        "studentmajorkey": studentmajorkey,
         "studentid": studentid,
         "major": major,
       };
