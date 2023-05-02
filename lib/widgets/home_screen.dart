@@ -3,6 +3,7 @@ import '../main.dart';
 import 'major_minor_list.dart';
 import 'side_menu.dart';
 import 'main_app_bar.dart';
+import 'gpa_calc.dart';
 
 var majorTitleTextController = TextEditingController();
 var minorTitleTextController = TextEditingController();
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   HomeScreenState();
 
+  String gpa = 'N/A';
   final courses = ['CS 341', 'UNIV 190', 'MA 132', 'CM 131', 'PH 131'];
   final titles = [
     'Programming Languages',
@@ -373,7 +375,7 @@ class HomeScreenState extends State<HomeScreen> {
           Flexible(
             child: FractionallySizedBox(
               widthFactor: .65,
-              heightFactor: .5,
+              heightFactor: .3,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -382,15 +384,20 @@ class HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.fromLTRB(28.0, 16.0, 28.0, 0.0),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width / 8,
-                  height: MediaQuery.of(context).size.height / 4,
+                  height: MediaQuery.of(context).size.height / 9,
                   child: Column(
                     children: <Widget>[
-                      Text(
-                        "Current Courses",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontWeight: FontWeight.w500,
-                          fontSize: screenWidth / 30,
+                      SizedBox(
+                        height: screenHeight * .06,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            "Current GPA",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -399,32 +406,43 @@ class HomeScreenState extends State<HomeScreen> {
                           color: Colors.grey,
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount: courses.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: Text(
-                                  courses[index],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: screenWidth / 60,
+                      FutureBuilder(
+                          future:
+                              gpaClass().getGPA().then((value) => gpa = value),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container(
+                                width: screenWidth / 20,
+                                height: screenWidth / 20,
+                                alignment: Alignment.center,
+                                child: AspectRatio(
+                                  aspectRatio: 1 / 1,
+                                  child: CircularProgressIndicator(
                                     color:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
-                                trailing: Text(
-                                  titles[index],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: screenWidth / 65,
-                                  ),
-                                ),
                               );
-                            }),
-                      )
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData) {
+                                return SizedBox(
+                                  width: screenWidth * .25,
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Text("GPA: $gpa"),
+                                  ),
+                                );
+                              } else {
+                                return const Text('Empty data');
+                              }
+                            } else {
+                              return Text('State: ${snapshot.connectionState}');
+                            }
+                          }),
                     ],
                   ),
                 ),

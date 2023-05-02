@@ -211,7 +211,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                         ),
                         semesterRow(),
                         SizedBox(
-                            width: screenWidth * .875,
+                            width: screenWidth * .879,
                             child: const Divider(
                               color: Colors.black,
                             )),
