@@ -172,8 +172,9 @@ class TransferScreenState extends State<TransferScreen> {
                               return Text('State: ${snapshot.connectionState}');
                             }
                           }),
-                      Padding(
-                          padding: EdgeInsets.only(left: screenWidth * .005)),
+                      const Padding(
+                        padding: EdgeInsets.only(),
+                      ),
                       FutureBuilder(
                           future: makeCourseList(departmentVal)
                               .then((value) => modules = value),
@@ -207,26 +208,6 @@ class TransferScreenState extends State<TransferScreen> {
                               return Text('State: ${snapshot.connectionState}');
                             }
                           }),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Course Name: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: screenWidth / 60,
-                        ),
-                      ),
-                      Text(
-                        courseName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: screenWidth / 65,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
                     ],
                   ),
                   Row(
@@ -279,6 +260,26 @@ class TransferScreenState extends State<TransferScreen> {
                               isTransfer = value;
                             });
                           }),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Course Name: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth / 60,
+                        ),
+                      ),
+                      Text(
+                        courseName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth / 65,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
                     ],
                   ),
                   ElevatedButton(
