@@ -172,6 +172,8 @@ class TransferScreenState extends State<TransferScreen> {
                               return Text('State: ${snapshot.connectionState}');
                             }
                           }),
+                      Padding(
+                          padding: EdgeInsets.only(left: screenWidth * .005)),
                       FutureBuilder(
                           future: makeCourseList(departmentVal)
                               .then((value) => modules = value),
