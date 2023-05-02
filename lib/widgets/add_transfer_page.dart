@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:majorizer_ui/models/models.dart';
 import '../api.dart';
 import '../models/course_catalog.dart';
 import 'main_app_bar.dart';
@@ -72,7 +74,10 @@ class TransferScreenState extends State<TransferScreen> {
 
   String departmentVal = "Select Department";
   String moduleVal = "Select Course";
-  String moduleName = '';
+  String courseName = '';
+  final semesterController = TextEditingController();
+  final gradeController = TextEditingController();
+  bool isTransfer = true;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +161,7 @@ class TransferScreenState extends State<TransferScreen> {
                                       departmentVal = value!;
                                       moduleVal =
                                           "Select Course"; //resets module selection each time a user changes departments
-                                      moduleName = '';
+                                      courseName = '';
                                     });
                                   },
                                 );
@@ -188,8 +193,8 @@ class TransferScreenState extends State<TransferScreen> {
                                     setState(() {
                                       moduleVal = value!;
                                       (value != "Select Course")
-                                          ? moduleName = value
-                                          : moduleName = '';
+                                          ? courseName = value
+                                          : courseName = '';
                                     });
                                   },
                                 );
@@ -206,14 +211,14 @@ class TransferScreenState extends State<TransferScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Module Name: ',
+                        'Course Name: ',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: screenWidth / 60,
                         ),
                       ),
                       Text(
-                        moduleName,
+                        courseName,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: screenWidth / 65,
@@ -222,9 +227,75 @@ class TransferScreenState extends State<TransferScreen> {
                       ),
                     ],
                   ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: screenWidth * .05)),
+                      Flexible(
+                        child: TextField(
+                          controller: semesterController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Semester Taken',
+                              hintText: 'Example: "Fall 2023"'),
+                        ),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(left: screenWidth * .05)),
+                    ],
+                  ),
+                  isTransfer
+                      ? Container()
+                      : Row(
+                          children: <Widget>[
+                            Padding(
+                                padding:
+                                    EdgeInsets.only(left: screenWidth * .05)),
+                            Flexible(
+                              child: TextField(
+                                controller: gradeController,
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Grade Received',
+                                    hintText: 'Example: "B-"'),
+                              ),
+                            ),
+                            Padding(
+                                padding:
+                                    EdgeInsets.only(left: screenWidth * .05)),
+                          ],
+                        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                          "This Is${(isTransfer) ? '' : ' Not'} A Transfer Course"),
+                      Switch(
+                          value: isTransfer,
+                          onChanged: (value) {
+                            setState(() {
+                              isTransfer = value;
+                            });
+                          }),
+                    ],
+                  ),
                   ElevatedButton(
                     onPressed: (moduleVal != "Select Course")
-                        ? () {}
+                        ? () {
+                            sendCourseHistory(CourseHistory(
+                                courseid: moduleVal,
+                                coursename: courseName,
+                                semester: semesterController.text,
+                                grade: gradeController.text,
+                                status: isTransfer ? "T" : "C"));
+                            setState(() {
+                              departmentVal = "Select Department";
+                              moduleVal = "Select Course";
+                              courseName = '';
+                              semesterController.clear();
+                              gradeController.clear();
+                            });
+                          }
                         : null, //post request to database if module selected
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.secondary,
