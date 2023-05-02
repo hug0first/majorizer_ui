@@ -48,7 +48,7 @@ class Majorizer extends StatelessWidget {
         '/landing': (context) => const LandingScreen(),
         '/catalog': (context) => const CatalogScreen(),
         '/studentBuild': (context) => const StudentBuildScreen(),
-        '/history': (context) => const HistoryScreen(),
+        '/history': (context) => const AdminScreen(),
         '/advisorManager': (context) => const AdvisorScreen(),
         //'/advisorBuild': (context) => const AdvisorBuildScreen(),
         '/studentManager': (context) => const StudentManagerScreen(),

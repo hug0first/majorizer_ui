@@ -9,7 +9,24 @@ const String courseCatalogEndpoint = 'course_catalog/';
 const String courseHistoryEndpoint = 'course_history/';
 const String studentAdvisorsEndpoint = 'student_advisors/';
 const String scheduleBuilderEndpoint = 'schedule_builder/';
-const String majorMinorEndPoint = 'student_majorminor/';
+const String studentMajorEndPoint = 'student_majors/';
+const String studentMinorEndPoint = 'student_minors/';
+const String advisorEndpoint = 'admin/advisors/';
+
+Future<List<Advisor>> getAdvisors() async {
+  try {
+    final response = await http.get(
+      Uri.parse(urlBase + advisorEndpoint),
+    );
+
+    List<Advisor> advisors = advisorFromJson(response.body);
+
+    return advisors;
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
 
 Future<List<AdvisorStudents>> getAdvisorStudents() async {
   try {
@@ -92,5 +109,83 @@ Future<List<Schedule>> getSchedule() async {
   } catch (e) {
     print(e);
     return [];
+  }
+}
+
+Future<List<StudentMajor>> getStudentMajor() async {
+  try {
+    final response = await http.get(
+      Uri.parse(urlBase + studentMajorEndPoint),
+    );
+    List<StudentMajor> studentMajors = studentMajorFromJson(response.body);
+    return studentMajors;
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
+
+Future<http.Response> postStudentMajor(List<StudentMajor> m) {
+  try {
+    final response = http.post(
+      Uri.parse(urlBase + studentMajorEndPoint),
+      body: studentMajorToJson(m),
+    );
+    return response;
+  } catch (e) {
+    print(e);
+    return Future.error(e);
+  }
+}
+
+Future<http.Response> deleteStudentMajor(StudentMajor m) {
+  try {
+    final response = http.delete(
+      Uri.parse(urlBase + studentMajorEndPoint),
+      body: studentMajorToJson([m]),
+    );
+    return response;
+  } catch (e) {
+    print(e);
+    return Future.error(e);
+  }
+}
+
+Future<List<StudentMinor>> getStudentMinor() async {
+  try {
+    final response = await http.get(
+      Uri.parse(urlBase + studentMinorEndPoint),
+    );
+    List<StudentMinor> studentMinors = studentMinorFromJson(response.body);
+    return studentMinors;
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
+
+Future<http.Response> postStudentMinor(List<StudentMinor> m) {
+  try {
+    final response = http.post(
+      Uri.parse(urlBase + studentMinorEndPoint),
+      body: studentMinorToJson(m),
+    );
+    return response;
+  } catch (e) {
+    print(e);
+    return Future.error(e);
+  }
+}
+
+Future<http.Response> deleteStudentMinor(StudentMinor m) {
+  try {
+    final response = http.delete(
+      Uri.parse(urlBase + studentMinorEndPoint),
+      body: studentMinorToJson([m]),
+    );
+    return response;
+  } catch (e) {
+    print(e);
+    return Future.error(e);
   }
 }
