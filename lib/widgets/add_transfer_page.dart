@@ -99,8 +99,8 @@ class TransferScreenState extends State<TransferScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: screenWidth * .45,
-            height: screenHeight * .45,
+            width: screenWidth * .9,
+            height: screenHeight * .8,
             child: Container(
               decoration: BoxDecoration(
                 color: const Color(0xFFFFFFFF),
@@ -129,7 +129,7 @@ class TransferScreenState extends State<TransferScreen> {
                         ),
                       ),
                       SizedBox(
-                        width: screenWidth * .42,
+                        width: screenWidth * .52,
                         child: const Divider(
                           color: Colors.grey,
                         ),
@@ -139,6 +139,8 @@ class TransferScreenState extends State<TransferScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      Padding(
+                          padding: EdgeInsets.only(left: screenWidth * .05)),
                       FutureBuilder(
                           future: makeDepartmentList(departmentVal)
                               .then((value) => departments = value),
@@ -175,6 +177,23 @@ class TransferScreenState extends State<TransferScreen> {
                       const Padding(
                         padding: EdgeInsets.only(),
                       ),
+                      SizedBox(
+                        width: screenWidth * .4,
+                        child: TextField(
+                          controller: semesterController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Semester Taken',
+                              hintText: 'Example: "Fall 2023"'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: screenWidth * .05)),
                       FutureBuilder(
                           future: makeCourseList(departmentVal)
                               .then((value) => modules = value),
@@ -208,33 +227,11 @@ class TransferScreenState extends State<TransferScreen> {
                               return Text('State: ${snapshot.connectionState}');
                             }
                           }),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(left: screenWidth * .05)),
-                      Flexible(
-                        child: TextField(
-                          controller: semesterController,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Semester Taken',
-                              hintText: 'Example: "Fall 2023"'),
-                        ),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(left: screenWidth * .05)),
-                    ],
-                  ),
-                  isTransfer
-                      ? Container()
-                      : Row(
-                          children: <Widget>[
-                            Padding(
-                                padding:
-                                    EdgeInsets.only(left: screenWidth * .05)),
-                            Flexible(
+                      const Padding(padding: EdgeInsets.only()),
+                      isTransfer
+                          ? SizedBox(width: screenWidth * .4)
+                          : SizedBox(
+                              width: screenWidth * .4,
                               child: TextField(
                                 controller: gradeController,
                                 decoration: const InputDecoration(
@@ -243,11 +240,8 @@ class TransferScreenState extends State<TransferScreen> {
                                     hintText: 'Example: "B-"'),
                               ),
                             ),
-                            Padding(
-                                padding:
-                                    EdgeInsets.only(left: screenWidth * .05)),
-                          ],
-                        ),
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

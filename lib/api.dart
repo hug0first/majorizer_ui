@@ -76,7 +76,7 @@ sendCourseHistory(CourseHistory course) async {
     final response = await http.put(
       Uri.http(urlBase, courseHistoryEndpoint),
       headers: baseHeaders,
-      body: course.toJson(),
+      body: jsonEncode(course.toJson()),
     );
   } catch (e) {
     print(e);
