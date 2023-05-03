@@ -116,6 +116,9 @@ Future<List<StudentMajor>> getStudentMajor() async {
   try {
     final response = await http.get(
       Uri.parse(urlBase + studentMajorEndPoint),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
     List<StudentMajor> studentMajors = studentMajorFromJson(response.body);
     return studentMajors;
@@ -125,11 +128,14 @@ Future<List<StudentMajor>> getStudentMajor() async {
   }
 }
 
-Future<http.Response> postStudentMajor(List<StudentMajor> m) {
+Future<http.Response> postStudentMajor(StudentMajor m) {
   try {
     final response = http.post(
       Uri.parse(urlBase + studentMajorEndPoint),
-      body: studentMajorToJson(m),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: m.toJson(),
     );
     return response;
   } catch (e) {
@@ -141,8 +147,10 @@ Future<http.Response> postStudentMajor(List<StudentMajor> m) {
 Future<http.Response> deleteStudentMajor(StudentMajor m) {
   try {
     final response = http.delete(
-      Uri.parse(urlBase + studentMajorEndPoint),
-      body: studentMajorToJson([m]),
+      Uri.parse('$urlBase$studentMajorEndPoint${m.studentmajorkey}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
     return response;
   } catch (e) {
@@ -155,6 +163,9 @@ Future<List<StudentMinor>> getStudentMinor() async {
   try {
     final response = await http.get(
       Uri.parse(urlBase + studentMinorEndPoint),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
     List<StudentMinor> studentMinors = studentMinorFromJson(response.body);
     return studentMinors;
@@ -164,12 +175,13 @@ Future<List<StudentMinor>> getStudentMinor() async {
   }
 }
 
-Future<http.Response> postStudentMinor(List<StudentMinor> m) {
+Future<http.Response> postStudentMinor(StudentMinor m) {
   try {
-    final response = http.post(
-      Uri.parse(urlBase + studentMinorEndPoint),
-      body: studentMinorToJson(m),
-    );
+    final response = http.post(Uri.parse(urlBase + studentMinorEndPoint),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: m.toJson());
     return response;
   } catch (e) {
     print(e);
@@ -180,7 +192,10 @@ Future<http.Response> postStudentMinor(List<StudentMinor> m) {
 Future<http.Response> deleteStudentMinor(StudentMinor m) {
   try {
     final response = http.delete(
-      Uri.parse(urlBase + studentMinorEndPoint),
+      Uri.parse(urlBase + studentMinorEndPoint + m.studentminorkey.toString()),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: studentMinorToJson([m]),
     );
     return response;
