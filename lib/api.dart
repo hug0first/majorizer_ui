@@ -1,37 +1,46 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
 import 'models/models.dart';
 
-const String urlBase = 'http://127.0.0.1:8000/';
-const String advisorStudentsEndpoint = 'advisor_students/';
-const String courseCatalogEndpoint = 'course_catalog/';
-const String courseHistoryEndpoint = 'course_history/';
-const String studentAdvisorsEndpoint = 'student_advisors/';
-const String scheduleBuilderEndpoint = 'schedule_builder/';
-const String studentMajorEndPoint = 'student_majors/';
-const String studentMinorEndPoint = 'student_minors/';
-const String advisorEndpoint = 'admin/advisors/';
+const Map<String, String> baseHeaders = {
+  'Content-Type': 'application/json; charset=UTF-8'
+};
+const String urlBase = '127.0.0.1:8000';
+const String advisorStudentsEndpoint = '/advisor_students/';
+const String courseCatalogEndpoint = '/course_catalog/';
+const String courseHistoryEndpoint = '/course_history/';
+const String studentAdvisorsEndpoint = '/student_advisors/';
+const String scheduleBuilderEndpoint = '/schedule_builder/';
+const String studentMajorEndPoint = '/student_majors/';
+const String studentMinorEndPoint = '/student_minors/';
+const String advisorEndpoint = '/admin/advisors/';
 
-Future<List<Advisor>> getAdvisors() async {
-  try {
-    final response = await http.get(
-      Uri.parse(urlBase + advisorEndpoint),
-    );
+// TODO: add advisor get and post
+// Future<List<Advisor>> getAdvisors() async {
+//   try {
+//     final response = await http.get(
+//       Uri.parse(urlBase + advisorEndpoint),
+//     );
 
-    List<Advisor> advisors = advisorFromJson(response.body);
+//     List<Advisor> advisors = advisorFromJson(response.body);
 
-    return advisors;
-  } catch (e) {
-    print(e);
-    return [];
-  }
-}
+//     return advisors;
+//   } catch (e) {
+//     print(e);
+//     return [];
+//   }
+// }
 
 Future<List<AdvisorStudents>> getAdvisorStudents() async {
   try {
-    final response = await http.get(
-      Uri.parse(urlBase + advisorStudentsEndpoint),
+    final response = await http.post(
+      Uri.http(urlBase, advisorStudentsEndpoint),
+      headers: baseHeaders,
+      body: json.encode({"emailaddress": "yankeets@clarkson.edu"}),
     );
 
     List<AdvisorStudents> advisorStudents =
@@ -46,8 +55,11 @@ Future<List<AdvisorStudents>> getAdvisorStudents() async {
 
 Future<List<CourseHistory>> getCourseHistory() async {
   try {
-    final response = await http.get(
-      Uri.parse(urlBase + courseHistoryEndpoint),
+    final response = await http.post(
+      Uri.http(urlBase, courseHistoryEndpoint),
+      headers: baseHeaders,
+      body: json
+          .encode({"emailaddress": FirebaseAuth.instance.currentUser?.email}),
     );
 
     List<CourseHistory> courseHistory = courseHistoryFromJson(response.body);
@@ -61,8 +73,11 @@ Future<List<CourseHistory>> getCourseHistory() async {
 
 sendCourseHistory(CourseHistory course) async {
   try {
-    final response = await http.post(Uri.parse(urlBase + courseHistoryEndpoint),
-        body: courseHistoryToJson([course]));
+    final response = await http.put(
+      Uri.http(urlBase, courseHistoryEndpoint),
+      headers: baseHeaders,
+      body: course.toJson(),
+    );
   } catch (e) {
     print(e);
   }
@@ -71,7 +86,8 @@ sendCourseHistory(CourseHistory course) async {
 Future<List<CourseCatalog>> getCourseCatalog() async {
   try {
     final response = await http.get(
-      Uri.parse(urlBase + courseCatalogEndpoint),
+      Uri.http(urlBase, courseCatalogEndpoint),
+      headers: baseHeaders,
     );
 
     List<CourseCatalog> courseCatalog = courseCatalogFromJson(response.body);
@@ -85,10 +101,12 @@ Future<List<CourseCatalog>> getCourseCatalog() async {
 
 Future<List<StudentAdvisors>> getStudentAdvisors() async {
   try {
-    final response = await http.get(
-      Uri.parse(urlBase + studentAdvisorsEndpoint),
+    final response = await http.post(
+      Uri.http(urlBase, studentAdvisorsEndpoint),
+      headers: baseHeaders,
+      body: json
+          .encode({"emailaddress": FirebaseAuth.instance.currentUser?.email}),
     );
-
     List<StudentAdvisors> studentAdvisors =
         studentAdvisorsFromJson(response.body);
 
@@ -101,8 +119,11 @@ Future<List<StudentAdvisors>> getStudentAdvisors() async {
 
 Future<List<Schedule>> getSchedule() async {
   try {
-    final response = await http.get(
-      Uri.parse(urlBase + scheduleBuilderEndpoint),
+    final response = await http.post(
+      Uri.http(urlBase, scheduleBuilderEndpoint),
+      headers: baseHeaders,
+      body: json
+          .encode({"emailaddress": FirebaseAuth.instance.currentUser?.email}),
     );
     List<Schedule> schedule = scheduleFromJson(response.body);
     return schedule;
@@ -115,10 +136,8 @@ Future<List<Schedule>> getSchedule() async {
 Future<List<StudentMajor>> getStudentMajor() async {
   try {
     final response = await http.get(
-      Uri.parse(urlBase + studentMajorEndPoint),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      Uri.http(urlBase, studentMajorEndPoint),
+      headers: baseHeaders,
     );
     List<StudentMajor> studentMajors = studentMajorFromJson(response.body);
     return studentMajors;
@@ -131,12 +150,11 @@ Future<List<StudentMajor>> getStudentMajor() async {
 Future<http.Response> postStudentMajor(StudentMajor m) {
   try {
     final response = http.post(
-      Uri.parse(urlBase + studentMajorEndPoint),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      Uri.http(urlBase, studentMajorEndPoint),
+      headers: baseHeaders,
       body: m.toJson(),
     );
+
     return response;
   } catch (e) {
     print(e);
@@ -147,10 +165,8 @@ Future<http.Response> postStudentMajor(StudentMajor m) {
 Future<http.Response> deleteStudentMajor(StudentMajor m) {
   try {
     final response = http.delete(
-      Uri.parse('$urlBase$studentMajorEndPoint${m.studentmajorkey}'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      Uri.http(urlBase, studentMajorEndPoint, {'pk': m.studentmajorkey}),
+      headers: baseHeaders,
     );
     return response;
   } catch (e) {
@@ -162,10 +178,8 @@ Future<http.Response> deleteStudentMajor(StudentMajor m) {
 Future<List<StudentMinor>> getStudentMinor() async {
   try {
     final response = await http.get(
-      Uri.parse(urlBase + studentMinorEndPoint),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      Uri.http(urlBase, studentMinorEndPoint),
+      headers: baseHeaders,
     );
     List<StudentMinor> studentMinors = studentMinorFromJson(response.body);
     return studentMinors;
@@ -177,11 +191,11 @@ Future<List<StudentMinor>> getStudentMinor() async {
 
 Future<http.Response> postStudentMinor(StudentMinor m) {
   try {
-    final response = http.post(Uri.parse(urlBase + studentMinorEndPoint),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: m.toJson());
+    final response = http.post(
+      Uri.http(urlBase, studentMinorEndPoint),
+      headers: baseHeaders,
+      body: m.toJson(),
+    );
     return response;
   } catch (e) {
     print(e);
@@ -192,12 +206,11 @@ Future<http.Response> postStudentMinor(StudentMinor m) {
 Future<http.Response> deleteStudentMinor(StudentMinor m) {
   try {
     final response = http.delete(
-      Uri.parse(urlBase + studentMinorEndPoint + m.studentminorkey.toString()),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: studentMinorToJson([m]),
+      Uri.http(urlBase, studentMinorEndPoint, {'pk': m.studentminorkey}),
+      headers: baseHeaders,
+      body: m.toJson(),
     );
+
     return response;
   } catch (e) {
     print(e);

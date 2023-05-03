@@ -83,7 +83,16 @@ Widget sideMenu(BuildContext context) {
           onTap: () {
             Navigator.of(context).pushNamed('/addTransfer');
           },
-        )
+        ),
+        ListTile(
+          title: Text(
+            'Administration',
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed('/admin');
+          },
+        ),
       ],
     ),
   );
