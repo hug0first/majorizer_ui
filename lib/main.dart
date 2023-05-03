@@ -25,8 +25,8 @@ void main() async {
 String firstName = "";
 String lastName = "";
 String emailAdrs = "";
-List<String> currMajors = ['Computer Science'];
-List<String> currMinors = ['Psychology'];
+List<String> currMajors = [];
+List<String> currMinors = [];
 
 String currMajor = (currMajors.isNotEmpty) ? currMajors[0] : '';
 String currMajor2 = (currMajors.length >= 2) ? currMajors[1] : '';

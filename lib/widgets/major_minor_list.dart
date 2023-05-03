@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/api.dart';
+import 'package:majorizer_ui/models/models.dart';
 import '../main.dart';
 import 'home_screen.dart';
 
@@ -54,6 +56,26 @@ class MajorMinorList extends State<HomeScreen> {
       }
     }
     return possibleMinors;
+  }
+
+  Future<List<String>> getCurrMajorList() async {
+    List<StudentMajor> majors = await getStudentMajor();
+    List<String> majorList = [];
+    for (StudentMajor major in majors) {
+      majorList.add(major.major);
+    }
+
+    return majorList;
+  }
+
+  Future<List<String>> getCurrMinorList() async {
+    List<StudentMinor> minors = await getStudentMinor();
+    List<String> minorList = [];
+    for (StudentMinor minor in minors) {
+      minorList.add(minor.minor);
+    }
+
+    return minorList;
   }
 
   @override

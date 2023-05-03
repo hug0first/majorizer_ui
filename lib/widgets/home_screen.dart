@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/api.dart';
+import 'package:majorizer_ui/models/student_major.dart';
+import 'package:majorizer_ui/models/student_minor.dart';
 import '../main.dart';
 import 'major_minor_list.dart';
 import 'side_menu.dart';
@@ -19,14 +22,6 @@ class HomeScreenState extends State<HomeScreen> {
   HomeScreenState();
 
   String gpa = 'N/A';
-  final courses = ['CS 341', 'UNIV 190', 'MA 132', 'CM 131', 'PH 131'];
-  final titles = [
-    'Programming Languages',
-    'The Clarkson Seminar',
-    'Calculus II',
-    'General Chemistry I',
-    'Physics I'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -124,61 +119,121 @@ class HomeScreenState extends State<HomeScreen> {
                                     SizedBox(
                                       width: screenWidth / 3.3,
                                       height: screenHeight / 6,
-                                      child: ListView.separated(
-                                        separatorBuilder: (context, index) =>
-                                            SizedBox(
-                                                height: screenHeight * .01),
-                                        itemCount: currMajors.length,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            leading: const Icon(
-                                                Icons.library_books_outlined),
-                                            title: Text(
-                                              currMajors[index],
-                                              style: TextStyle(
-                                                fontSize: screenWidth / 60,
-                                              ),
-                                            ),
-                                            trailing: IconButton(
-                                              icon: const Icon(Icons.delete),
-                                              onPressed: () {
-                                                setState(() {
-                                                  majorListTiles.add(ListTile(
-                                                    leading: Text(
-                                                      currMajors[index],
-                                                      style: TextStyle(
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width /
-                                                              60),
-                                                    ),
-                                                    trailing: IconButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          currMajors.add(
-                                                              currMajors[
-                                                                  index]);
-                                                        });
-                                                      }, //add a new major from a search bar
-                                                      icon:
-                                                          const Icon(Icons.add),
-                                                      color: const Color(
-                                                          0xFFda6237),
-                                                      style:
-                                                          IconButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.white,
+                                      child: FutureBuilder(
+                                          future: MajorMinorList()
+                                              .getCurrMajorList()
+                                              .then((value) =>
+                                                  currMajors = value),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Container(
+                                                width: screenWidth / 20,
+                                                height: screenWidth / 20,
+                                                alignment: Alignment.center,
+                                                child: AspectRatio(
+                                                  aspectRatio: 1 / 1,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                  ),
+                                                ),
+                                              );
+                                            } else if (snapshot
+                                                    .connectionState ==
+                                                ConnectionState.done) {
+                                              if (snapshot.hasError) {
+                                                return Text(
+                                                    'Error: ${snapshot.error}');
+                                              } else if (snapshot.hasData) {
+                                                currMajor =
+                                                    (currMajors.isNotEmpty)
+                                                        ? currMajors[0]
+                                                        : '';
+                                                currMajor2 =
+                                                    (currMajors.length >= 2)
+                                                        ? currMajors[1]
+                                                        : '';
+                                                return ListView.separated(
+                                                  separatorBuilder: (context,
+                                                          index) =>
+                                                      SizedBox(
+                                                          height: screenHeight *
+                                                              .01),
+                                                  itemCount: currMajors.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return ListTile(
+                                                      leading: const Icon(Icons
+                                                          .library_books_outlined),
+                                                      title: Text(
+                                                        currMajors[index],
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              screenWidth / 60,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ));
-                                                  currMajors.removeAt(index);
-                                                });
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                                      trailing: IconButton(
+                                                        icon: const Icon(
+                                                            Icons.delete),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            majorListTiles
+                                                                .add(ListTile(
+                                                              leading: Text(
+                                                                currMajors[
+                                                                    index],
+                                                                style: TextStyle(
+                                                                    fontSize: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        60),
+                                                              ),
+                                                              trailing:
+                                                                  IconButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    currMajors.add(
+                                                                        currMajors[
+                                                                            index]);
+                                                                  });
+                                                                }, //add a new major from a search bar
+                                                                icon: const Icon(
+                                                                    Icons.add),
+                                                                color: const Color(
+                                                                    0xFFda6237),
+                                                                style: IconButton
+                                                                    .styleFrom(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                ),
+                                                              ),
+                                                            ));
+                                                            //currMajors.removeAt(
+                                                            //  index);
+                                                            deleteStudentMajor(
+                                                                StudentMajor(
+                                                                    studentid:
+                                                                        'S0001',
+                                                                    major: currMajors[
+                                                                        index]));
+                                                          });
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                return const Text('Empty data');
+                                              }
+                                            } else {
+                                              return Text(
+                                                  'State: ${snapshot.connectionState}');
+                                            }
+                                          }),
                                     ),
                                     Column(
                                       children: <Widget>[
@@ -268,61 +323,121 @@ class HomeScreenState extends State<HomeScreen> {
                                     SizedBox(
                                       width: screenWidth / 3.3,
                                       height: screenHeight / 6,
-                                      child: ListView.separated(
-                                        separatorBuilder: (context, index) =>
-                                            SizedBox(
-                                                height: screenHeight * .01),
-                                        itemCount: currMinors.length,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            leading: const Icon(
-                                                Icons.library_books_outlined),
-                                            title: Text(
-                                              currMinors[index],
-                                              style: TextStyle(
-                                                fontSize: screenWidth / 60,
-                                              ),
-                                            ),
-                                            trailing: IconButton(
-                                              icon: const Icon(Icons.delete),
-                                              onPressed: () {
-                                                setState(() {
-                                                  minorListTiles.add(ListTile(
-                                                    leading: Text(
-                                                      currMinors[index],
-                                                      style: TextStyle(
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width /
-                                                              60),
-                                                    ),
-                                                    trailing: IconButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          currMinors.add(
-                                                              currMinors[
-                                                                  index]);
-                                                        });
-                                                      }, //add a new minor from a search bar
-                                                      icon:
-                                                          const Icon(Icons.add),
-                                                      color: const Color(
-                                                          0xFFda6237),
-                                                      style:
-                                                          IconButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.white,
+                                      child: FutureBuilder(
+                                          future: MajorMinorList()
+                                              .getCurrMinorList()
+                                              .then((value) =>
+                                                  currMinors = value),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Container(
+                                                width: screenWidth / 20,
+                                                height: screenWidth / 20,
+                                                alignment: Alignment.center,
+                                                child: AspectRatio(
+                                                  aspectRatio: 1 / 1,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                  ),
+                                                ),
+                                              );
+                                            } else if (snapshot
+                                                    .connectionState ==
+                                                ConnectionState.done) {
+                                              if (snapshot.hasError) {
+                                                return Text(
+                                                    'Error: ${snapshot.error}');
+                                              } else if (snapshot.hasData) {
+                                                currMinor =
+                                                    (currMinors.isNotEmpty)
+                                                        ? currMinors[0]
+                                                        : '';
+                                                currMinor2 =
+                                                    (currMinors.length >= 2)
+                                                        ? currMinors[1]
+                                                        : '';
+                                                return ListView.separated(
+                                                  separatorBuilder: (context,
+                                                          index) =>
+                                                      SizedBox(
+                                                          height: screenHeight *
+                                                              .01),
+                                                  itemCount: currMinors.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return ListTile(
+                                                      leading: const Icon(Icons
+                                                          .library_books_outlined),
+                                                      title: Text(
+                                                        currMinors[index],
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              screenWidth / 60,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ));
-                                                  currMinors.removeAt(index);
-                                                });
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                                      trailing: IconButton(
+                                                        icon: const Icon(
+                                                            Icons.delete),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            minorListTiles
+                                                                .add(ListTile(
+                                                              leading: Text(
+                                                                currMinors[
+                                                                    index],
+                                                                style: TextStyle(
+                                                                    fontSize: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        60),
+                                                              ),
+                                                              trailing:
+                                                                  IconButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    currMinors.add(
+                                                                        currMinors[
+                                                                            index]);
+                                                                  });
+                                                                },
+                                                                icon: const Icon(
+                                                                    Icons.add),
+                                                                color: const Color(
+                                                                    0xFFda6237),
+                                                                style: IconButton
+                                                                    .styleFrom(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                ),
+                                                              ),
+                                                            ));
+                                                            //currMinors.removeAt(
+                                                            //  index);
+                                                            deleteStudentMinor(
+                                                                StudentMinor(
+                                                                    studentid:
+                                                                        'S0001',
+                                                                    minor: currMinors[
+                                                                        index]));
+                                                          });
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                return const Text('Empty data');
+                                              }
+                                            } else {
+                                              return Text(
+                                                  'State: ${snapshot.connectionState}');
+                                            }
+                                          }),
                                     ),
                                     Column(
                                       children: <Widget>[
@@ -465,11 +580,7 @@ class HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontSize: MediaQuery.of(context).size.width / 60),
         ),
         trailing: IconButton(
-          onPressed: () {
-            setState(() {
-              currMajors.add(major);
-            });
-          },
+          onPressed: () => addToCurrMajors(major),
           icon: const Icon(Icons.add),
           color: Theme.of(context).colorScheme.secondary,
           style: IconButton.styleFrom(
@@ -506,13 +617,15 @@ class HomeScreenState extends State<HomeScreen> {
 
   void addToCurrMajors(String major) {
     setState(() {
-      currMajors.add(major);
+      //currMajors.add(major);
+      postStudentMajor([StudentMajor(studentid: 'S0001', major: major)]);
     });
   }
 
   void addToCurrMinors(String minor) {
     setState(() {
-      currMinors.add(minor);
+      //currMinors.add(minor);
+      postStudentMinor([StudentMinor(studentid: 'S0001', minor: minor)]);
     });
   }
 }
