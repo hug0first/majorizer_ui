@@ -64,7 +64,7 @@ class MajorMinorList extends State<HomeScreen> {
     for (StudentMajor major in majors) {
       majorList.add(major.major);
     }
-    print(majorList[0]);
+
     return majorList;
   }
 
@@ -74,7 +74,7 @@ class MajorMinorList extends State<HomeScreen> {
     for (StudentMinor minor in minors) {
       minorList.add(minor.minor);
     }
-    print(minorList[0]);
+
     return minorList;
   }
 
