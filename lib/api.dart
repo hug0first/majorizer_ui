@@ -7,7 +7,7 @@ import 'dart:async';
 import 'models/models.dart';
 
 const Map<String, String> baseHeaders = {
-  // 'Content-Type': 'application/json; charset=UTF-8'
+  'Content-Type': 'application/json; charset=UTF-8'
 };
 const String urlBase = '127.0.0.1:8000';
 const String advisorStudentsEndpoint = '/advisor_students/';
