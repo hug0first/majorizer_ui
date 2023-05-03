@@ -10,6 +10,8 @@ import 'gpa_calc.dart';
 
 var majorTitleTextController = TextEditingController();
 var minorTitleTextController = TextEditingController();
+late List<String> homeCurrMajors;
+late List<String> homeCurrMinors;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen();
@@ -123,7 +125,7 @@ class HomeScreenState extends State<HomeScreen> {
                                           future: MajorMinorList()
                                               .getCurrMajorList()
                                               .then((value) =>
-                                                  currMajors = value),
+                                                  homeCurrMajors = value),
                                           builder: (context, snapshot) {
                                             if (snapshot.connectionState ==
                                                 ConnectionState.waiting) {
@@ -148,6 +150,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                 return Text(
                                                     'Error: ${snapshot.error}');
                                               } else if (snapshot.hasData) {
+                                                currMajors = homeCurrMajors;
                                                 currMajor =
                                                     (currMajors.isNotEmpty)
                                                         ? currMajors[0]
@@ -264,10 +267,46 @@ class HomeScreenState extends State<HomeScreen> {
                                                   .size
                                                   .height *
                                               .21,
-                                          child: ListView(
-                                            //children: MajorMinorList().possibleMajorListTiles(),
-                                            children: possibleMajorListTiles(),
-                                          ),
+                                          child: FutureBuilder(
+                                              future: MajorMinorList()
+                                                  .getCurrMajorList(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return Container(
+                                                    width: screenWidth / 20,
+                                                    height: screenWidth / 20,
+                                                    alignment: Alignment.center,
+                                                    child: AspectRatio(
+                                                      aspectRatio: 1 / 1,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .secondary,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else if (snapshot
+                                                        .connectionState ==
+                                                    ConnectionState.done) {
+                                                  if (snapshot.hasError) {
+                                                    return Text(
+                                                        'Error: ${snapshot.error}');
+                                                  } else if (snapshot.hasData) {
+                                                    return ListView(
+                                                      children:
+                                                          possibleMajorListTiles(),
+                                                    );
+                                                  } else {
+                                                    return const Text(
+                                                        'Empty data');
+                                                  }
+                                                } else {
+                                                  return Text(
+                                                      'State: ${snapshot.connectionState}');
+                                                }
+                                              }),
                                         ),
                                       ],
                                     ),
@@ -327,7 +366,7 @@ class HomeScreenState extends State<HomeScreen> {
                                           future: MajorMinorList()
                                               .getCurrMinorList()
                                               .then((value) =>
-                                                  currMinors = value),
+                                                  homeCurrMinors = value),
                                           builder: (context, snapshot) {
                                             if (snapshot.connectionState ==
                                                 ConnectionState.waiting) {
@@ -352,6 +391,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                 return Text(
                                                     'Error: ${snapshot.error}');
                                               } else if (snapshot.hasData) {
+                                                currMinors = homeCurrMinors;
                                                 currMinor =
                                                     (currMinors.isNotEmpty)
                                                         ? currMinors[0]
@@ -468,9 +508,46 @@ class HomeScreenState extends State<HomeScreen> {
                                                   .size
                                                   .height *
                                               .21,
-                                          child: ListView(
-                                            children: possibleMinorListTiles(),
-                                          ),
+                                          child: FutureBuilder(
+                                              future: MajorMinorList()
+                                                  .getCurrMinorList(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return Container(
+                                                    width: screenWidth / 20,
+                                                    height: screenWidth / 20,
+                                                    alignment: Alignment.center,
+                                                    child: AspectRatio(
+                                                      aspectRatio: 1 / 1,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .secondary,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else if (snapshot
+                                                        .connectionState ==
+                                                    ConnectionState.done) {
+                                                  if (snapshot.hasError) {
+                                                    return Text(
+                                                        'Error: ${snapshot.error}');
+                                                  } else if (snapshot.hasData) {
+                                                    return ListView(
+                                                      children:
+                                                          possibleMinorListTiles(),
+                                                    );
+                                                  } else {
+                                                    return const Text(
+                                                        'Empty data');
+                                                  }
+                                                } else {
+                                                  return Text(
+                                                      'State: ${snapshot.connectionState}');
+                                                }
+                                              }),
                                         ),
                                       ],
                                     ),
@@ -546,6 +623,7 @@ class HomeScreenState extends State<HomeScreen> {
                               } else if (snapshot.hasData) {
                                 return SizedBox(
                                   width: screenWidth * .25,
+                                  height: screenHeight * .15,
                                   child: FittedBox(
                                     fit: BoxFit.contain,
                                     child: Text("GPA: $gpa"),
@@ -570,6 +648,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   List<ListTile> majorListTiles = [];
+
   List<ListTile> possibleMajorListTiles() {
     List<ListTile> majorListTiles = [];
     for (var major
