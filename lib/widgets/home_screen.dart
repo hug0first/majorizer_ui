@@ -618,14 +618,14 @@ class HomeScreenState extends State<HomeScreen> {
   void addToCurrMajors(String major) {
     setState(() {
       //currMajors.add(major);
-      postStudentMajor([StudentMajor(studentid: 'S0001', major: major)]);
+      postStudentMajor(StudentMajor(major: major));
     });
   }
 
   void addToCurrMinors(String minor) {
     setState(() {
       //currMinors.add(minor);
-      postStudentMinor([StudentMinor(studentid: 'S0001', minor: minor)]);
+      postStudentMinor(StudentMinor(minor: minor));
     });
   }
 }

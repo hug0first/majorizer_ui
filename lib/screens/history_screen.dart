@@ -18,7 +18,7 @@ class HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    courseHistory = getCourseHistory();
+    // courseHistory = getCourseHistory();
   }
 
   @override

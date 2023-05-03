@@ -48,14 +48,15 @@ class Majorizer extends StatelessWidget {
         '/landing': (context) => const LandingScreen(),
         '/catalog': (context) => const CatalogScreen(),
         '/studentBuild': (context) => const StudentBuildScreen(),
-        '/history': (context) => const AdminScreen(),
+        '/history': (context) => const HistoryScreen(),
         '/advisorManager': (context) => const AdvisorScreen(),
         //'/advisorBuild': (context) => const AdvisorBuildScreen(),
         '/studentManager': (context) => const StudentManagerScreen(),
         '/courseManager': (context) => const CourseManagerScreen(),
         '/adminAdvisor': (context) => const AdminAdvisorScreen(),
         '/addTransfer': (context) => TransferScreen(),
-        '/logIn': (context) => const LoginPage()
+        '/logIn': (context) => const LoginPage(),
+        '/admin': (context) => const AdminScreen(),
       },
       initialRoute: '/landing',
       theme: ThemeData(

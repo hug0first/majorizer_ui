@@ -8,12 +8,12 @@ String studentMinorToJson(List<StudentMinor> data) =>
 
 class StudentMinor {
   int? studentminorkey;
-  String studentid;
+  String? studentid;
   String minor;
 
   StudentMinor({
     this.studentminorkey,
-    required this.studentid,
+    this.studentid,
     required this.minor,
   });
 
