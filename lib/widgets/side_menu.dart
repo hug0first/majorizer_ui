@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+bool isAdmin = false;
+
 Widget sideMenu(BuildContext context) {
   return Drawer(
     child: ListView(
@@ -9,7 +11,7 @@ Widget sideMenu(BuildContext context) {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondary,
           ),
-          child: Text(
+          child: const Text(
             'Majorizer Navigation', //Temporary title
             style: TextStyle(
               color: Colors.white,
@@ -17,25 +19,31 @@ Widget sideMenu(BuildContext context) {
             ),
           ),
         ),
-        ListTile(
-          //leading: Icon(Icons.message),
-          title: Text(
-            'Advisor Manager',
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-          ),
-          onTap: () {
-            Navigator.of(context).pushNamed('/advisorManager');
-          },
-        ),
-        ListTile(
-          title: Text(
-            'Student Manager',
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-          ),
-          onTap: () {
-            Navigator.of(context).pushNamed('/studentManager');
-          },
-        ),
+        !isAdmin
+            ? ListTile(
+                //leading: Icon(Icons.message),
+                title: Text(
+                  'Advisor Manager',
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.secondary),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/advisorManager');
+                },
+              )
+            : Container(),
+        isAdmin
+            ? ListTile(
+                title: Text(
+                  'Student Manager',
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.secondary),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/studentManager');
+                },
+              )
+            : Container(),
         ListTile(
           //leading: Icon(Icons.account_circle),
           title: Text(

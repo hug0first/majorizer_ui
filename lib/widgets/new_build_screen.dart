@@ -179,7 +179,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                   selectedCoop = newValue;
                                   coopSemester = int.parse(newValue!);
                                   if (newValue == "Coop Term") {
-                                    coopSemester = null;
+                                    coopSemester = 12;
                                   } else {
                                     coopSemester = int.parse(newValue);
                                   }
@@ -201,7 +201,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                   selectedStudyAbroad = newValue!;
                                   studyAbroadSemester = int.parse(newValue);
                                   if (newValue == "Study Abroad Term") {
-                                    studyAbroadSemester = null;
+                                    studyAbroadSemester = 12;
                                   } else {
                                     studyAbroadSemester = int.parse(newValue);
                                   }
@@ -368,15 +368,22 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
     int visibleSemesterNum = semesterNum;
     print(coopSemester);
     print(studyAbroadSemester);
-    if (coopSemester != null) {
+    if (coopSemester != null && studyAbroadSemester != null) {
+      if (coopSemester! > studyAbroadSemester!) {
+        if (studyAbroadSemester! <= visibleSemesterNum) visibleSemesterNum++;
+        if (coopSemester! <= visibleSemesterNum) visibleSemesterNum++;
+      } else if (coopSemester! == studyAbroadSemester!) {
+        if (studyAbroadSemester! <= visibleSemesterNum) visibleSemesterNum++;
+      } else {
+        if (coopSemester! <= visibleSemesterNum) visibleSemesterNum++;
+        if (studyAbroadSemester! <= visibleSemesterNum) visibleSemesterNum++;
+      }
+    } else if (coopSemester != null) {
       if (coopSemester! <= visibleSemesterNum) visibleSemesterNum++;
-    }
-    if (studyAbroadSemester != null) {
+    } else if (studyAbroadSemester != null) {
       if (studyAbroadSemester! <= visibleSemesterNum) visibleSemesterNum++;
     }
-    if (coopSemester != null) {
-      if (coopSemester! <= visibleSemesterNum) visibleSemesterNum++;
-    }
+
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(
