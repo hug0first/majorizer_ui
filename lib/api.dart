@@ -73,7 +73,6 @@ Future<List<CourseHistory>> getCourseHistory() async {
 
 sendCourseHistory(CourseHistory course) async {
   try {
-    print("email: ${course.email}");
     final response = await http.put(
       Uri.http(urlBase, courseHistoryEndpoint),
       headers: baseHeaders,
@@ -152,7 +151,6 @@ Future<List<StudentMajor>> getStudentMajor() async {
 
 Future<http.Response> postStudentMajor(StudentMajor m) {
   try {
-    m.email = FirebaseAuth.instance.currentUser?.email;
     final response = http.put(
       Uri.http(urlBase, studentMajorEndpoint),
       headers: baseHeaders,
@@ -185,6 +183,8 @@ Future<List<StudentMinor>> getStudentMinor() async {
     final response = await http.post(
       Uri.http(urlBase, studentMinorEndPoint),
       headers: baseHeaders,
+      body: json
+          .encode({"emailaddress": FirebaseAuth.instance.currentUser?.email}),
     );
     List<StudentMinor> studentMinors = studentMinorFromJson(response.body);
     return studentMinors;
@@ -196,7 +196,6 @@ Future<List<StudentMinor>> getStudentMinor() async {
 
 Future<http.Response> postStudentMinor(StudentMinor m) {
   try {
-    m.email = FirebaseAuth.instance.currentUser?.email;
     final response = http.put(
       Uri.http(urlBase, studentMinorEndPoint),
       headers: baseHeaders,
@@ -211,9 +210,8 @@ Future<http.Response> postStudentMinor(StudentMinor m) {
 
 Future<http.Response> deleteStudentMinor(StudentMinor m) {
   try {
-    m.email = FirebaseAuth.instance.currentUser?.email;
     final response = http.delete(
-      Uri.http(urlBase, studentMinorEndPoint, {'pk': m.studentminorkey}),
+      Uri.http(urlBase, studentMinorEndPoint),
       headers: baseHeaders,
       body: jsonEncode(m.toJson()),
     );
