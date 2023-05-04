@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 List<CourseHistory> courseHistoryFromJson(String str) =>
     List<CourseHistory>.from(
         json.decode(str).map((x) => CourseHistory.fromJson(x)));
@@ -21,7 +23,7 @@ class CourseHistory {
   String semester;
   String grade;
   String status;
-  String? email;
+  String? email = FirebaseAuth.instance.currentUser?.email;
 
   factory CourseHistory.fromJson(Map<String, dynamic> json) => CourseHistory(
         courseid: json["courseid"],

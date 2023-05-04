@@ -73,8 +73,7 @@ Future<List<CourseHistory>> getCourseHistory() async {
 
 sendCourseHistory(CourseHistory course) async {
   try {
-    course.email = FirebaseAuth.instance.currentUser?.email;
-    print(FirebaseAuth.instance.currentUser?.email);
+    print("email: ${course.email}");
     final response = await http.put(
       Uri.http(urlBase, courseHistoryEndpoint),
       headers: baseHeaders,
