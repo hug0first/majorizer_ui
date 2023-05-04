@@ -21,6 +21,7 @@ class CourseHistory {
   String semester;
   String grade;
   String status;
+  String? email;
 
   factory CourseHistory.fromJson(Map<String, dynamic> json) => CourseHistory(
         courseid: json["courseid"],
@@ -36,5 +37,6 @@ class CourseHistory {
         "semester": semester,
         "grade": grade,
         "status": status,
+        "emailaddress": email,
       };
 }

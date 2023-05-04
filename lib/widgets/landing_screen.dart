@@ -39,7 +39,7 @@ class LandingScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                      '/logIn'); //eventually should be changed to a separate Login page
+                      '/logInSimp'); //eventually should be changed to a separate Login page
                   //user is just making a new account every time they visit, essentially
                 },
                 child: Text(

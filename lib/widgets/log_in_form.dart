@@ -23,6 +23,8 @@ class _userInitData {
   String? userLastName;
   String? userEmail;
   String? userSorA;
+  String? advDepa;
+  String? advPosi;
 
   _userInitData({this.userName, this.userFirstName, this.userLastName, this.userEmail, this.userSorA});
 
@@ -31,37 +33,100 @@ class _userInitData {
         "fname" : userFirstName,
         "lname" : userLastName,
         "emailaddress" : userEmail,
-        "SorA":userSorA
+        "SorA" : userSorA,
+        "department" : advDepa,
+        "position" : advPosi
       };
 }
 
 _userInitData _data = new _userInitData();
+bool _showTextFields = false;
 
-class LoginPage extends StatelessWidget {
-  const LoginPage();
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _departmentController = TextEditingController();
+  final _positionController = TextEditingController();
+
+  @override
+  void dispose() {
+    _departmentController.dispose();
+    _positionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Log in'),
+        title: Text('Sign up'),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Center(
-        child: ElevatedButton(
-          child: Text('Sign in with Google'),
-          onPressed: () => _signInWithGoogle(context),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the contents horizontally
+              children: [
+                Switch(
+                  value: _showTextFields,
+                  onChanged: (value) {
+                    setState(() {
+                      _showTextFields = value;
+                    });
+                  },
+                ),
+                Text('Advisor'), // Display a sentence next to the switch
+              ],
+            ),
+            SizedBox(height: 10), // This adds some space between the button and the text fields
+            if (_showTextFields)
+              Column(
+                children: [
+                  SizedBox(
+                    width: 200, // Set the width of the TextField
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Department',
+                      ),
+                      controller: _departmentController,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 200, // Set the width of the TextField
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Position',
+                      ),
+                      controller: _positionController,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              ),
+            ElevatedButton(
+              child: Text('Sign up with Google',
+              style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+              onPressed: () { 
+                if (_showTextFields){
+                  _data.advDepa = _departmentController.text;
+                  _data.advPosi = _positionController.text;
+                }
+                _signInWithGoogle(context);},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.background,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
-  /*
-  void _showSignUpScreen() {
-      Navigator.of(context).pushNamed('/home');
-    } */
+}
 
   void _signInWithGoogle(BuildContext context) async {
     try {
@@ -94,11 +159,11 @@ class LoginPage extends StatelessWidget {
         _data.userEmail = email;
         _data.userFirstName = gfirstName;
         _data.userLastName = glastName;
-        _data.userSorA = "S";
-
-        firstName = gfirstName;
-        lastName = glastName;
-        emailAdrs = email;
+        
+        if(_showTextFields){ 
+          _data.userSorA = "A";
+        }
+        else _data.userSorA = "S";
 
         var response = await http.post(
           Uri.parse('http://127.0.0.1:8000/user_sign_up/'),
@@ -106,36 +171,10 @@ class LoginPage extends StatelessWidget {
           body: json.encode(_data.toJson()),
         );
 
-        print(response.body);
-
-    
-
-        Navigator.of(context).pushNamed('/home');
-        /*
-        var url = Uri.https('example.com', 'whatsit/create');
-        var response = await http.post(url, body: {'name': 'doodle', 'color': 'blue'});
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
-
-        print(await http.read(Uri.https('example.com', 'foobar.txt')));
-        */
-/*
-        var result = await http.post(Uri.parse('url'),
-            body: json.encode(_data.toJson()),
-            headers: {'content-type': 'application/json'});
-        if (result.statusCode == 201) {
-          print('success');
-          //Navigator.of(context).pushNamed('/home');
-        }*/
-
-        // InitPost init = await
+        if(response.body == "User Added") Navigator.of(context).pushNamed('/home');
+        else if(response.body == "Existing User") Navigator.of(context).pushNamed('/logInSimp');
+        else Navigator.of(context).pushNamed('/logIn');
       }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Welcome, ${user!.displayName}"),
-        ),
-      );
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -144,4 +183,4 @@ class LoginPage extends StatelessWidget {
       );
     }
   }
-}
+

@@ -9,6 +9,7 @@ String studentMinorToJson(List<StudentMinor> data) =>
 class StudentMinor {
   int? studentminorkey;
   String? studentid;
+  String? email;
   String minor;
 
   StudentMinor({
@@ -26,5 +27,6 @@ class StudentMinor {
   Map<String, dynamic> toJson() => {
         "studentid": studentid,
         "minor": minor,
+        "emailaddress": email,
       };
 }
