@@ -78,7 +78,7 @@ sendCourseHistory(CourseHistory course) async {
     final response = await http.put(
       Uri.http(urlBase, courseHistoryEndpoint),
       headers: baseHeaders,
-      body: json.encode(course),
+      body: jsonEncode(course.toJson()),
     );
   } catch (e) {
     print(e);
@@ -157,7 +157,7 @@ Future<http.Response> postStudentMajor(StudentMajor m) {
     final response = http.put(
       Uri.http(urlBase, studentMajorEndPoint),
       headers: baseHeaders,
-      body: m.toJson(),
+      body: jsonEncode(m.toJson()),
     );
 
     return response;
@@ -172,6 +172,7 @@ Future<http.Response> deleteStudentMajor(StudentMajor m) {
     final response = http.delete(
       Uri.http(urlBase, studentMajorEndPoint, {'pk': m.studentmajorkey}),
       headers: baseHeaders,
+      body: jsonEncode(m.toJson()),
     );
     return response;
   } catch (e) {
@@ -200,7 +201,7 @@ Future<http.Response> postStudentMinor(StudentMinor m) {
     final response = http.put(
       Uri.http(urlBase, studentMinorEndPoint),
       headers: baseHeaders,
-      body: m.toJson(),
+      body: jsonEncode(m.toJson()),
     );
     return response;
   } catch (e) {
@@ -215,7 +216,7 @@ Future<http.Response> deleteStudentMinor(StudentMinor m) {
     final response = http.delete(
       Uri.http(urlBase, studentMinorEndPoint, {'pk': m.studentminorkey}),
       headers: baseHeaders,
-      body: m.toJson(),
+      body: jsonEncode(m.toJson()),
     );
 
     return response;

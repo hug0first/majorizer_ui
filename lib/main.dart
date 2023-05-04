@@ -9,6 +9,7 @@ import 'screens/screens.dart';
 import 'widgets/admin_advisor_screen.dart';
 import 'widgets/new_build_screen.dart';
 import 'widgets/log_in_form.dart';
+import 'widgets/log_in_form_simp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -55,7 +56,8 @@ class Majorizer extends StatelessWidget {
         '/courseManager': (context) => const CourseManagerScreen(),
         '/adminAdvisor': (context) => const AdminAdvisorScreen(),
         '/addTransfer': (context) => TransferScreen(),
-        '/logIn': (context) => const LoginPage(),
+        '/logIn': (context) => LoginPage(),
+        '/logInSimp': (context) => const LoginPageSimp(),
         '/admin': (context) => const AdminScreen(),
       },
       initialRoute: '/landing',

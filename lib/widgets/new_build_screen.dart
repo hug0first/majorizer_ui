@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/api.dart';
 import 'package:majorizer_ui/main.dart';
 import 'package:majorizer_ui/models/models.dart';
 import 'dropdown_button_lists.dart';
@@ -80,7 +81,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               value: selectedMajor1,
                               onChanged: (String? newValue) {
                                 setState(() {
+                                  deleteStudentMajor(StudentMajor(
+                                      studentid: 'S0001',
+                                      major: selectedMajor1));
                                   selectedMajor1 = newValue!;
+                                  postStudentMajor(
+                                      StudentMajor(major: selectedMajor1));
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -95,7 +101,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               value: selectedMajor2,
                               onChanged: (String? newValue) {
                                 setState(() {
+                                  deleteStudentMajor(StudentMajor(
+                                      studentid: 'S0001',
+                                      major: selectedMajor2));
                                   selectedMajor2 = newValue!;
+                                  postStudentMajor(
+                                      StudentMajor(major: selectedMajor2));
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -110,7 +121,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               value: selectedMinor1,
                               onChanged: (String? newValue) {
                                 setState(() {
+                                  deleteStudentMinor(StudentMinor(
+                                      studentid: 'S0001',
+                                      minor: selectedMinor1));
                                   selectedMinor1 = newValue!;
+                                  postStudentMinor(
+                                      StudentMinor(minor: selectedMinor1));
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -125,7 +141,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               value: selectedMinor2,
                               onChanged: (String? newValue) {
                                 setState(() {
+                                  deleteStudentMinor(StudentMinor(
+                                      studentid: 'S0001',
+                                      minor: selectedMinor2));
                                   selectedMinor2 = newValue!;
+                                  postStudentMinor(
+                                      StudentMinor(minor: selectedMinor2));
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
