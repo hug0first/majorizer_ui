@@ -283,7 +283,9 @@ class TransferScreenState extends State<TransferScreen> {
                                 courseid: moduleVal,
                                 coursename: courseName,
                                 semester: semesterController.text,
-                                grade: gradeController.text,
+                                grade: (gradeController.text == '')
+                                    ? '-'
+                                    : gradeController.text,
                                 status: isTransfer ? "T" : "C"));
                             setState(() {
                               departmentVal = "Select Department";

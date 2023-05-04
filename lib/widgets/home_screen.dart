@@ -12,6 +12,7 @@ var majorTitleTextController = TextEditingController();
 var minorTitleTextController = TextEditingController();
 late List<String> homeCurrMajors;
 late List<String> homeCurrMinors;
+bool showGPA = false;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen();
@@ -598,44 +599,62 @@ class HomeScreenState extends State<HomeScreen> {
                           color: Colors.grey,
                         ),
                       ),
-                      FutureBuilder(
-                          future:
-                              gpaClass().getGPA().then((value) => gpa = value),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Container(
-                                width: screenWidth / 20,
-                                height: screenWidth / 20,
-                                alignment: Alignment.center,
-                                child: AspectRatio(
-                                  aspectRatio: 1 / 1,
-                                  child: CircularProgressIndicator(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
-                                ),
-                              );
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.hasData) {
-                                return SizedBox(
-                                  width: screenWidth * .25,
-                                  height: screenHeight * .15,
-                                  child: FittedBox(
-                                    fit: BoxFit.contain,
-                                    child: Text("GPA: $gpa"),
-                                  ),
-                                );
-                              } else {
-                                return const Text('Empty data');
-                              }
-                            } else {
-                              return Text('State: ${snapshot.connectionState}');
-                            }
-                          }),
+                      !showGPA
+                          ? SizedBox(
+                              height: screenHeight * .12,
+                            )
+                          : FutureBuilder(
+                              future: gpaClass()
+                                  .getGPA()
+                                  .then((value) => gpa = value),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container(
+                                    width: screenWidth / 20,
+                                    height: screenWidth / 20,
+                                    alignment: Alignment.center,
+                                    child: AspectRatio(
+                                      aspectRatio: 1 / 1,
+                                      child: CircularProgressIndicator(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
+                                    ),
+                                  );
+                                } else if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (snapshot.hasData) {
+                                    return SizedBox(
+                                      width: screenWidth * .25,
+                                      height: screenHeight * .12,
+                                      child: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text("GPA: $gpa"),
+                                      ),
+                                    );
+                                  } else {
+                                    return const Text('Empty data');
+                                  }
+                                } else {
+                                  return Text(
+                                      'State: ${snapshot.connectionState}');
+                                }
+                              }),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("${showGPA ? 'Hide' : 'Show'} GPA"),
+                          Switch(
+                              value: showGPA,
+                              onChanged: (value) {
+                                setState(() => showGPA = value);
+                              }),
+                        ],
+                      ),
                     ],
                   ),
                 ),

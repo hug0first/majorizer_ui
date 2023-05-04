@@ -9,10 +9,7 @@ class dropdownMenuItemClass {
       const DropdownMenuItem(
           value: "Chemical Engineering", child: Text("Chemical Engineering")),
     ];
-    /* if (currMajors.isNotEmpty) {
-    items[0] =
-        DropdownMenuItem(value: currMajors[0], child: Text(currMajors[0]));
-  } */
+
     return items;
   }
 
@@ -61,10 +58,14 @@ class dropdownMenuItemClass {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(
           value: "Study Abroad Term", child: Text("Study Abroad Term")),
-      const DropdownMenuItem(value: "Spring 2024", child: Text("Spring 2024")),
-      const DropdownMenuItem(value: "Fall 2023", child: Text("Fall 2023")),
-      const DropdownMenuItem(value: "Spring 2023", child: Text("Spring 2023")),
-      const DropdownMenuItem(value: "Fall 2022", child: Text("Fall 2022")),
+      const DropdownMenuItem(value: "1", child: Text("Semester 1")),
+      const DropdownMenuItem(value: "2", child: Text("Semester 2")),
+      const DropdownMenuItem(value: "3", child: Text("Semester 3")),
+      const DropdownMenuItem(value: "4", child: Text("Semester 4")),
+      const DropdownMenuItem(value: "5", child: Text("Semester 5")),
+      const DropdownMenuItem(value: "6", child: Text("Semester 6")),
+      const DropdownMenuItem(value: "7", child: Text("Semester 7")),
+      const DropdownMenuItem(value: "8", child: Text("Semester 8")),
     ];
     return menuItems;
   }
@@ -72,22 +73,14 @@ class dropdownMenuItemClass {
   List<DropdownMenuItem<String>> get coopItems {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(value: "Coop Term", child: Text("Coop Term")),
-      const DropdownMenuItem(value: "Spring 2024", child: Text("Spring 2024")),
-      const DropdownMenuItem(value: "Fall 2023", child: Text("Fall 2023")),
-      const DropdownMenuItem(value: "Spring 2023", child: Text("Spring 2023")),
-      const DropdownMenuItem(value: "Fall 2022", child: Text("Fall 2022")),
-    ];
-    return menuItems;
-  }
-
-  List<DropdownMenuItem<String>> get graduationItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(
-          value: "Graduation Term", child: Text("Graduation Term")),
-      const DropdownMenuItem(value: "Spring 2024", child: Text("Spring 2024")),
-      const DropdownMenuItem(value: "Fall 2023", child: Text("Fall 2023")),
-      const DropdownMenuItem(value: "Spring 2023", child: Text("Spring 2023")),
-      const DropdownMenuItem(value: "Fall 2022", child: Text("Fall 2022")),
+      const DropdownMenuItem(value: "1", child: Text("Semester 1")),
+      const DropdownMenuItem(value: "2", child: Text("Semester 2")),
+      const DropdownMenuItem(value: "3", child: Text("Semester 3")),
+      const DropdownMenuItem(value: "4", child: Text("Semester 4")),
+      const DropdownMenuItem(value: "5", child: Text("Semester 5")),
+      const DropdownMenuItem(value: "6", child: Text("Semester 6")),
+      const DropdownMenuItem(value: "7", child: Text("Semester 7")),
+      const DropdownMenuItem(value: "8", child: Text("Semester 8")),
     ];
     return menuItems;
   }

@@ -50,14 +50,35 @@ class ScheduleBuildClass extends StatefulWidget {
     return 'No Course Name Available';
   }
 
-  ListView scheduleBuild(
-      int semesterNum, int scheduleVersion, List<Schedule> allSchedules) {
+  Widget scheduleBuild(
+      int semesterNum,
+      int scheduleVersion,
+      List<Schedule> allSchedules,
+      int? coopSemester,
+      int? studyAbroadSemester) {
     //use scheduleVersion to index from list of schedules
     //use semesterNum to index from list of semesters in a schedule
     //from there return list of courses from the data member
+    /* if (semesterNum == coopSemester) return const Text("Coop Semester");
+    if (semesterNum == studyAbroadSemester) {
+      return const Text("Study Abroad Semester");
+    }
+
+    if (coopSemester != null) {
+      ((semesterNum >= coopSemester) ? semesterNum-- : semesterNum);
+    }
+    if (studyAbroadSemester != null) {
+      ((semesterNum >= studyAbroadSemester) ? semesterNum-- : semesterNum);
+    } */
+
     String courseName = '';
     Schedule schedule = allSchedules[scheduleVersion - 1];
     Sem semester = schedule.sems[semesterNum];
+
+    /* if (semesterNum == coopSemester) return const Text("Coop Semester");
+    if (semesterNum == studyAbroadSemester) {
+      return const Text("Study Abroad Semester");
+    } */
 
     return ListView.separated(
         itemBuilder: (BuildContext context, int index) {

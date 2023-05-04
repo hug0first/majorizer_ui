@@ -15,7 +15,7 @@ const String courseCatalogEndpoint = '/course_catalog/';
 const String courseHistoryEndpoint = '/course_history/';
 const String studentAdvisorsEndpoint = '/student_advisors/';
 const String scheduleBuilderEndpoint = '/schedule_builder/';
-const String studentMajorEndPoint = '/student_majors/';
+const String studentMajorEndpoint = '/student_majors/';
 const String studentMinorEndPoint = '/student_minors/';
 const String advisorEndpoint = '/admin/advisors/';
 
@@ -137,7 +137,7 @@ Future<List<Schedule>> getSchedule() async {
 Future<List<StudentMajor>> getStudentMajor() async {
   try {
     final response = await http.post(
-      Uri.http(urlBase, scheduleBuilderEndpoint),
+      Uri.http(urlBase, studentMajorEndpoint),
       headers: baseHeaders,
       body: json
           .encode({"emailaddress": FirebaseAuth.instance.currentUser?.email}),
@@ -154,7 +154,7 @@ Future<http.Response> postStudentMajor(StudentMajor m) {
   try {
     m.email = FirebaseAuth.instance.currentUser?.email;
     final response = http.put(
-      Uri.http(urlBase, studentMajorEndPoint),
+      Uri.http(urlBase, studentMajorEndpoint),
       headers: baseHeaders,
       body: jsonEncode(m.toJson()),
     );
@@ -169,7 +169,7 @@ Future<http.Response> postStudentMajor(StudentMajor m) {
 Future<http.Response> deleteStudentMajor(StudentMajor m) {
   try {
     final response = http.delete(
-      Uri.http(urlBase, studentMajorEndPoint, {'pk': m.studentmajorkey}),
+      Uri.http(urlBase, studentMajorEndpoint, {'pk': m.studentmajorkey}),
       headers: baseHeaders,
       body: jsonEncode(m.toJson()),
     );
