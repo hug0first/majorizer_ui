@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 List<StudentMajor> studentMajorFromJson(String str) => List<StudentMajor>.from(
     json.decode(str).map((x) => StudentMajor.fromJson(x)));
 
@@ -9,8 +11,8 @@ String studentMajorToJson(List<StudentMajor> data) =>
 class StudentMajor {
   int? studentmajorkey;
   String? studentid;
-  String? email;
   String major;
+  String? email = FirebaseAuth.instance.currentUser?.email;
 
   StudentMajor({
     this.studentmajorkey,
