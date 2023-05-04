@@ -23,6 +23,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   late List<ListView> semesterList;
   late List<Schedule> allSchedules = [];
   late var scheduleView;
+  int? coopSemester;
+  int? studyAbroadSemester;
   int semesterNum = 1;
   int scheduleVersion = 1;
   int numSemesters = 1;
@@ -33,10 +35,9 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   String selectedMajor2 = (currMajors.length < 2) ? 'Major 2' : currMajors[1];
   String selectedMinor1 = (currMinors.isEmpty) ? 'Minor 1' : currMinors[0];
   String selectedMinor2 = (currMinors.length < 2) ? 'Minor 2' : currMinors[1];
-  String selectedCoop = 'Coop Term';
-  String selectedStudyAbroad = 'Study Abroad Term';
-  String selectedGraduation = 'Graduation Term';
-
+  String? selectedCoop = "Coop Term";
+  String? selectedStudyAbroad = "Study Abroad Term";
+  Widget semesterRow = Container();
   Widget scheduleVersionDropdown = Container();
 
   @override
@@ -85,8 +86,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                       studentid: 'S0001',
                                       major: selectedMajor1));
                                   selectedMajor1 = newValue!;
-                                  postStudentMajor(
-                                      StudentMajor(major: selectedMajor1));
+                                  if (selectedMajor1 != "Major 1") {
+                                    postStudentMajor(
+                                        StudentMajor(major: selectedMajor1));
+                                  }
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -105,8 +108,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                       studentid: 'S0001',
                                       major: selectedMajor2));
                                   selectedMajor2 = newValue!;
-                                  postStudentMajor(
-                                      StudentMajor(major: selectedMajor2));
+                                  if (selectedMajor2 != "Major 2") {
+                                    postStudentMajor(
+                                        StudentMajor(major: selectedMajor2));
+                                  }
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -125,8 +130,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                       studentid: 'S0001',
                                       minor: selectedMinor1));
                                   selectedMinor1 = newValue!;
-                                  postStudentMinor(
-                                      StudentMinor(minor: selectedMinor1));
+                                  if (selectedMinor1 != "Minor 1") {
+                                    postStudentMinor(
+                                        StudentMinor(minor: selectedMinor1));
+                                  }
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -145,8 +152,10 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                       studentid: 'S0001',
                                       minor: selectedMinor2));
                                   selectedMinor2 = newValue!;
-                                  postStudentMinor(
-                                      StudentMinor(minor: selectedMinor2));
+                                  if (selectedMinor2 != "Minor 2") {
+                                    postStudentMinor(
+                                        StudentMinor(minor: selectedMinor2));
+                                  }
                                   scheduleView = scheduleViewBuilder(false);
                                 });
                               },
@@ -167,8 +176,15 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               value: selectedCoop,
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  selectedCoop = newValue!;
+                                  selectedCoop = newValue;
+                                  coopSemester = int.parse(newValue!);
+                                  if (newValue == "Coop Term") {
+                                    coopSemester = null;
+                                  } else {
+                                    coopSemester = int.parse(newValue);
+                                  }
                                   scheduleView = scheduleViewBuilder(false);
+                                  semesterRow;
                                 });
                               },
                               style: const TextStyle(
@@ -183,22 +199,14 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedStudyAbroad = newValue!;
+                                  studyAbroadSemester = int.parse(newValue);
+                                  if (newValue == "Study Abroad Term") {
+                                    studyAbroadSemester = null;
+                                  } else {
+                                    studyAbroadSemester = int.parse(newValue);
+                                  }
                                   scheduleView = scheduleViewBuilder(false);
-                                });
-                              },
-                              style: const TextStyle(
-                                color: Colors.black,
-                              ),
-                              dropdownColor: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            DropdownButton<String>(
-                              items: dropdownMenuItemClass().graduationItems,
-                              value: selectedGraduation,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedGraduation = newValue!;
-                                  scheduleView = scheduleViewBuilder(false);
+                                  semesterRow;
                                 });
                               },
                               style: const TextStyle(
@@ -230,7 +238,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                                 : Container(),
                           ],
                         ),
-                        semesterRow(),
+                        semesterRow = semesterRowFunc(),
                         SizedBox(
                             width: screenWidth * .879,
                             child: const Divider(
@@ -293,8 +301,12 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
                   .numberOfSemesters(
                       semesterNum, scheduleVersion, allSchedules);
 
-              return ScheduleBuildClass.semesterNum(semesterNum)
-                  .scheduleBuild(semesterNum, scheduleVersion, allSchedules);
+              return ScheduleBuildClass.semesterNum(semesterNum).scheduleBuild(
+                  semesterNum,
+                  scheduleVersion,
+                  allSchedules,
+                  coopSemester,
+                  studyAbroadSemester);
             } else {
               return const Text('Empty data');
             }
@@ -307,11 +319,8 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   }
 
   Widget scheduleSelection() {
-    //still doesn't properly update the dropdown
-
     numSchedules = ScheduleBuildClass.semesterNum(semesterNum)
         .numberOfSchedules(allSchedules);
-
     return Row(
       children: <Widget>[
         IconButton(
@@ -351,10 +360,23 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
   void updateSemester(int num) {
     setState(() {
       semesterNum += num;
+      semesterRow;
     });
   }
 
-  Widget semesterRow() {
+  Widget semesterRowFunc() {
+    int visibleSemesterNum = semesterNum;
+    print(coopSemester);
+    print(studyAbroadSemester);
+    if (coopSemester != null) {
+      if (coopSemester! <= visibleSemesterNum) visibleSemesterNum++;
+    }
+    if (studyAbroadSemester != null) {
+      if (studyAbroadSemester! <= visibleSemesterNum) visibleSemesterNum++;
+    }
+    if (coopSemester != null) {
+      if (coopSemester! <= visibleSemesterNum) visibleSemesterNum++;
+    }
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(
@@ -362,7 +384,7 @@ class StudentBuildScreenState extends State<StudentBuildScreen> {
         children: <Widget>[
           (showSchedule)
               ? Text(
-                  "Semester $semesterNum",
+                  "Semester $visibleSemesterNum",
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * .025,
                     fontWeight: FontWeight.w500,
