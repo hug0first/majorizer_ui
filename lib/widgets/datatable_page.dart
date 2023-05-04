@@ -5,8 +5,12 @@ import 'side_menu.dart';
 class DataTablePage extends StatefulWidget {
   final String pageName;
   final Widget pageBody;
+  final List<Widget>? headerChildren;
   const DataTablePage(
-      {super.key, required this.pageName, required this.pageBody});
+      {super.key,
+      required this.pageName,
+      required this.pageBody,
+      this.headerChildren});
 
   @override
   State<DataTablePage> createState() => DataTablePageState();
@@ -14,6 +18,7 @@ class DataTablePage extends StatefulWidget {
 
 class DataTablePageState extends State<DataTablePage> {
   late Widget pageBody;
+
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   DataTablePageState();
@@ -55,6 +60,10 @@ class DataTablePageState extends State<DataTablePage> {
                 fontSize: 50,
               ),
             ),
+            if (widget.headerChildren != null)
+              Row(
+                children: widget.headerChildren!,
+              ),
           ]),
           pageBody,
         ]),

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:majorizer_ui/widgets/datatable_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../api.dart';
 import '../models/models.dart';
@@ -19,10 +22,9 @@ class AdminScreenState extends State<AdminScreen> {
   List<bool> selectedLists = <bool>[true, false]; // [advisors, students]
   List<Widget> selectedWidgets = [
     AdvisorTable(),
-    Placeholder()
+    StudentTable(),
   ]; // TODO IMPLEMENT
   late Widget selectedWidget = selectedWidgets[1];
-  late Future<List<Advisor>> advisors;
 
   @override
   void initState() {
@@ -116,8 +118,6 @@ class AdvisorTable extends StatefulWidget {
 
 class _AdvisorTableState extends State<AdvisorTable> {
   late Future<List<StudentAdvisors>> studentAdvisors;
-  final int _highlightIndex = 1;
-  List<bool> _view = <bool>[false, false, true];
 
   @override
   void initState() {
@@ -132,97 +132,69 @@ class _AdvisorTableState extends State<AdvisorTable> {
         maxHeight: MediaQuery.of(context).size.height * 0.7,
         maxWidth: MediaQuery.of(context).size.width * 0.8,
       ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(35),
-        border: Border.all(
-          width: 5,
-        ),
-      ),
-      child: Column(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Students Lacking Advisors',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      fontSize: 30,
+          Expanded(
+            child: FutureBuilder<List<StudentAdvisors>>(
+              future: studentAdvisors,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return SingleChildScrollView(
+                  controller: ScrollController(),
+                  child: DataTable(
+                    headingTextStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
                     ),
+                    columns: const [
+                      DataColumn(label: Text('First Name')),
+                      DataColumn(label: Text('Last Name')),
+                      DataColumn(label: Text('Email')),
+                      DataColumn(label: Text('Department')),
+                      DataColumn(label: Text('Profile')),
+                      DataColumn(label: Text('Students')),
+                    ],
+                    rows: List<DataRow>.generate(
+                        growable: true,
+                        snapshot.data!.length,
+                        (int index) => DataRow(cells: <DataCell>[
+                              DataCell(Text(snapshot.data![index].fname)),
+                              DataCell(Text(snapshot.data![index].lname)),
+                              DataCell(InkWell(
+                                  child:
+                                      Text(snapshot.data![index].emailaddress),
+                                  onTap: () => launchUrl(Uri(
+                                        scheme: 'mailto',
+                                        path:
+                                            snapshot.data![index].emailaddress,
+                                      )))),
+                              DataCell(
+                                  Text(snapshot.data![index].advisingcapacity)),
+                              DataCell(SizedBox.expand(
+                                  child: MaterialButton(
+                                      child: const Icon(Icons.person),
+                                      onPressed: () {
+                                        throw UnimplementedError();
+                                      }))),
+                              DataCell(SizedBox.expand(
+                                  child: MaterialButton(
+                                      child: const Icon(Icons.list),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            AdminStudentTableRoute(
+                                                snapshot.data![index]));
+                                      })))
+                            ])),
                   ),
-                  IconButton(
-                      icon: const Icon(Icons.add),
-                      splashRadius: 25,
-                      onPressed: () {}),
-                ],
-              )),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: FutureBuilder<List<StudentAdvisors>>(
-                  future: studentAdvisors,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return SingleChildScrollView(
-                      controller: ScrollController(),
-                      child: DataTable(
-                        headingTextStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        columns: const [
-                          DataColumn(label: Text('First Name')),
-                          DataColumn(label: Text('Last Name')),
-                          DataColumn(label: Text('Email')),
-                          DataColumn(label: Text('Department')),
-                          DataColumn(label: Text('Profile')),
-                          DataColumn(label: Text('Edit Advisees')),
-                        ],
-                        rows: List<DataRow>.generate(
-                            growable: true,
-                            snapshot.data!.length,
-                            (int index) => DataRow(cells: <DataCell>[
-                                  DataCell(Text(snapshot.data![index].fname)),
-                                  DataCell(Text(snapshot.data![index].lname)),
-                                  DataCell(InkWell(
-                                      child: Text(
-                                          snapshot.data![index].emailaddress),
-                                      onTap: () => launchUrl(Uri(
-                                            scheme: 'mailto',
-                                            path: snapshot
-                                                .data![index].emailaddress,
-                                          )))),
-                                  DataCell(Text(
-                                      snapshot.data![index].advisingcapacity)),
-                                  DataCell(SizedBox.expand(
-                                      child: MaterialButton(
-                                          child: const Icon(Icons.person),
-                                          onPressed: () {
-                                            throw UnimplementedError();
-                                          }))),
-                                  DataCell(SizedBox.expand(
-                                      child: MaterialButton(
-                                          child: const Icon(Icons.edit),
-                                          onPressed: () {
-                                            AnimatedRoute(
-                                                snapshot.data![index]);
-                                          })))
-                                ])),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -230,13 +202,87 @@ class _AdvisorTableState extends State<AdvisorTable> {
   }
 }
 
-class AdvisorStudentTable extends StatelessWidget {
+class AdvisorStudentTable extends StatefulWidget {
   final StudentAdvisors advisor;
-  const AdvisorStudentTable({super.key, required this.advisor});
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  AdvisorStudentTable({super.key, required this.advisor});
+
+  @override
+  State<AdvisorStudentTable> createState() => AdvisorStudentTableState();
+}
+
+class AdvisorStudentTableState extends State<AdvisorStudentTable> {
+  late Future<List<AdvisorStudents>> advisorStudents;
+  late Future<List<AdvisorStudents>> studentsWithoutAdvisor;
+  List<AdvisorStudents> selectedStudents = [];
+
+  @override
+  void initState() {
+    super.initState();
+    advisorStudents = adminGetStudents(widget.advisor.emailaddress);
+    // studentsWithoutAdvisor = getStudentsWithoutAdvisor();
+  }
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return DataTablePage(
+      pageName: '${widget.advisor.fname} ${widget.advisor.lname}\'s Students',
+      pageBody: Row(mainAxisSize: MainAxisSize.min, children: [
+        Expanded(
+          child: FutureBuilder<List<AdvisorStudents>>(
+              future: advisorStudents,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return SingleChildScrollView(
+                  controller: ScrollController(),
+                  child: DataTable(
+                    showCheckboxColumn: true,
+                    columns: const [
+                      DataColumn(label: Text('First Name')),
+                      DataColumn(label: Text('Last Name')),
+                      DataColumn(label: Text('Email')),
+                      DataColumn(label: Text('Advising Capacity')),
+                    ],
+                    rows: List<DataRow>.generate(
+                        growable: true,
+                        snapshot.data!.length,
+                        (int index) => DataRow(
+                                onSelectChanged: (bool? selected) {
+                                  if (selected != null) {
+                                    setState(() {
+                                      if (selected) {
+                                        selectedStudents
+                                            .add(snapshot.data![index]);
+                                      } else {
+                                        selectedStudents
+                                            .remove(snapshot.data![index]);
+                                      }
+                                      print(
+                                          '${index} s ${selected.toString()}');
+                                    });
+                                  }
+                                },
+                                selected: selectedStudents
+                                    .contains(snapshot.data![index]),
+                                cells: <DataCell>[
+                                  DataCell(Text(snapshot.data![index].fname)),
+                                  DataCell(Text(snapshot.data![index].lname)),
+                                  DataCell(
+                                      Text(snapshot.data![index].emailaddress)),
+                                  DataCell(Text(
+                                      snapshot.data![index].advisingcapacity)),
+                                ])),
+                  ),
+                );
+              }),
+        ),
+      ]),
+    );
   }
 }
 
@@ -255,8 +301,8 @@ class AdvisorProfileState extends State<AdvisorProfile> {
   }
 }
 
-class AnimatedRoute extends MaterialPageRoute {
-  AnimatedRoute(StudentAdvisors advisor)
+class AdminStudentTableRoute extends MaterialPageRoute {
+  AdminStudentTableRoute(StudentAdvisors advisor)
       : super(builder: (context) => AdvisorStudentTable(advisor: advisor));
 
   @override
@@ -265,6 +311,95 @@ class AnimatedRoute extends MaterialPageRoute {
     return FadeTransition(
       opacity: animation,
       child: child,
+    );
+  }
+}
+
+class StudentTable extends StatefulWidget {
+  const StudentTable({super.key});
+
+  @override
+  State<StudentTable> createState() => StudentTableState();
+}
+
+class StudentTableState extends State<StudentTable> {
+  late Future<List<AdvisorStudents>> advisorStudents;
+
+  @override
+  void initState() {
+    super.initState();
+    advisorStudents = getAdvisorStudents();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
+        maxWidth: MediaQuery.of(context).size.width * 0.8,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: FutureBuilder<List<AdvisorStudents>>(
+              future: advisorStudents,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return SingleChildScrollView(
+                  controller: ScrollController(),
+                  child: DataTable(
+                    headingTextStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('First Name')),
+                      DataColumn(label: Text('Last Name')),
+                      DataColumn(label: Text('Email')),
+                      DataColumn(label: Text('Major')),
+                      DataColumn(label: Text('Profile')),
+                      DataColumn(label: Text('Advisor(s)')),
+                    ],
+                    rows: List<DataRow>.generate(
+                        growable: true,
+                        snapshot.data!.length,
+                        (int index) => DataRow(cells: <DataCell>[
+                              DataCell(Text(snapshot.data![index].fname)),
+                              DataCell(Text(snapshot.data![index].lname)),
+                              DataCell(InkWell(
+                                  child:
+                                      Text(snapshot.data![index].emailaddress),
+                                  onTap: () => launchUrl(Uri(
+                                        scheme: 'mailto',
+                                        path:
+                                            snapshot.data![index].emailaddress,
+                                      )))),
+                              DataCell(
+                                  Text(snapshot.data![index].advisingcapacity)),
+                              DataCell(SizedBox.expand(
+                                  child: MaterialButton(
+                                      child: const Icon(Icons.person),
+                                      onPressed: () {
+                                        throw UnimplementedError();
+                                      }))),
+                              DataCell(SizedBox.expand(
+                                  child: MaterialButton(
+                                      child: const Icon(Icons.list),
+                                      onPressed: () {})))
+                            ])),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

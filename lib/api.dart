@@ -73,10 +73,12 @@ Future<List<CourseHistory>> getCourseHistory() async {
 
 sendCourseHistory(CourseHistory course) async {
   try {
+    course.email = FirebaseAuth.instance.currentUser?.email;
+    print(FirebaseAuth.instance.currentUser?.email);
     final response = await http.put(
       Uri.http(urlBase, courseHistoryEndpoint),
       headers: baseHeaders,
-      body: course.toJson(),
+      body: json.encode(course),
     );
   } catch (e) {
     print(e);
@@ -135,9 +137,11 @@ Future<List<Schedule>> getSchedule() async {
 
 Future<List<StudentMajor>> getStudentMajor() async {
   try {
-    final response = await http.get(
-      Uri.http(urlBase, studentMajorEndPoint),
+    final response = await http.post(
+      Uri.http(urlBase, scheduleBuilderEndpoint),
       headers: baseHeaders,
+      body: json
+          .encode({"emailaddress": FirebaseAuth.instance.currentUser?.email}),
     );
     List<StudentMajor> studentMajors = studentMajorFromJson(response.body);
     return studentMajors;
@@ -149,7 +153,8 @@ Future<List<StudentMajor>> getStudentMajor() async {
 
 Future<http.Response> postStudentMajor(StudentMajor m) {
   try {
-    final response = http.post(
+    m.email = FirebaseAuth.instance.currentUser?.email;
+    final response = http.put(
       Uri.http(urlBase, studentMajorEndPoint),
       headers: baseHeaders,
       body: m.toJson(),
@@ -177,7 +182,7 @@ Future<http.Response> deleteStudentMajor(StudentMajor m) {
 
 Future<List<StudentMinor>> getStudentMinor() async {
   try {
-    final response = await http.get(
+    final response = await http.post(
       Uri.http(urlBase, studentMinorEndPoint),
       headers: baseHeaders,
     );
@@ -191,7 +196,8 @@ Future<List<StudentMinor>> getStudentMinor() async {
 
 Future<http.Response> postStudentMinor(StudentMinor m) {
   try {
-    final response = http.post(
+    m.email = FirebaseAuth.instance.currentUser?.email;
+    final response = http.put(
       Uri.http(urlBase, studentMinorEndPoint),
       headers: baseHeaders,
       body: m.toJson(),
@@ -205,6 +211,7 @@ Future<http.Response> postStudentMinor(StudentMinor m) {
 
 Future<http.Response> deleteStudentMinor(StudentMinor m) {
   try {
+    m.email = FirebaseAuth.instance.currentUser?.email;
     final response = http.delete(
       Uri.http(urlBase, studentMinorEndPoint, {'pk': m.studentminorkey}),
       headers: baseHeaders,
@@ -215,5 +222,40 @@ Future<http.Response> deleteStudentMinor(StudentMinor m) {
   } catch (e) {
     print(e);
     return Future.error(e);
+  }
+}
+
+Future<List<StudentAdvisors>> adminGetAdvisors(String email) async {
+  try {
+    final response = await http.post(
+        Uri.http(
+          urlBase,
+          advisorStudentsEndpoint,
+        ),
+        headers: baseHeaders,
+        body: jsonEncode(<String, String>{
+          'emailaddress': email,
+        }));
+    List<StudentAdvisors> advisors = studentAdvisorsFromJson(response.body);
+    return advisors;
+  } catch (e) {}
+  return [];
+}
+
+Future<List<AdvisorStudents>> adminGetStudents(String email) async {
+  try {
+    final response = await http.post(
+        Uri.http(
+          urlBase,
+          advisorStudentsEndpoint,
+        ),
+        headers: baseHeaders,
+        body: jsonEncode(<String, String>{
+          'emailaddress': email,
+        }));
+    List<AdvisorStudents> students = advisorStudentsFromJson(response.body);
+    return students;
+  } catch (e) {
+    return [];
   }
 }
