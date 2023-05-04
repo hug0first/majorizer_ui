@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-bool isAdmin = false;
+bool isAdmin =
+    FirebaseAuth.instance.currentUser?.email == "yankeets@clarkson.edu"
+        ? true
+        : false;
 
 Widget sideMenu(BuildContext context) {
   return Drawer(
